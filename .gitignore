@@ -6,3 +6,29 @@
 *.csproj
 *.unityproj
 *.sln
+
+#ignore the library in unity
+[Ll]ibrary/
+[Tt]emp/
+
+# Ignore the following file extensions
+*.exe
+*.vcproject
+*.sln
+*.userprefs
+# Others
+*.Cache
+*.cachefile
+Thumbs.db
+.DS_Store
+
+
+
+
+
+
+*.csproj
+
+
+*.pidb
+
