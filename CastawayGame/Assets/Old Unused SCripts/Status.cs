@@ -6,10 +6,9 @@ public class Status :MonoBehaviour {
 	
 	public int health = 0;
 	public int mana = 0;
-	public MonoBehaviour controllerScript;
+	//public MonoBehaviour controllerScript;
 	public void substractHealth(int damage){
-		 health -= damage;
-		controllerScript.SendMessage("takeDamage");
+		 
 	}
 	
 	

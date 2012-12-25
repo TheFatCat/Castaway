@@ -64,10 +64,6 @@ int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
 
 // Update is called once per frame
 void  Update (){
-	health = Mathf.Clamp(health,0,maxHealth);// prevent from being less than zero or above max health	
-	if(health <= 0){
-		beginDeath();	
-	}
 	transform.position = new Vector3(transform.position.x,transform.position.y, Mathf.Round(transform.position.z) );//prevent getting off on z 	
 	double h= Input.GetAxisRaw("Horizontal");
 	double v= Input.GetAxisRaw("Vertical");
