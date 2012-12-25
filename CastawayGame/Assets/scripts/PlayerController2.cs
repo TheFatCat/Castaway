@@ -36,7 +36,11 @@ public class PlayerController2 : MonoBehaviour {
 			currentXSpeed = Mathf.Lerp(currentXSpeed, horizontalInput * maxAirSpeed, Time.time * airAcceleration);
 			//accelerate downward
 			currentYSpeed += gravityAcceleration * Time.deltaTime;
+			//if you hold jump while in the air you will jump higher
+			if(Input.GetButton("Jump") && currentYSpeed < 0 ){
 				
+				currentYSpeed -= (gravityAcceleration / 2f) * Time.deltaTime;
+			}	
 		}
 
 		else{
@@ -44,7 +48,7 @@ public class PlayerController2 : MonoBehaviour {
 			currentYSpeed = 0.1f;
 			currentXSpeed = Mathf.Lerp(currentXSpeed, horizontalInput * maxAirSpeed, Time.time * groundAcceleration );
 
-			if(Input.GetButtonDown("Jump")){
+			if(Input.GetButton("Jump")){
 				Debug.Log("Jumped");
 				currentYSpeed -= jumpSpeed;
 			}
