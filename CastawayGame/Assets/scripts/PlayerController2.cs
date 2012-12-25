@@ -15,8 +15,13 @@ public class PlayerController2 : MonoBehaviour {
 	public float gravityAcceleration = 9.8f;
 	float currentYSpeed = 0;
 	float currentXSpeed = 0 ;
+	PlayerSpriteAnimate mainAnimator;
+	PlayerSpriteAnimate overlayAnimator;
+	[SerializeField] Transform overlay;
 	// Use this for initialization
 	void Start () {
+		mainAnimator = GetComponent<PlayerSpriteAnimate>();
+		overlayAnimator = overlay.GetComponent<PlayerSpriteAnimate>();
 		controller = GetComponent<CharacterController>();
 	}
 	
@@ -26,6 +31,8 @@ public class PlayerController2 : MonoBehaviour {
 		
 		float horizontalInput = Input.GetAxisRaw("Horizontal");
 		float verticalInput = Input.GetAxisRaw("Vertical");
+		
+		
 		
 		//for jumping and falling
 		collisionFlags = controller.Move(new Vector3(0,-1 * currentYSpeed,0)  *Time.deltaTime);
@@ -58,7 +65,29 @@ public class PlayerController2 : MonoBehaviour {
 		//move from controller input
 		collisionFlags = controller.Move(new Vector3(currentXSpeed,0,0)  *Time.deltaTime);
 		
-
+//*****************************************
+//*********Animations and graphics*********
+//*****************************************
+		if(Mathf.Abs(horizontalInput) > 0.5){
+			if(horizontalInput > 0.5){
+				transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * 1 , transform.localScale.y , transform.localScale.z); 
+				overlay.renderer.enabled = false;
+				mainAnimator.SetAnimation(PlayerSpriteAnimate.animationType.MoveLeft);
+				//mainAnimator.SetFallback(PlayerSpriteAnimate.animationType.IdleLeft);
+			}
+		
+			else if(horizontalInput < 0.5){
+				transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1 , transform.localScale.y , transform.localScale.z); 
+				overlay.renderer.enabled = false;
+				mainAnimator.SetAnimation(PlayerSpriteAnimate.animationType.MoveLeft);
+				//mainAnimator.SetFallback(PlayerSpriteAnimate.animationType.IdleLeft);
+			}
+		}
+		else{
+			overlay.renderer.enabled = false;
+			mainAnimator.SetAnimation(PlayerSpriteAnimate.animationType.IdleLeft);
+			//mainAnimator.SetFallback(PlayerSpriteAnimate.animationType.IdleLeft);	
+		}
 	
 	}
 	
