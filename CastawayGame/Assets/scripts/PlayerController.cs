@@ -1,21 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-
-
-
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof (PlayerSpriteAnimate))]
 [RequireComponent(typeof (Weapon))]
 [RequireComponent(typeof (Status))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
-
-//health and stats
-public int health = 10;
-public int maxHealth = 10;
-//etc stats like magic or something
-	
 public double speed = 1.0;
 public double acceleration = 0.5;
 public double inAirAccel = 0.3;
@@ -43,32 +34,13 @@ Transform triggerObject ; // the current object we are dealing with like a ladde
 
 private Vector3 moveDirection = Vector3.zero;
 
-
-	void takeDamage(){
-		renderer.material.color = Color.red;
-	}
-void OnTriggerEnter(Collider collider){
-	
-	//Debug.Log("entered trigger "  );
-	triggerObject = collider.transform;	
-	if(Input.GetKey(KeyCode.DownArrow)){
-		attempPickUpItem();
-		Debug.Log("grabbing");	
-	}
-}
-
-void OnTriggerExit(Collider collider){
-	Debug.Log("exit trigger");
-}
-
 void  Start (){
 	controller = GetComponent<CharacterController>()	;
 		
 	//doesn't work either
 }
-//used for picking up objects interactig with other objects that have trigger colliders
-//doesn't work
-int  getDirectionY (){
+
+int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 if facing left or right
 	double y = Input.GetAxisRaw("Vertical");	
 	if(y > 0.25){
 		return 1;
@@ -81,7 +53,7 @@ int  getDirectionY (){
 	}
 }
 
-int  getDirectionX (){
+int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
 	if(transform.localScale.x > 0){
 		return 1;
 	}
@@ -89,31 +61,7 @@ int  getDirectionX (){
 		return -1;	
 	}
 }
-void attempPickUpItem(){
-	Debug.Log(triggerObject.gameObject.name);
-	if(triggerObject != null){
-		// i don't have to check what type of object we are picking up because if it doesn't have it it doesn't matter	
-		ItemHandler itemHandler = triggerObject.GetComponent<ItemHandler>();
-		
-		switch(itemHandler.itemType){
-			case ItemHandler.ItemType.WEAPON:
-				GetComponent<Inventory>().weaponAttributes.Add(itemHandler.weaponAttributes);
-				break;
-			case ItemHandler.ItemType.ITEM:
-				GetComponent<Inventory>().itemAttributes.Add(itemHandler.itemAttributes);
-				break;
-			case ItemHandler.ItemType.TOOL:
-				//unimplemented
-				break;
-		}
-		
-		Destroy(triggerObject.gameObject);	
-	}
-}
 
-void beginDeath(){
-//unimplemented	
-}
 // Update is called once per frame
 void  Update (){
 	health = Mathf.Clamp(health,0,maxHealth);// prevent from being less than zero or above max health	
