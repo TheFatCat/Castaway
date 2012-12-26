@@ -5,7 +5,7 @@ public class TestTrigger : MonoBehaviour {
 	int enter = 0;
 	int exit = 0;
 	void OnTriggerEnter(Collider collider){
-		if(collider.GetComponent<PlayerController>() == null){
+		if(collider.GetComponent<PlayerController>() != null){
 			enter ++;
 			Debug.Log("enter " + enter);
 		}
