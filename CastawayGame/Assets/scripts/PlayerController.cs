@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof (PlayerSpriteAnimate))]
-[RequireComponent(typeof (Weapon))]
+[RequireComponent(typeof (WeaponImplementer))]
 [RequireComponent(typeof (Status))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
@@ -19,7 +19,7 @@ bool  crouching = false;
 bool  jumping = false;
 bool  canThrow = true;
 bool  throwing = false;
-bool  canShoot = true;
+//bool  canShoot = true; never used as far as i know
 bool  shooting = false;
 public double shotLength = 0.7;
 private double shootTimer= 0.0;
@@ -34,6 +34,7 @@ private CollisionFlags collisionFlags;
 public Vector3 moveDirection = Vector3.zero;
 
 void  Start (){
+	
 	controller = GetComponent<CharacterController>();
 }
 
@@ -341,17 +342,18 @@ void  Update ()
 }
 
 public void  fire (){
-		Weapon weapon= GetComponent<Weapon>();
+		WeaponImplementer weapon= GetComponent<WeaponImplementer>();
 		shooting = true;
 		throwing = false;
 		shootTimer = 0.0f;
 		weapon.fire(muzzleLocation,muzzleDirection);
 }
-
+/*
+this method is never used and has no purpose
 public void  SetCanShoot ( bool yesno  ){
 	 canShoot = yesno;
 }
-
+*/
 public void  SetCanThrow ( bool yesno  ){
 	 canThrow = yesno;
 }

@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour {
 				Debug.Log("sent back to first weapon");
 				weaponNum = 0;
 			}
-			GetComponent<Weapon>().setAttributes((WeaponAttributes)weaponAttributes[weaponNum]);
+			GetComponent<WeaponImplementer>().setAttributes((Weapon)weaponAttributes[weaponNum]);
 			
 		}
 	
@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour {
 				if(selectorLevel == 0 && weaponAttributes.Count > 0){
 					
 					weaponNum = selectorPosition;
-					GetComponent<Weapon>().setAttributes((WeaponAttributes)weaponAttributes[weaponNum]);
+					GetComponent<WeaponImplementer>().setAttributes((Weapon)weaponAttributes[weaponNum]);
 					
 				}
 			}
@@ -127,7 +127,7 @@ public class Inventory : MonoBehaviour {
 		for(int i = 0 ; i < weaponAttributes.Count; i ++){
 			
 			//GUI.Box(new Rect(8f + 0.1f * i * freeSpaceX,8f, 0.1f * freeSpaceX,0.25f * freSpaceY ), ((WeaponAttributes)weaponAttributes[i]).weaponIcon);
-			GUI.DrawTexture(new Rect(border.left + iconSize.x * i * freeSpaceX,border.top + textHeight, iconSize.x * freeSpaceX,iconSize.y * freeSpaceY ), ((WeaponAttributes)weaponAttributes[i]).weaponIcon, ScaleMode.ScaleToFit, true, 0);
+			GUI.DrawTexture(new Rect(border.left + iconSize.x * i * freeSpaceX,border.top + textHeight, iconSize.x * freeSpaceX,iconSize.y * freeSpaceY ), ((Weapon)weaponAttributes[i]).weaponIcon, ScaleMode.ScaleToFit, true, 0);
 		}
         GUI.TextField(new Rect(border.left, border.top + textHeight + iconSize.y*freeSpaceY, freeSpaceX ,textHeight ), "~itemAttributes~");
         for(int i = 0 ; i < itemAttributes.Count; i ++){
@@ -142,7 +142,7 @@ public class Inventory : MonoBehaviour {
 			if(weaponAttributes.Count == 0){
 				return;
 			}
-			description = ((WeaponAttributes) weaponAttributes[selectorPosition]).description  ;
+			description = ((Weapon) weaponAttributes[selectorPosition]).description  ;
 		}
 		else if (selectorLevel == 1){
 			if(itemAttributes.Count == 0){

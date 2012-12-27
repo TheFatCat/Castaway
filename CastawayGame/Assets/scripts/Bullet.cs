@@ -9,14 +9,14 @@ public class Bullet : MonoBehaviour {
 	
 	
 	void OnCollisionEnter(Collision collision) {
-		/*
+		
 		Status status = collision.transform.GetComponent<Status>();
 		if(status != null){
 			status.substractHealth(damage);
 		}
 			
 		Destroy(gameObject);
-		*/
+		
 		
 		
 	}

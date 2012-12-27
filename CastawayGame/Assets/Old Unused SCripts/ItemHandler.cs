@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ItemHandler : MonoBehaviour {
 	// pick only one to give a value
-	public WeaponAttributes weaponAttributes;
+	public Weapon weaponAttributes;
 	public ItemAttributes itemAttributes;
 	public ItemType itemType;
 	
