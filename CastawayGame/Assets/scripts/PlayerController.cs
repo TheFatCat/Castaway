@@ -7,6 +7,7 @@ using System.Collections;
 [RequireComponent(typeof (Status))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
+private float zPosition = 0.0f;
 public double speed = 1.0;
 public double minMoveDistance = 0.005;
 public double acceleration = 0.5;
@@ -19,7 +20,7 @@ bool  crouching = false;
 bool  jumping = false;
 bool  canThrow = true;
 bool  throwing = false;
-//bool  canShoot = true; never used as far as i know
+bool  canShoot = true; 
 bool  shooting = false;
 public double shotLength = 0.7;
 private double shootTimer= 0.0;
@@ -34,7 +35,7 @@ private CollisionFlags collisionFlags;
 public Vector3 moveDirection = Vector3.zero;
 
 void  Start (){
-	
+	zPosition = transform.position.z;
 	controller = GetComponent<CharacterController>();
 }
 
@@ -63,7 +64,9 @@ int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
 // Update is called once per frame
 void  Update ()
 	{
-		//transform.position = new Vector3 (transform.position.x, transform.position.y, Mathf.Round (transform.position.z));//prevent getting off on z 	
+		//hold our z value to center player
+		transform.position  = new Vector3(transform.position.x, transform.position.y, zPosition);
+		//get inputs
 		double h = Input.GetAxisRaw ("Horizontal");
 		double v = Input.GetAxisRaw ("Vertical");
 	
@@ -342,18 +345,21 @@ void  Update ()
 }
 
 public void  fire (){
-		WeaponImplementer weapon= GetComponent<WeaponImplementer>();
-		shooting = true;
-		throwing = false;
-		shootTimer = 0.0f;
-		weapon.fire(muzzleLocation,muzzleDirection);
+		if (canShoot) {
+			WeaponImplementer weapon = GetComponent<WeaponImplementer> ();
+			shooting = true;
+			throwing = false;
+			shootTimer = 0.0f;
+			weapon.fire (muzzleLocation, muzzleDirection);
+		}
 }
-/*
-this method is never used and has no purpose
+
+//allow us to shoot
 public void  SetCanShoot ( bool yesno  ){
 	 canShoot = yesno;
 }
-*/
+
+//allow us to throw
 public void  SetCanThrow ( bool yesno  ){
 	 canThrow = yesno;
 }
