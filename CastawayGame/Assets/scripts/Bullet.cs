@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour {
 	public int damage = 1;
 	
 	
+	
 	void OnCollisionEnter(Collision collision) {
 		
 		Status status = collision.transform.GetComponent<Status>();

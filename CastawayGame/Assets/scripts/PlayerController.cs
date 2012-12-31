@@ -199,7 +199,7 @@ void  Update ()
 			//smooth out the horizontal vector
 			moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)inAirAccel);
 			moveDirection.y -= (float)(gravity * Time.deltaTime);
-			if(Input.GetButton("Jump")){
+			if(Input.GetButton("Jump") && moveDirection.y >0 ){
 				moveDirection.y += (float)(jumpModifier * Time.deltaTime);	
 			}
 		

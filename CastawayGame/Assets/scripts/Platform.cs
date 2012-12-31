@@ -11,7 +11,7 @@ public class Platform : MonoBehaviour {
 	
 	void OnTriggerExit(Collider collider){
 		if(collider.transform.tag.Equals("Player")){
-			collider.gameObject.layer = LayerMask.NameToLayer("Default");
+			collider.gameObject.layer = LayerMask.NameToLayer("Player");
 				
 		}
 	}
