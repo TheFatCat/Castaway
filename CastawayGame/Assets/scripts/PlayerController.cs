@@ -13,6 +13,7 @@ public double minMoveDistance = 0.005;
 public double acceleration = 0.5;
 public double inAirAccel = 0.3;
 public double jumpSpeed = 10;
+public double jumpModifier = 10;	
 public double crouchSpeed = 5.0;
 public double gravity = 10.0;
 public bool  grounded = false;
@@ -198,6 +199,9 @@ void  Update ()
 			//smooth out the horizontal vector
 			moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)inAirAccel);
 			moveDirection.y -= (float)(gravity * Time.deltaTime);
+			if(Input.GetButton("Jump")){
+				moveDirection.y += (float)(jumpModifier * Time.deltaTime);	
+			}
 		
 			if (v > 0.5f) {//up
 				muzzleDirection = Vector3.up;
