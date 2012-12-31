@@ -18,7 +18,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Nudge amount, if not equal to grid
 	/// </summary>
-	private static Vector3 nudge = new Vector3(1.0f, 1.0f, 1.0f);
+	private static Vector3 nudge = new Vector3(10.0f, 10.0f, 1.0f);
 	
 	/// <summary>
 	/// Rotation amount
@@ -28,7 +28,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Grid size in XYZ
 	/// </summary>
-	private static Vector3 grid = new Vector3(1.0f, 1.0f, 1.0f);
+	private static Vector3 grid = new Vector3(30.0f, 1.0f, 1.0f);
 	
 	/// <summary>
 	/// Show XZ grid floor
@@ -48,12 +48,12 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Number of displayed grid lines
 	/// </summary>
-	private static int gridLines = 10;
+	private static int gridLines = 50;
 	
 	/// <summary>
 	/// Grid offset from origin
 	/// </summary>
-	private static Vector3 gridOffset = new Vector3(0.0f, 0.0f, 0.0f);
+	private static Vector3 gridOffset = new Vector3(-270.0f, 0.0f, 11.01f);
 	
 	/// <summary>
 	/// Color used for XZ grid floor

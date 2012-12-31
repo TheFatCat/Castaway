@@ -26,7 +26,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Nudge Z Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Nudge Z &i", false, 310001)]
+	[MenuItem("Edit/Transform Util/Nudge Z #&i", false, 310001)]
 	static void OnMenuNudgeZ()
 	{
 		NudgeZ();
@@ -35,7 +35,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Nudge -Z Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Nudge -Z &k", false, 310002)]
+	[MenuItem("Edit/Transform Util/Nudge -Z #&k", false, 310002)]
 	static void OnMenuNudgeNegZ()
 	{
 		NudgeNegZ();
@@ -62,7 +62,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Nudge Y Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Nudge Y #&i", false, 310005)]
+	[MenuItem("Edit/Transform Util/Nudge Y &i", false, 310005)]
 	static void OnMenuNudgeY()
 	{
 		NudgeY();
@@ -71,7 +71,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Nudge -Y Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Nudge -Y #&k", false, 310006)]
+	[MenuItem("Edit/Transform Util/Nudge -Y &k", false, 310006)]
 	static void OnMenuNudgeNegY()
 	{
 		NudgeNegY();
@@ -80,7 +80,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Snap in X direction Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Snap X", false, 320001)]
+	[MenuItem("Edit/Transform Util/Snap X &x", false, 320001)]
 	static void OnMenuSnapX()
 	{
 		SnapX();
@@ -89,7 +89,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Snap in Y direction Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Snap Y", false, 320001)]
+	[MenuItem("Edit/Transform Util/Snap Y &y", false, 320001)]
 	static void OnMenuSnapY()
 	{
 		SnapY();
@@ -98,7 +98,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Snap in Z direction Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Snap Z", false, 320001)]
+	[MenuItem("Edit/Transform Util/Snap Z &z", false, 320001)]
 	static void OnMenuSnapZ()
 	{
 		SnapZ();
@@ -125,7 +125,7 @@ public partial class TransformUtil : EditorWindow
 	/// <summary>
 	/// Snap in XY direction Menu Item
 	/// </summary>
-	[MenuItem("Edit/Transform Util/Snap XY", false, 320001)]
+	[MenuItem("Edit/Transform Util/Snap XY &s", false, 320001)]
 	static void OnMenuSnapXY()
 	{
 		SnapXY();
