@@ -1,0 +1,46 @@
+Things to Atlas
+v 1.0.0- 12/1/13
+
+Waves:						*all animated
+
+-Background half waves.png
+-Background waves.png
+-beachwaves hires.png				*important to chose right file
+-beachwaves rolling hires.png			*important to chose right file
+-beachwaves side copy hires.png			*important to chose right file
+
+
+Level Pieces:
+
+-beach1.png
+-beach2.png
+-beach3.png
+-beach4.png
+-cliffleft.png
+-cliff middle.png
+-cliff right.png
+-cliff2 center.png
+-cliff2 left.png
+
+Props:
+
+-beach box 1.png
+-beach box 2.png
+-beach box 3.png
+-beach box 4.png
+-beach palm 01.png				*animated
+-beach palm 02.png				*animated
+-brkship back.png	
+-brkship front.png
+-brkship hit.png				*animated
+-broken mast.png
+-bush01.png
+-bush02.png
+
+(leave space for:)
+-box01
+-box02
+-brkship2 back
+-brkship2 front
+-brkship3 back
+-brkship3 front
