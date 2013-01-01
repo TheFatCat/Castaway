@@ -1,13 +1,7 @@
 Things to Atlas
-v 1.0.0- 12/1/13
+v 1.0.1- 12/1/13
 
-Waves:						*all animated
-
--Background half waves.png
--Background waves.png
--beachwaves hires.png				*important to chose right file
--beachwaves rolling hires.png			*important to chose right file
--beachwaves side copy hires.png			*important to chose right file
+[Don't atlas all the waves]
 
 
 Level Pieces:
