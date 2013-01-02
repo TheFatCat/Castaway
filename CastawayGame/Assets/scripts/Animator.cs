@@ -36,4 +36,16 @@ public class Animator : MonoBehaviour {
 			renderer.material.mainTextureOffset = new Vector2(x,y); 
 		}
 	}
+	
+	
+	public void setAnimation(Animation newAnimation, bool loop){
+		currentAnimation = newAnimation;
+		this.loop = loop;
+		
+		if(loop && currentY == newAnimation.y   && currentX >= newAnimation.startX  && currentX <= newAnimation.endX){
+		
+		}
+		currentX = newAnimation.startX;
+		currentY = newAnimation.y;
+	}
 }
