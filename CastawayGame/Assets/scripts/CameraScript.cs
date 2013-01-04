@@ -30,7 +30,7 @@ public class CameraScript : MonoBehaviour {
 			
 
 			
-			transform.position = new Vector3(Mathf.Clamp(target.position.x,Xmin,Xmax) ,Mathf.Clamp(target.position.y + cameraHeight,Ymin,Ymax), target.position.z - cameraDistance);
+			transform.position = new Vector3(Mathf.Clamp(Mathf.Clamp(transform.position.x,target.position.x - XminMoveDist,target.position.x + XminMoveDist),Xmin,Xmax) ,Mathf.Clamp(Mathf.Clamp(transform.position.y,target.position.y + cameraHeight - YminMoveDist,target.position.y + cameraHeight + YminMoveDist),Ymin,Ymax), target.position.z - cameraDistance);
 			
 			
 			//if rumbling
