@@ -32,7 +32,7 @@ public class Animator : MonoBehaviour {
 			
 			float x = currentX * (float)tileX;
 			
-			float y = 1 - currentY * (float)tileY;
+			float y = 1 - currentY * (float)tileY - (float)  tileY;
 			renderer.material.mainTextureOffset = new Vector2(x,y); 
 		}
 	}

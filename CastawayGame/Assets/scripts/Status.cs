@@ -4,11 +4,20 @@ using System.Collections;
 public class Status :MonoBehaviour {
 	
 	
-	public int health = 0;
-	public int mana = 0;
+	[SerializeField] int health = 0;
+	[SerializeField] int mana = 0;
 	//public MonoBehaviour controllerScript;
 	public void substractHealth(int damage){
-		 
+		health -= damage;
+		if(health <= 0){
+			die();
+		}
+	}
+		
+	public void die(){
+		Debug.Log(transform.name + " just died");	
+		Destroy(gameObject);
+		//unimplemented	
 	}
 	
 	
