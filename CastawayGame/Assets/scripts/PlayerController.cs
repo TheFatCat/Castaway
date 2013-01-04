@@ -7,6 +7,7 @@ using System.Collections;
 [RequireComponent(typeof (Status))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
+public bool frozen = false;
 private float zPosition = 0.0f;
 public double speed = 1.0;
 public double minMoveDistance = 0.005;
@@ -91,7 +92,10 @@ void  Update ()
 		//get inputs
 		double h = Input.GetAxisRaw ("Horizontal");
 		double v = Input.GetAxisRaw ("Vertical");
-	
+		if(frozen){
+			h = 0;
+			v = 0;
+		}
 		PlayerSpriteAnimate overAnimator = overlay.GetComponent<PlayerSpriteAnimate> ();
 		PlayerSpriteAnimate animator = GetComponent<PlayerSpriteAnimate> ();
 	
@@ -183,7 +187,7 @@ void  Update ()
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (Input.GetButtonDown ("Jump")) {
+			if (Input.GetButtonDown ("Jump")  && ! frozen) {
 				jumping = true;
 				shooting = false;
 				shootTimer = 0.0f;
