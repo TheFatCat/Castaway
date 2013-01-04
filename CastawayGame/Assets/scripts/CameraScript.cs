@@ -3,8 +3,8 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 	public Transform target;
-	public float cameraDistance = 10f;
-	public float cameraHeight = 10f;
+	public float cameraDistance = 29.7299f;
+	public float cameraHeight = 16.1712f;
 	public float cameraSpeed = 1f;
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class CameraScript : MonoBehaviour {
 	void Update () {
 		if(target != null){
 			
-			transform.position = Vector3.Lerp(transform.position , new Vector3(target.position.x , target.position.y + cameraHeight , target.position.z - cameraDistance), cameraSpeed);
+			transform.position = new Vector3(target.position.x , target.position.y + cameraHeight , target.position.z - cameraDistance); 
 		}
 	}
 }
