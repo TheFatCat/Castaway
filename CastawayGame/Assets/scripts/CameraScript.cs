@@ -16,7 +16,7 @@ public class CameraScript : MonoBehaviour {
 	public float rumbleTimer = 5.0f;
 
 	
-	public float cameraSpeed = 1f; // speed the camera follows the player
+
 
 	// Use this for initialization
 	void Start () {
@@ -30,12 +30,12 @@ public class CameraScript : MonoBehaviour {
 			
 
 			
-			transform.position = Vector3.Lerp(transform.position , new Vector3(Mathf.Clamp(target.position.x,Xmin,Xmax) ,Mathf.Clamp(target.position.y + cameraHeight,Ymin,Ymax), target.position.z - cameraDistance), cameraSpeed);
+			transform.position = new Vector3(Mathf.Clamp(target.position.x,Xmin,Xmax) ,Mathf.Clamp(target.position.y + cameraHeight,Ymin,Ymax), target.position.z - cameraDistance);
 			
 			
 			//if rumbling
 			if(rumbleTimer > 0.0f){
-				transform.position += new Vector3(Random.Range(-rumbleAmount,rumbleAmount) * 1 /*Time.deltaTime*/,Random.Range(-rumbleAmount,rumbleAmount) * Time.deltaTime,0.0f);	//move randomly
+				transform.position += new Vector3(Random.Range(-rumbleAmount,rumbleAmount) * Time.deltaTime,Random.Range(-rumbleAmount,rumbleAmount) * Time.deltaTime,0.0f);	//move randomly
 				transform.position = new Vector3(Mathf.Clamp(transform.position.x,Xmin,Xmax) ,Mathf.Clamp(transform.position.y,Ymin,Ymax),transform.position.z);//stay in bounds
 				rumbleTimer -= Time.deltaTime;//subtract timer
 			}
