@@ -50,7 +50,7 @@ public void takeDamage(int damage){
 	
 	if(! status.isInvincible()){
 		status.substractHealth(damage);	
-		status.setInvincibleFor(2);	
+		status.setInvincibleFor(0.75f);	
 	}	
 }
 void  Start (){
@@ -208,7 +208,7 @@ void  Update ()
 				shooting = false;
 				throwing = false;
 				shootTimer = 0.0f;
-				moveDirection.y = 0;
+				moveDirection.y = -0.05f;
 			}
 			//if we just fell
 			if (!jumping && !grounded) {
