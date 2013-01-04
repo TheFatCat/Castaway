@@ -35,6 +35,11 @@ private CollisionFlags collisionFlags;
 
 public Vector3 moveDirection = Vector3.zero;
 
+void OnControllerColliderHit(ControllerColliderHit hit){
+	if(hit.transform.tag.Equals("Enemy")){
+		GetComponent<Status>().substractHealth(hit.transform.GetComponent<EnemyController>().touchDamage);	
+	}
+}
 void  Start (){
 	zPosition = transform.position.z;
 	controller = GetComponent<CharacterController>();
