@@ -4,45 +4,36 @@ using System.Collections;
 [RequireComponent (typeof(Status))]
 public class EnemyController : MonoBehaviour {
 	public float gravityAcceleration ;
-	public int touchDamage = 0;
+	public int touchDamage = 0; // damage done each time enemy touches player
 	Vector3 velocity;
 	private CollisionFlags collisionFlags;
 	CharacterController controller ;
-	
+	private float zPosition = 0;
 	void Start(){
+		zPosition = transform.position.z;
 		controller = GetComponent<CharacterController>();
-	}/*
-	void OnTriggerEnter(Collider collider){
-		//Debug.Log("hitting " + hit.transform.name);
-		if(collider.transform.tag.Equals("Player")){
-			Debug.Log("hit player");
-			collider.GetComponent<Status>().substractHealth(touchDamage);	
-		}
 	}
-	*/
-	/*
-	void OnCollisionEnter(Collision collision){
-		if(collision.transform.tag.Equals("Player")){
-			collision.transform.GetComponent<Status>().substractHealth(touchDamage);	
-		}
-	}
-	*/
 	
-	
+	// check to see if we hit the player and if so do damage
 	void OnControllerColliderHit(ControllerColliderHit hit){
 		if(hit.transform.tag.Equals("Player")){
-			hit.transform.GetComponent<Status>().substractHealth(touchDamage);
+			hit.transform.GetComponent<PlayerController>().takeDamage(touchDamage);
+			
 		}
 	}
 	// Update is called once per frame
 	void Update () {
-		transform.position = new Vector3 (transform.position.x, transform.position.y, 10f);
+		
+		// make sure the crab stays on the right zposition
+		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
+		
+		// move the crab
 		collisionFlags = controller.Move(velocity * Time.deltaTime);
 		if(IsGrounded()){
-			setYSpeed(-.05f);
+			setYSpeed(-.05f); // need a very small y velocity to keep the crab grounded every frame
 		}
 		
-		else{
+		else{ // accelerate downward
 			setYSpeed(getYSpeed() - gravityAcceleration * Time.deltaTime);
 		}
 	}

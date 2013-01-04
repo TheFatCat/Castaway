@@ -31,16 +31,30 @@ public Transform overlay;
 CharacterController controller;	
 //collision flags from controller
 private CollisionFlags collisionFlags; 
-
+private Status status;
 
 public Vector3 moveDirection = Vector3.zero;
 
 void OnControllerColliderHit(ControllerColliderHit hit){
 	if(hit.transform.tag.Equals("Enemy")){
-		GetComponent<Status>().substractHealth(hit.transform.GetComponent<EnemyController>().touchDamage);	
+		takeDamage(hit.transform.GetComponent<EnemyController>().touchDamage);
 	}
 }
+
+
+
+	
+public void takeDamage(int damage){
+	
+			
+	
+	if(! status.isInvincible()){
+		status.substractHealth(damage);	
+		status.setInvincibleFor(2);	
+	}	
+}
 void  Start (){
+	status = GetComponent<Status>();	
 	zPosition = transform.position.z;
 	controller = GetComponent<CharacterController>();
 }
@@ -70,6 +84,8 @@ int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
 // Update is called once per frame
 void  Update ()
 	{
+		
+		
 		//hold our z value to center player
 		transform.position  = new Vector3(transform.position.x, transform.position.y, zPosition);
 		//get inputs

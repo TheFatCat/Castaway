@@ -3,9 +3,9 @@ using System.Collections;
 [System.Serializable]
 public class Animation  {
 	
-	public int startX;
+	public int startX; // starting values for animation
 	public int endX;
-	public int y;
-	public float timePerFrame = 1f;
+	public int y; // y is expected to not change for each animation
+	public float timePerFrame = 1f; // time between each frame
 	
 }

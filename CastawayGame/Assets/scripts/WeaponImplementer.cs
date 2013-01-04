@@ -11,9 +11,9 @@ public class WeaponImplementer : MonoBehaviour{
 	public double speed = 10;
 	public double fireRate = 0.2;//seconds per shot
 	*/
-	[SerializeField] private List<Weapon> weapons = new List<Weapon>();
+	[SerializeField] private List<Weapon> weapons = new List<Weapon>(); // essentially the players armory
 	[SerializeField] private Weapon currentWeapon;
-	private double timer = 0.0;
+	private double timer = 0.0; // to keep track of rate of fire
 	
 	public void  fire ( Vector3 bulletLocation ,  Vector3 bulletDirection  ){
 		
@@ -50,7 +50,7 @@ public class WeaponImplementer : MonoBehaviour{
 	
 	void  Update (){
 		timer+= Time.deltaTime;	
-		if(Input.GetButtonDown("Fire1")&& timer >= currentWeapon.timeBetweenShots ){
+		if((Input.GetButtonDown("Fire1") || (Input.GetButton("Fire1") && currentWeapon.automatic) )&& timer >= currentWeapon.timeBetweenShots ){
 			timer = 0.0f;
 			
 			PlayerController controller = GetComponent<PlayerController>();

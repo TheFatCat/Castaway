@@ -3,7 +3,8 @@ using System.Collections;
 //this struct holds the different kinds of 
 [System.Serializable] //so we can see in the inspector
 public class Weapon {
-	[SerializeField]public  Texture uniqueSpriteSheet;//
+	public bool automatic= false; // is the gun automatic fire or do you have to press each time
+	[SerializeField]public  Texture uniqueSpriteSheet;// the sprite sheet for this particular gun
 	[SerializeField]public  Texture weaponIcon;//for gui
 	[SerializeField]public  string description;//for gui
 	[SerializeField]public  Rigidbody bullet ;//bullet gun will fire

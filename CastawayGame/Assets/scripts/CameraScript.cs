@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 	public Transform target;
+<<<<<<< HEAD
 	public float cameraDistance = 29.7299f;
 	public float cameraHeight = 16.1712f;
 	public float Ymin = 23.9f;
@@ -13,6 +14,11 @@ public class CameraScript : MonoBehaviour {
 	public float YminMoveDist = 12f;
 	public float rumbleAmount = 0.0f;
 	public float rumbleTimer = 0.0f;
+=======
+	public float cameraDistance = 10f; // distance in z from the target
+	public float cameraHeight = 10f; // distance y from the target
+	public float cameraSpeed = 1f; // speed the camera follows the player
+>>>>>>> a lot of stuff
 	// Use this for initialization
 	void Start () {
 	
@@ -21,6 +27,7 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(target != null){
+<<<<<<< HEAD
 			transform.position = new Vector3(Mathf.Clamp(target.position.x,Xmin,Xmax) ,Mathf.Clamp(target.position.y + cameraHeight,Ymin,Ymax), target.position.z - cameraDistance);
 			//if rumbling
 			if(rumbleTimer > 0.0f){
@@ -28,6 +35,11 @@ public class CameraScript : MonoBehaviour {
 				transform.position = new Vector3(Mathf.Clamp(transform.position.x,Xmin,Xmax) ,Mathf.Clamp(transform.position.y,Ymin,Ymax),transform.position.z);//stay in bounds
 				rumbleTimer -= Time.deltaTime;//subtract timer
 			}
+=======
+			
+			transform.position = Vector3.Lerp(transform.position , new Vector3(target.position.x , target.position.y + cameraHeight ,
+				target.position.z - cameraDistance), cameraSpeed);
+>>>>>>> a lot of stuff
 		}
 	}
 
