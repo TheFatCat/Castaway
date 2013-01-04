@@ -43,9 +43,9 @@ public class Animator : MonoBehaviour {
 		this.loop = loop;
 		
 		if(loop && currentY == newAnimation.y   && currentX >= newAnimation.startX  && currentX <= newAnimation.endX){
-		
+			currentX = newAnimation.startX;
+			currentY = newAnimation.y;
 		}
-		currentX = newAnimation.startX;
-		currentY = newAnimation.y;
+		
 	}
 }
