@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerController2 : MonoBehaviour {
+	/*
 	CollisionFlags collisionFlags;
 	CharacterController controller;
 	float currentMaxSpeed;
@@ -94,4 +95,5 @@ public class PlayerController2 : MonoBehaviour {
 	public bool  IsGrounded (){
 		return (collisionFlags & CollisionFlags.CollidedBelow) != 0;
 	}
+	*/
 }

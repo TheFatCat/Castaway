@@ -96,7 +96,7 @@ void  Update ()
 			h = 0;
 			v = 0;
 		}
-		PlayerSpriteAnimate overAnimator = overlay.GetComponent<PlayerSpriteAnimate> ();
+		//PlayerSpriteAnimate overAnimator = overlay.GetComponent<PlayerSpriteAnimate> ();
 		PlayerSpriteAnimate animator = GetComponent<PlayerSpriteAnimate> ();
 	
 		grounded = IsGrounded();

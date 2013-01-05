@@ -7,11 +7,11 @@ public class TemporaryFallTrigger : MonoBehaviour {
 	private float curSpeed = 0.0f;
 	public Transform fall;
 	public Transform particleHost;
-	public GameObject fallingCube;
-	private bool beganCountdown = false;
+	public Transform fallingCube;
+	//private bool beganCountdown = false;
 	public float timer = 3;
 	public float rumblePower = 40;
-	private PlayerController controller;
+	//private PlayerController controller;
 	// Use this for initialization
 	void Start () {
 	
@@ -41,14 +41,14 @@ public class TemporaryFallTrigger : MonoBehaviour {
 	void OnTriggerEnter (Collider other){
 		if (other.CompareTag ("Player")) {
 			Camera.mainCamera.GetComponent<CameraScript>().Rumble(rumblePower, timer);
-			Destroy(fallingCube);	//destroy the platform
+			Destroy(fallingCube.gameObject);	//destroy the platform
 			curSpeed = fallSpeed;	//make particles move
 			ParticleSystem ps = particleHost.GetComponent<ParticleSystem>();
 			ps.Play(true);	//enable particles
 			SynchronizedAnimate sa = fall.GetComponent<SynchronizedAnimate>();
 			sa.SetEnabled(true);
-			beganCountdown = true;
-			controller = other.GetComponent<PlayerController>();
+			//beganCountdown = true;
+			//controller = other.GetComponent<PlayerController>();
 			//controller.frozen = true;
 		}
 	}

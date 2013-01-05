@@ -5,7 +5,7 @@ public class Status :MonoBehaviour {
 	
 	private bool invincible = false; // make the object invincible from damage
 	[SerializeField] int health = 0;
-	[SerializeField] int mana = 0;
+	//[SerializeField] int mana = 0;
 	[SerializeField] Color takeDamageColor = Color.red; // when object takes damage what should the object flash in color
 	//public MonoBehaviour controllerScript;
 	private float invincibleTimer = 0; // for keeping track of how long the object should be invincible

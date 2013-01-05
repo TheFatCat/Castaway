@@ -8,13 +8,13 @@ public class SynchronizedAnimate : MonoBehaviour {
 	public float tilesizeY = 60.0f;
 	public float offsetX = 0.0f;
 	public float offsetY = 0.0f;
-	public bool enabled = true;
+	public bool isEnabled = true;
 	public bool oneshot = false;
 	
 	
 	void Update ()
 	{
-		if (enabled) {
+		if (isEnabled) {
 			timer += Time.deltaTime;
 			if (timer >= animationdelay) {
 				timer = 0.0f;
@@ -27,7 +27,7 @@ public class SynchronizedAnimate : MonoBehaviour {
 					if (offsetY <= 0.0f) {
 						//we exceeded bounds, if we are oneshot
 						if (oneshot) {
-							enabled = false;
+							isEnabled = false;
 							offsetX = 1.0f-tilesizeX;
 							offsetY = 0.0f;
 						}
@@ -42,7 +42,7 @@ public class SynchronizedAnimate : MonoBehaviour {
 	}
 
 	public void SetEnabled(bool state){
-		enabled = state;
+		isEnabled = state;
 	}
 
 	public void SetOneShot (bool state)

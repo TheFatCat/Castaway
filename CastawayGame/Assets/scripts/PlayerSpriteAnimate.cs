@@ -25,12 +25,12 @@ public int Xmin = 0;
 public int Xmax = 1;
 public int Yframe = 1;
 
-animationMode CurMode= animationMode.Wait;
+//animationMode CurMode= animationMode.Wait;
 public animationType CurType= animationType.IdleLeft;
 //FIXME_VAR_TYPE NewType= animationType.IdleLeft;
 public animationType FallbackType= animationType.IdleLeft;
 public wrap CurWrap= wrap.Loop;
-bool  done =  false;
+//bool  done =  false;
 
 void  Update (){
 	timer += Time.deltaTime;	//add to timer
@@ -38,7 +38,7 @@ void  Update (){
 		timer = 0.0f;
 		//advance one frame
 		offsetX += tilingX;
-		done = false;
+		//done = false;
 		//check if out of loop
 		if(offsetX < Xmin * tilingX){//too early
 			offsetX = Xmin * tilingX;	
