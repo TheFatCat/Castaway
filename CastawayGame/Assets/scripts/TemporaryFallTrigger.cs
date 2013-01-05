@@ -19,6 +19,7 @@ public class TemporaryFallTrigger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		/*
 		if(beganCountdown){
 			timer -= Time.deltaTime;
 			if(timer < 0){
@@ -32,6 +33,7 @@ public class TemporaryFallTrigger : MonoBehaviour {
 				sa.SetEnabled(true);
 			}
 		}
+		*/
 		particleHost.position -= new Vector3(0,curSpeed * Time.deltaTime,0);
 	
 	}
@@ -39,9 +41,15 @@ public class TemporaryFallTrigger : MonoBehaviour {
 	void OnTriggerEnter (Collider other){
 		if (other.CompareTag ("Player")) {
 			Camera.mainCamera.GetComponent<CameraScript>().Rumble(rumblePower, timer);
+			Destroy(fallingCube);	//destroy the platform
+			curSpeed = fallSpeed;	//make particles move
+			ParticleSystem ps = particleHost.GetComponent<ParticleSystem>();
+			ps.Play(true);	//enable particles
+			SynchronizedAnimate sa = fall.GetComponent<SynchronizedAnimate>();
+			sa.SetEnabled(true);
 			beganCountdown = true;
 			controller = other.GetComponent<PlayerController>();
-			controller.frozen = true;
+			//controller.frozen = true;
 		}
 	}
 }
