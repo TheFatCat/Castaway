@@ -40,6 +40,7 @@ public class TemporaryFallTrigger : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other){
 		if (other.CompareTag ("Player")) {
+			Destroy(gameObject);
 			Camera.mainCamera.GetComponent<CameraScript>().Rumble(rumblePower, timer);
 			Destroy(fallingCube.gameObject);	//destroy the platform
 			curSpeed = fallSpeed;	//make particles move
