@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class Inventory : MonoBehaviour {
+public class InventoryOld : MonoBehaviour {
 	int weaponNum = 0;//current weapon player is using
 	
 	

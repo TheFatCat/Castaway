@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 public class WeaponImplementer : MonoBehaviour{
+	public bool canShoot = true;
 	/*
 	public Texture weaponIcon;
 	public Texture uniqueSpriteSheet;
@@ -17,7 +18,7 @@ public class WeaponImplementer : MonoBehaviour{
 	
 	public void  fire ( Vector3 bulletLocation ,  Vector3 bulletDirection  ){
 		
-			if(currentWeapon.ammo > 0){
+			if(currentWeapon.ammo > 0 && canShoot){
 				currentWeapon.ammo --;
 				bulletLocation.x *= -(transform.localScale.x/Mathf.Abs(transform.localScale.x));//change for direction
 				Rigidbody bulletClone= Instantiate(currentWeapon.bullet,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;//instantiate bullet

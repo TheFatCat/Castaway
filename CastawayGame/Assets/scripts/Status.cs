@@ -5,6 +5,7 @@ public class Status :MonoBehaviour {
 	
 	private bool invincible = false; // make the object invincible from damage
 	[SerializeField] int health = 0;
+	[SerializeField] int maxHeath = 100;
 	//[SerializeField] int mana = 0;
 	[SerializeField] Color takeDamageColor = Color.red; // when object takes damage what should the object flash in color
 	//public MonoBehaviour controllerScript;
@@ -31,6 +32,10 @@ public class Status :MonoBehaviour {
 		}
 	}
 	public void substractHealth(int damage){
+		
+		if(damage < 0){
+			return;
+		}
 		if(! invincible){
 			renderer.material.color = takeDamageColor;
 			flashTimer = 0;
@@ -40,7 +45,25 @@ public class Status :MonoBehaviour {
 			}
 		}
 	}
+	
+	public void addHealth(int addedHealth){
+		if(addedHealth < 0){
+			return;
+		}
+		health += addedHealth;
 		
+		health = Mathf.Clamp(health, 0, maxHeath);
+	}
+	
+	
+	public void increaseMaxHealth(int increase){
+		if(increase < 0){
+			return;
+		}
+		
+		maxHeath += increase;
+	}
+	
 	public void die(){
 		Debug.Log(transform.name + " just died");	
 		Destroy(gameObject);
