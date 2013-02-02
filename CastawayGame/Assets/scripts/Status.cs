@@ -47,6 +47,14 @@ public class Status :MonoBehaviour {
 		}
 	}
 	
+	
+	public int getHealth(){
+		return health;
+	}
+	
+	public int getMaxHealth(){
+		return maxHeath;
+	}
 	public void addHealth(int addedHealth){
 		if(addedHealth < 0){
 			return;
@@ -67,9 +75,11 @@ public class Status :MonoBehaviour {
 	
 	public void die(){
 		Debug.Log(transform.name + " just died");	
-		Destroy(gameObject);
+		if(shouldDestroyOnDeath){
+			Destroy(gameObject);
+		}
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
-		//unimplemented	
+		
 	}
 	public bool isInvincible(){
 		return invincible;
