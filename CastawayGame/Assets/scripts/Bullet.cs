@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		// if the object has a status take health from the status and destroy the bullet
 		Status status = collision.transform.GetComponent<Status>();
-		if(status != null){
+		if(status != null && !collision.transform.tag.Equals("Player")){
 			status.substractHealth(damage);
 			//we hit an enemy
 			Instantiate(damageHit,transform.position,transform.rotation);
