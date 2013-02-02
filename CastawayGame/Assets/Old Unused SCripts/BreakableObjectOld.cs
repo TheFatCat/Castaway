@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class BreakableObject : MonoBehaviour {
+public class BreakableObjectOld : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
