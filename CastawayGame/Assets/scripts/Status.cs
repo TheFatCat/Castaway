@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 // this is a status object that all objects 
 public class Status :MonoBehaviour {
+	[SerializeField] private GameObject deathPrefab ;
 	
 	private bool invincible = false; // make the object invincible from damage
 	[SerializeField] int health = 0;
@@ -67,6 +68,7 @@ public class Status :MonoBehaviour {
 	public void die(){
 		Debug.Log(transform.name + " just died");	
 		Destroy(gameObject);
+		Instantiate(deathPrefab,transform.position, transform.rotation);
 		//unimplemented	
 	}
 	public bool isInvincible(){
