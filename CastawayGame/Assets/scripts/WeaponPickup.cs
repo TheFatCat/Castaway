@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class WeaponPickup : MonoBehaviour {
+	public Transform pickupFlash;
 	void Start(){
 		collider.isTrigger = true;
 	}
@@ -30,6 +31,8 @@ public class WeaponPickup : MonoBehaviour {
 		if(canBePickedUp && Input.GetAxisRaw("Vertical") < -0.5){
 			// add the weapon to the players array of weapons
 			implementer.addWeapon(weapon);
+			//instantiate the pickup prefab
+			Instantiate(pickupFlash,transform.position,transform.rotation);
 			//Destroy the leftover object
 			Destroy(gameObject);
 			
