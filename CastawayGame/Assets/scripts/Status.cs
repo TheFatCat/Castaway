@@ -3,7 +3,7 @@ using System.Collections;
 // this is a status object that all objects 
 public class Status :MonoBehaviour {
 	[SerializeField] private GameObject deathPrefab ;
-	
+	[SerializeField] private bool shouldDestroyOnDeath = true;
 	private bool invincible = false; // make the object invincible from damage
 	[SerializeField] int health = 0;
 	[SerializeField] int maxHeath = 100;
@@ -68,7 +68,7 @@ public class Status :MonoBehaviour {
 	public void die(){
 		Debug.Log(transform.name + " just died");	
 		Destroy(gameObject);
-		Instantiate(deathPrefab,transform.position, transform.rotation);
+		Instantiate(deathPrefab,transform.position, Quaternion.identity);
 		//unimplemented	
 	}
 	public bool isInvincible(){
