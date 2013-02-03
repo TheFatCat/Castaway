@@ -34,9 +34,13 @@ public class WeaponImplementer : MonoBehaviour{
 		}
 		
 		weapons.Add(weapon);
+		//allow us to shoot. redundant, but who cares
+		PlayerController controller = GetComponent<PlayerController>();
+		controller.SetCanShoot(true);
 		//if this is the only weapon we have
 		if(weapons.Count == 1){
 			changeCurrentWeaponTo(weapon);
+
 		}
 		
 	}
