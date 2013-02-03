@@ -16,15 +16,38 @@ public class WeaponImplementer : MonoBehaviour{
 	[SerializeField] private Weapon currentWeapon;
 	private double timer = 0.0; // to keep track of rate of fire
 	
-	public void  fire ( Vector3 bulletLocation ,  Vector3 bulletDirection  ){
+	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		
 			if(currentWeapon.ammo > 0 && canShoot){
 				currentWeapon.ammo --;
 				bulletLocation.x *= -(transform.localScale.x/Mathf.Abs(transform.localScale.x));//change for direction
+				bulletLocation.z -= 0.3f;	//make sure bullets are in front of player
 				Rigidbody bulletClone= Instantiate(currentWeapon.bullet,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;//instantiate bullet
-				Instantiate(currentWeapon.muzzleFlash,transform.position + bulletLocation, Quaternion.identity);//instantiate muzzle flash
-			
-				bulletClone.velocity = bulletDirection * (float)(currentWeapon.bulletSpeed);
+
+				//instantiate muzzle flash based on direction
+				if(bulletDirection.x == 0){		//looking up or down
+					if(bulletDirection.y > 0.5){//looking up
+						Rigidbody muzzleFlash = Instantiate(currentWeapon.muzzleFlashUp,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;
+						muzzleFlash.velocity = playerVelocity;
+					} else {					//looking down
+						Rigidbody muzzleFlash = Instantiate(currentWeapon.muzzleFlashDown,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;
+						muzzleFlash.velocity = playerVelocity;
+					}
+				} else {						//looking left or right
+					if(bulletDirection.x > 0.5){//looking right
+						Rigidbody muzzleFlash = Instantiate(currentWeapon.muzzleFlashRight,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;
+						muzzleFlash.velocity = playerVelocity;
+					} else {					//looking left
+						Rigidbody muzzleFlash = Instantiate(currentWeapon.muzzleFlashLeft,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;
+						muzzleFlash.velocity = playerVelocity;
+					}
+				}
+				
+				
+				bulletClone.velocity = (bulletDirection * (float)(currentWeapon.bulletSpeed));
+				Vector3 bulletRotation = new Vector3(-bulletDirection.y,bulletDirection.x,0);	//rotate vector by 90 degrees (quaternions are stupid)
+				bulletClone.rotation = Quaternion.LookRotation(Vector3.forward,bulletRotation);	//set the rotation of the new vector
+				
 			}
 	}
 	public void addWeapon(Weapon weapon){

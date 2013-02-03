@@ -379,7 +379,7 @@ public void  fire (){
 			shooting = true;
 			throwing = false;
 			shootTimer = 0.0f;
-			weapon.fire (muzzleLocation, muzzleDirection);
+			weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
 		}
 }
 
