@@ -26,7 +26,9 @@ public class HUD : MonoBehaviour {
 		GUI.DrawTexture(getRect (70, 0, 175  , 65 ), healthBarBackground);
 		GUI.DrawTexture( getRect(75,5, 165 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 55 ),healthBar);
 		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
+		
 		GUI.DrawTexture(getRect(375, 0 , 50, 50) , weaponImplementer.getCurrentWeapon().weaponIcon);
+		
 	}
 	
 	
