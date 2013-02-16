@@ -38,7 +38,7 @@ public class SeagullAI : MonoBehaviour {
 			//animator.setAnimation(dive, true);
 		
 		}
-		controller.setXSpeed(xSpeed * xSpeedScale );
-		controller.setYSpeed(ySpeed * ySpeedScale);	
+		controller.setXSpeed(xSpeed * xSpeedScale  );
+		controller.setYSpeed(ySpeed * ySpeedScale );	
 	}
 }

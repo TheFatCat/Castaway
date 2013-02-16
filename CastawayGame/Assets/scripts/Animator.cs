@@ -11,6 +11,8 @@ public class Animator : MonoBehaviour {
 	[SerializeField] private double tileX; // tiling for current set of animations
 	[SerializeField] private double tileY;
 	private float timeSinceLastFrame = 0; // for keeping time with frames
+	
+	private bool flashingFrame = false; // if is flashing frame don't do other animations
 	// Use this for initialization
 	void Start () {
 		
@@ -18,7 +20,9 @@ public class Animator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		timeSinceLastFrame += Time.deltaTime;
+		if(!flashingFrame){
+			timeSinceLastFrame += Time.deltaTime;
+		}
 		if(timeSinceLastFrame > currentAnimation.timePerFrame){
 			timeSinceLastFrame = 0;
 			currentX ++;
@@ -44,6 +48,23 @@ public class Animator : MonoBehaviour {
 	}
 	
 	
+	//start flash frame from a Animation
+	public void flashFrame(Animation frame){
+		flashingFrame = true;
+		float x = (float)offsetX + frame.startX * (float)tileX;
+			
+		float y = (float) offsetY - frame.y * (float)tileY - (float)  tileY ;
+		renderer.material.mainTextureOffset = new Vector2(x,y); 
+	}
+	
+	// end the flashframe and set the renderer back to the normal offset
+	public void endFlashFrame(){
+		flashingFrame = false;
+		float x = (float)offsetX + currentX * (float)tileX;
+			
+		float y = (float) offsetY - currentY * (float)tileY - (float)  tileY ;
+		renderer.material.mainTextureOffset = new Vector2(x,y); 
+	}
 	public void setAnimation(Animation newAnimation, bool loop){
 		currentAnimation = newAnimation;
 		this.loop = loop;
