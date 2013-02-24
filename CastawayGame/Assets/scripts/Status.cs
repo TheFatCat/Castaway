@@ -27,8 +27,7 @@ public class Status :MonoBehaviour {
 	void Update(){
 		if(flashTimer < 0.2f){
 			flashTimer += Time.deltaTime;
-			
-			if(flashTimer > 0.2f && animator != null){
+			if(flashTimer > 0.2f){
 				animator.endFlashFrame();
 				//renderer.material.color = Color.white; // after a tenth of a second switch back to normal color
 			}
@@ -51,9 +50,7 @@ public class Status :MonoBehaviour {
 			return;
 		}
 		if(! invincible){
-			if(animator != null){
-				animator.flashFrame(hitFrame);
-			}
+			animator.flashFrame(hitFrame);
 			//renderer.material.color = takeDamageColor;
 			flashTimer = 0;
 			health -= damage;
