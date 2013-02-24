@@ -20,7 +20,7 @@ public class SeagullAI : MonoBehaviour {
 	void Update () {
 		float time = Time.time;
 		float xSpeed = -1 * Mathf.Cos(0.5f * time);
-		float ySpeed = -1 * Mathf.Cos(time) * (0.5f * Random.value + 0.5f);
+		float ySpeed = -1 * Mathf.Cos(time) ;
 		Debug.Log(xSpeed);
 		if(xSpeed > 0 ){
 			transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.lossyScale.y, transform.lossyScale.z);

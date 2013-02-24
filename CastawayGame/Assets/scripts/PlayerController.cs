@@ -7,6 +7,7 @@ using System.Collections;
 [RequireComponent(typeof (Status))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
+private static  Transform player ;	
 public bool frozen = false;
 private float zPosition = 0.0f;
 public double speed = 1.0;
@@ -55,11 +56,16 @@ public void takeDamage(int damage){
 	}	
 }
 void  Start (){
+	player = transform;	
 	status = GetComponent<Status>();	
 	zPosition = transform.position.z;
 	controller = GetComponent<CharacterController>();
 }
 
+public static Transform getPlayer(){
+		return player;
+}
+	
 int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 if facing left or right
 	double y = Input.GetAxisRaw("Vertical");	
 	if(y > 0.25){
