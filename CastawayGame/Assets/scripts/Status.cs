@@ -50,7 +50,9 @@ public class Status :MonoBehaviour {
 			return;
 		}
 		if(! invincible){
-			animator.flashFrame(hitFrame);
+			if(animator != null){
+				animator.flashFrame(hitFrame);
+			}
 			//renderer.material.color = takeDamageColor;
 			flashTimer = 0;
 			health -= damage;
