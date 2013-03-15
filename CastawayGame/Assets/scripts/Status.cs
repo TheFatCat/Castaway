@@ -15,8 +15,9 @@ public class Status :MonoBehaviour {
 	//[SerializeField] Color takeDamageColor = Color.red; // when object takes damage what should the object flash in color
 	//public MonoBehaviour controllerScript;
 	private float invincibleTimer = 0; // for keeping track of how long the object should be invincible
-	private float invincibleTime = 0;
+	public float invincibleTime = 0;
 	private float flashTimer = 0.5f; // for keeping track of how long the object should flash
+	public float flashTime = 0.25f;
 	
 	
 	void Start(){
@@ -25,10 +26,12 @@ public class Status :MonoBehaviour {
 	
 	
 	void Update(){
-		if(flashTimer < 0.2f){
+		if(flashTimer < flashTime){
 			flashTimer += Time.deltaTime;
-			if(flashTimer > 0.2f){
-				animator.endFlashFrame();
+			if(flashTimer > flashTime){
+				if(animator != null){
+					animator.endFlashFrame();
+				}
 				//renderer.material.color = Color.white; // after a tenth of a second switch back to normal color
 			}
 		}
