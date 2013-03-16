@@ -24,7 +24,7 @@ public class SeagullAI : MonoBehaviour {
 		//Debug.Log(controller.getXSpeed());
 		timeSinceTurned += Time.deltaTime;
 		
-		controller.setYSpeed(Mathf.Sin(Time.time));
+		controller.setYSpeed( 3 * Mathf.Sin( 3 * Time.time));
 		if(timeSinceTurned > turnWait){
 			timeSinceTurned = 0;
 			turnWait = Random.Range(5,20);

@@ -100,11 +100,11 @@ public class Status :MonoBehaviour {
 		}
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
 		//respawn the player after 2 seconds
-		/*
+		
 		if(transform == PlayerController.getPlayer()){
-			yield return new WaitForSeconds(2);
+			health = (int)(.8 * maxHeath);
 			transform.position = PlayerSpawn.getPlayerSpawn().position;
-		}*/
+		}
 	}
 	public bool isInvincible(){
 		return invincible;

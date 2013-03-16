@@ -23,11 +23,12 @@ public class HUD : MonoBehaviour {
 	
 	void OnGUI(){
 		GUI.DrawTexture(getRect(0,0, 65 , 65), healthIcon);
-		GUI.DrawTexture(getRect (70, 0, 175  , 65 ), healthBarBackground);
-		GUI.DrawTexture( getRect(75,5, 165 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 55 ),healthBar);
+		
+		GUI.DrawTexture( getRect(75,5, 158 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 26 ),healthBar);
+		GUI.DrawTexture(getRect (70, 0, 162  , 34 ), healthBarBackground);
 		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
 		
-		//GUI.DrawTexture(getRect(375, 0 , 50, 50) , weaponImplementer.getCurrentWeapon().weaponIcon);
+		GUI.DrawTexture(getRect(375, 0 , 50, 50) , weaponImplementer.getCurrentWeapon().weaponIcon);
 		
 	}
 	
