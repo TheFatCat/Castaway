@@ -5,10 +5,19 @@ using System.Collections;
 public class EnemyController : MonoBehaviour {
 	public float gravityAcceleration ;
 	public int touchDamage = 0; // damage done each time enemy touches player
-	Vector3 velocity;
+	[SerializeField]Vector3 velocity;
 	private CollisionFlags collisionFlags;
 	CharacterController controller ;
 	private float zPosition = 0;
+	
+	static bool frozen;
+	public static void freezeAllEnemies(){
+		frozen = true;
+	}
+	
+	public static void unfreezeAllEnemies(){
+		frozen = false;
+	}
 	void Start(){
 		zPosition = transform.position.z;
 		controller = GetComponent<CharacterController>();
@@ -23,18 +32,19 @@ public class EnemyController : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		
-		// make sure the crab stays on the right zposition
-		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
-		
-		// move the crab
-		collisionFlags = controller.Move(velocity * Time.deltaTime);
-		if(IsGrounded()){
-			setYSpeed(-.05f); // need a very small y velocity to keep the crab grounded every frame
-		}
-		
-		else{ // accelerate downward
-			setYSpeed(getYSpeed() - gravityAcceleration * Time.deltaTime);
+		if(! frozen){
+			// make sure the crab stays on the right zposition
+			transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
+			
+			// move the crab
+			collisionFlags = controller.Move(velocity * Time.deltaTime);
+			if(IsGrounded()){
+				setYSpeed(-.05f); // need a very small y velocity to keep the crab grounded every frame
+			}
+			
+			else{ // accelerate downward
+				setYSpeed(getYSpeed() - gravityAcceleration * Time.deltaTime);
+			}
 		}
 	}
 	public float getXSpeed(){

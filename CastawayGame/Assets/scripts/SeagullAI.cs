@@ -12,17 +12,33 @@ public class SeagullAI : MonoBehaviour {
 	Animator animator;
 	// Use this for initialization
 	void Start () {
+		
 		controller = GetComponent<EnemyController>();
 		animator = GetComponent<Animator>();
+		controller.setXSpeed(xSpeedScale);
 	}
-	
+	private float timeSinceTurned = 0;
+	private float turnWait = 5;
 	// Update is called once per frame
 	void Update () {
-		float time = Time.time;
-		float xSpeed = -1 * Mathf.Cos(0.5f * time);
-		float ySpeed = -1 * Mathf.Cos(time) ;
-		Debug.Log(xSpeed);
-		if(xSpeed > 0 ){
+		//Debug.Log(controller.getXSpeed());
+		timeSinceTurned += Time.deltaTime;
+		
+		controller.setYSpeed(Mathf.Sin(Time.time));
+		if(timeSinceTurned > turnWait){
+			timeSinceTurned = 0;
+			turnWait = Random.Range(5,20);
+			if(controller.getXSpeed() > 0){
+				controller.setXSpeed(-1 * xSpeedScale);
+			}
+			else{
+				controller.setXSpeed( xSpeedScale);
+
+			}
+		}
+		
+		
+		if(controller.getXSpeed() > 0 ){
 			transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.lossyScale.y, transform.lossyScale.z);
 				
 		}
@@ -30,7 +46,7 @@ public class SeagullAI : MonoBehaviour {
 			transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1, transform.lossyScale.y, transform.lossyScale.z);
 		}
 		
-		
+		/*
 		if(ySpeed > 0 ){
 			//animator.setAnimation(soar, true);
 		}
@@ -38,7 +54,9 @@ public class SeagullAI : MonoBehaviour {
 			//animator.setAnimation(dive, true);
 		
 		}
+		
 		controller.setXSpeed(xSpeed * xSpeedScale  );
-		controller.setYSpeed(ySpeed * ySpeedScale );	
+		controller.setYSpeed(ySpeed * ySpeedScale );
+		*/	
 	}
 }

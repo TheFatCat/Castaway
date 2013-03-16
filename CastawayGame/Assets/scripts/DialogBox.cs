@@ -15,8 +15,17 @@ public class DialogBox : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		text = dialogs[0].dialog;
+		freezeWorld();
 	}
 	
+	void freezeWorld(){
+		PlayerController.getPlayer().GetComponent<PlayerController>().frozen  = true;
+		EnemyController.freezeAllEnemies();
+	}
+	void unfreezeWorld(){
+		PlayerController.getPlayer().GetComponent<PlayerController>().frozen  = false;
+		EnemyController.unfreezeAllEnemies();
+	}
 	// Update is called once per frame
 	void Update () {
 		if(textLengthShown < text.Length){
@@ -36,6 +45,7 @@ public class DialogBox : MonoBehaviour {
 			textLengthShown = 0;
 			dialogNum ++;
 			if(dialogNum >= dialogs.Length){
+				unfreezeWorld();
 				Destroy(this);
 			}
 			else{
