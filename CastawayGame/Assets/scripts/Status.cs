@@ -93,17 +93,18 @@ public class Status :MonoBehaviour {
 		maxHeath += increase;
 	}
 	
-	public IEnumerator die(){
+	public void die(){
 		Debug.Log(transform.name + " just died");	
 		if(shouldDestroyOnDeath){
 			Destroy(gameObject);
 		}
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
 		//respawn the player after 2 seconds
+		/*
 		if(transform == PlayerController.getPlayer()){
 			yield return new WaitForSeconds(2);
 			transform.position = PlayerSpawn.getPlayerSpawn().position;
-		}
+		}*/
 	}
 	public bool isInvincible(){
 		return invincible;

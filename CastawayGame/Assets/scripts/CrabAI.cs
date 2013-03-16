@@ -47,7 +47,7 @@ public class CrabAI : MonoBehaviour {
 	
 	
 	void chooseRandomAction(){
-		Debug.Log("changed action");
+		//Debug.Log("changed action");
 		// pick a random action idle moveleft or moveright
 		switch(Random.Range(0,3)){
 		case 0 :
