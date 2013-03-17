@@ -4,19 +4,19 @@ using System.Collections;
 
 [RequireComponent (typeof(Animator))]
 public class Status :MonoBehaviour {
-	Animator animator;
-	[SerializeField] Animation hitFrame; // animation frame when object is hit
-	[SerializeField] private GameObject deathPrefab ;
-	[SerializeField] private bool shouldDestroyOnDeath = true;
-	private bool invincible = false; // make the object invincible from damage
-	[SerializeField] int health = 0;
-	[SerializeField] int maxHeath = 100;
+	protected Animator animator;
+	[SerializeField] protected Animation hitFrame; // animation frame when object is hit
+	[SerializeField] protected  GameObject deathPrefab ;
+	[SerializeField] protected bool shouldDestroyOnDeath = true;
+	protected bool invincible = false; // make the object invincible from damage
+	[SerializeField] protected int health = 0;
+	[SerializeField] protected int maxHeath = 100;
 	//[SerializeField] int mana = 0;
 	//[SerializeField] Color takeDamageColor = Color.red; // when object takes damage what should the object flash in color
 	//public MonoBehaviour controllerScript;
-	private float invincibleTimer = 0; // for keeping track of how long the object should be invincible
+	protected float invincibleTimer = 0; // for keeping track of how long the object should be invincible
 	public float invincibleTime = 0;
-	private float flashTimer = 0.5f; // for keeping track of how long the object should flash
+	protected float flashTimer = 0.5f; // for keeping track of how long the object should flash
 	public float flashTime = 0.25f;
 	
 	

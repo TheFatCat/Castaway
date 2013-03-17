@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof (CharacterController))]
 [RequireComponent(typeof (PlayerSpriteAnimate))]
 [RequireComponent(typeof (WeaponImplementer))]
-[RequireComponent(typeof (Status))]
+[RequireComponent(typeof (PlayerStatus))]
 public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
 private static  Transform player ;	
