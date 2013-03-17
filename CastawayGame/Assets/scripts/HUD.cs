@@ -9,12 +9,16 @@ public class HUD : MonoBehaviour {
 	[SerializeField] private Vector2 scaleImage = new Vector2(1,1);
 	private Status playerStatus;
 	private WeaponImplementer weaponImplementer;
+	DrawBars drawBars ;
 	// Use this for initialization
-	
+	void Start(){
+		drawBars = GetComponent<DrawBars>();	
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		scaleImage.x = (Screen.width  - (2 * drawBars.getBarWidth()))/ 800f;
+		scaleImage.y = Screen.height / 600f;
 	}
 	
 	void OnGUI(){
@@ -34,6 +38,6 @@ public class HUD : MonoBehaviour {
 	
 	
 	Rect getRect(float left, float top, float width, float height){
-		return new Rect(scaleImage.x * left, scaleImage.y * top, scaleImage.x * width , scaleImage.y * height);
+		return new Rect(drawBars.getBarWidth() + scaleImage.x * left, scaleImage.y * top, scaleImage.x * width , scaleImage.y * height);
 	}
 }
