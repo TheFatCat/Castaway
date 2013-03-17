@@ -10,13 +10,37 @@ public class HUD : MonoBehaviour {
 	private Status playerStatus;
 	private WeaponImplementer weaponImplementer;
 	DrawBars drawBars ;
+	
+	//For pulling the hud up or down when we want to hide it
+	float pullupScale = 0;
+	bool pullUp = false;
+	//***************************************
+	
+	
+	
 	// Use this for initialization
 	void Start(){
 		drawBars = GetComponent<DrawBars>();	
 	}
 	
+	
+	public void hideHUD(){
+		pullUp = true;
+	}
+	public void unhideHUD(){
+		pullUp = false;
+	}
 	// Update is called once per frame
 	void Update () {
+		
+		
+		
+		if(pullUp){
+			pullupScale = Mathf.Lerp(pullupScale, 1,0.1f);
+		}
+		else{
+			pullupScale = Mathf.Lerp(pullupScale, 0,0.1f);
+		}
 		scaleImage.x = (Screen.width  - (2 * drawBars.getBarWidth()))/ 800f;
 		scaleImage.y = Screen.height / 600f;
 	}
@@ -38,6 +62,6 @@ public class HUD : MonoBehaviour {
 	
 	
 	Rect getRect(float left, float top, float width, float height){
-		return new Rect(drawBars.getBarWidth() + scaleImage.x * left, scaleImage.y * top, scaleImage.x * width , scaleImage.y * height);
+		return new Rect(drawBars.getBarWidth() + scaleImage.x * left, scaleImage.y * top - pullupScale * (scaleImage.y * (top + height)), scaleImage.x * width , scaleImage.y * height);
 	}
 }
