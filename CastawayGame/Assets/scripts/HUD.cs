@@ -10,10 +10,7 @@ public class HUD : MonoBehaviour {
 	private Status playerStatus;
 	private WeaponImplementer weaponImplementer;
 	// Use this for initialization
-	void Start () {
-		playerStatus = PlayerController.getPlayer().GetComponent<Status>();
-		weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();
-	}
+	
 	
 	// Update is called once per frame
 	void Update () {
