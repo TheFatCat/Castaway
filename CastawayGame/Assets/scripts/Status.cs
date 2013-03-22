@@ -7,6 +7,7 @@ public class Status :MonoBehaviour {
 	protected Animator animator;
 	[SerializeField] protected Animation hitFrame; // animation frame when object is hit
 	[SerializeField] protected  GameObject deathPrefab ;
+	[SerializeField] protected  GameObject hitPrefab ;
 	[SerializeField] protected bool shouldDestroyOnDeath = true;
 	protected bool invincible = false; // make the object invincible from damage
 	[SerializeField] protected int health = 0;
@@ -57,6 +58,10 @@ public class Status :MonoBehaviour {
 		if(! invincible){
 			if(animator != null){
 				animator.flashFrame(hitFrame);
+			}
+			//instantiate the hit prefab
+			if(hitPrefab != null){
+				Instantiate(hitPrefab,transform.position, Quaternion.identity);
 			}
 
 			flashTimer = 0;
