@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour {
 	[SerializeField] private Texture healthIcon;
 	[SerializeField] private Vector2 scaleImage = new Vector2(1,1);
 	private PlayerStatus playerStatus;
+	private Inventory inventory;
 	private WeaponImplementer weaponImplementer;
 	DrawBars drawBars ;
 	
@@ -20,7 +21,13 @@ public class HUD : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start(){
-		drawBars = GetComponent<DrawBars>();	
+		while(PlayerController.getPlayer() == null){
+		}
+		inventory = PlayerController.getPlayer().GetComponent<Inventory>();
+		playerStatus = PlayerController.getPlayer().GetComponent<PlayerStatus>();
+		weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
+		drawBars = GetComponent<DrawBars>();
+		
 	}
 	
 	
@@ -47,14 +54,15 @@ public class HUD : MonoBehaviour {
 	
 	void OnGUI(){
 		if(playerStatus == null){
-			playerStatus = PlayerController.getPlayer().GetComponent<PlayerStatus>();
-			weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
+			
+			
 		}
 		GUI.DrawTexture(getRect(0,0, 65 , 65), healthIcon);
 		
 		GUI.DrawTexture( getRect(75,5, 158 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 26 ),healthBar);
 		GUI.DrawTexture(getRect (70, 0, 162  , 34 ), healthBarBackground);
 		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
+		GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
 		/*
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){
 		}*/

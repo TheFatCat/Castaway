@@ -31,6 +31,10 @@ public class Inventory : MonoBehaviour {
 		coins -= val;
 	}
 	
+	public int getCoins(){
+		return coins;
+	}
+	
 	
 	
 	//GUI
