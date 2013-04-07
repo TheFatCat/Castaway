@@ -16,6 +16,10 @@ public class WeaponImplementer : MonoBehaviour{
 	[SerializeField] private Weapon currentWeapon;
 	private double timer = 0.0; // to keep track of rate of fire
 	
+	
+	public List<Weapon> getWeapons(){
+		return weapons;
+	}
 	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		
 			if(currentWeapon.ammo > 0 && canShoot){
