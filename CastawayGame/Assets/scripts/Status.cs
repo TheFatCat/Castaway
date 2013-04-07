@@ -4,7 +4,7 @@ using System.Collections;
 
 [RequireComponent (typeof(Animator))]
 public class Status :MonoBehaviour {
-	protected Animator animator;
+	private Animator animator;
 	[SerializeField] protected Animation hitFrame; // animation frame when object is hit
 	[SerializeField] protected  GameObject deathPrefab ;
 	[SerializeField] protected  GameObject hitPrefab ;
@@ -19,6 +19,8 @@ public class Status :MonoBehaviour {
 	public float invincibleTime = 0;
 	protected float flashTimer = 0.5f; // for keeping track of how long the object should flash
 	public float flashTime = 0.25f;
+
+
 	
 	
 	void Start(){
@@ -27,7 +29,8 @@ public class Status :MonoBehaviour {
 	
 	
 	void Update(){
-		if(flashTimer < flashTime){
+		//runs once every frame
+		if(flashTimer < flashTime){	//for enemies that need to flash when hit
 			flashTimer += Time.deltaTime;
 
 			if(flashTimer > flashTime){
@@ -38,7 +41,7 @@ public class Status :MonoBehaviour {
 				//renderer.material.color = Color.white; // after a tenth of a second switch back to normal color
 			}
 		}
-		if(invincible){
+		if(invincible){	//invincible stuff
 			
 			invincibleTimer += Time.deltaTime;
 			if(invincibleTimer > invincibleTime){
@@ -50,8 +53,8 @@ public class Status :MonoBehaviour {
 			
 		}
 	}
-	public void substractHealth(int damage){
-		
+	public virtual void substractHealth(int damage){
+
 		if(damage < 0){
 			return;
 		}
@@ -98,18 +101,12 @@ public class Status :MonoBehaviour {
 		maxHeath += increase;
 	}
 	
-	public void die(){
+	public virtual void die(){
 		Debug.Log(transform.name + " just died");	
 		if(shouldDestroyOnDeath){
 			Destroy(gameObject);
 		}
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
-		//respawn the player after 2 seconds
-		
-		if(transform == PlayerController.getPlayer()){
-			health = (int)(.8 * maxHeath);
-			transform.position = PlayerSpawn.getPlayerSpawn().position;
-		}
 	}
 	public bool isInvincible(){
 		return invincible;

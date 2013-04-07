@@ -7,7 +7,7 @@ public class HUD : MonoBehaviour {
 	[SerializeField] private Texture healthBar;
 	[SerializeField] private Texture healthIcon;
 	[SerializeField] private Vector2 scaleImage = new Vector2(1,1);
-	private Status playerStatus;
+	private PlayerStatus playerStatus;
 	private WeaponImplementer weaponImplementer;
 	DrawBars drawBars ;
 	
@@ -47,7 +47,7 @@ public class HUD : MonoBehaviour {
 	
 	void OnGUI(){
 		if(playerStatus == null){
-			playerStatus = PlayerController.getPlayer().GetComponent<Status>();
+			playerStatus = PlayerController.getPlayer().GetComponent<PlayerStatus>();
 			weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
 		}
 		GUI.DrawTexture(getRect(0,0, 65 , 65), healthIcon);

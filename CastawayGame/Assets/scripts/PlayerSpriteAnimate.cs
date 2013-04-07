@@ -10,7 +10,7 @@ public class PlayerSpriteAnimate : MonoBehaviour {
 
 public enum animationMode { Wait = 0, Cut = 1, Overlay = 2 };
 
-public enum animationType {IdleLeft = 0, IdleUp = 1, MoveLeft = 2, MoveUp = 3, MoveLegs = 4, CrouchStart = 5, CrouchLeft = 6, CrouchMove = 7, JumpLeft = 8, JumpUp = 9, JumpDown = 10, Turn = 11, ShootLeft = 12, ShootUp = 13, ShootMoveLeft = 14, ShootMoveUp = 15, ShootCrouch = 16, ShootFallLeft = 17, ShootFallUp = 18, ShootFallDown = 19, ThrowIdle = 20, ThrowMove = 21, ThrowCrouch = 22, ThrowFall = 23};
+public enum animationType {IdleLeft = 0, IdleUp = 1, MoveLeft = 2, MoveUp = 3, MoveLegs = 4, CrouchStart = 5, CrouchLeft = 6, CrouchMove = 7, JumpLeft = 8, JumpUp = 9, JumpDown = 10, Turn = 11, ShootLeft = 12, ShootUp = 13, ShootMoveLeft = 14, ShootMoveUp = 15, ShootCrouch = 16, ShootFallLeft = 17, ShootFallUp = 18, ShootFallDown = 19, ThrowIdle = 20, ThrowMove = 21, ThrowCrouch = 22, ThrowFall = 23, Die = 24, HitLeft = 25, HitUp = 26, HitJump = 27, HitCrouch = 28 };
 
 Transform overlay;
 
@@ -352,7 +352,7 @@ public void  SetAnimation ( animationType type  ){
 				//set wrapping
 				CurWrap = wrap.OneShot;
 				//set the current animation
-				CurType = animationType.CrouchStart;
+				CurType = animationType.CrouchLeft;
 				break;
 			case animationType.ShootFallLeft:
 				//set frame coordinates
@@ -388,7 +388,7 @@ public void  SetAnimation ( animationType type  ){
 				//set wrapping
 				CurWrap = wrap.OneShotHold;
 				//set the current animation
-				CurType = animationType.IdleLeft;
+				CurType = animationType.JumpDown;
 				break;
 			case animationType.ThrowIdle:
 				//set frame coordinates
@@ -438,7 +438,72 @@ public void  SetAnimation ( animationType type  ){
 				//set the current animation
 				CurType = animationType.CrouchLeft;
 				break;
-				
+			case animationType.Die:
+				//set frame coordinates
+				Xmin = 0;
+				Xmax = 9;
+				Yframe = 11;
+				//set speed
+				animationDelay = 0.07f;
+				//always cut
+				SetFrameMin();
+				//set wrapping
+				CurWrap = wrap.OneShotHold;
+				//set the current animation
+				CurType = animationType.Die;
+				break;
+
+			case animationType.HitLeft:
+				//set frame coordinates
+				Xmin = 16;
+				Xmax = 17;
+				Yframe = 4;
+				//always cut
+				SetFrameMin();
+				//set speed
+				animationDelay = 0.1f;
+				//set the current animation
+				CurType = animationType.IdleLeft;
+				break;
+
+			case animationType.HitUp:
+				//set frame coordinates
+				Xmin = 16;
+				Xmax = 17;
+				Yframe = 5;
+				//always cut
+				SetFrameMin();
+				//set speed
+				animationDelay = 0.1f;
+				//set the current animation
+				CurType = animationType.IdleLeft;
+				break;
+
+			case animationType.HitJump:
+				//set frame coordinates
+				Xmin = 16;
+				Xmax = 17;
+				Yframe = 6;
+				//always cut
+				SetFrameMin();
+				//set speed
+				animationDelay = 0.1f;
+				//set the current animation
+				CurType = animationType.IdleLeft;
+				break;
+
+			case animationType.HitCrouch:
+				//set frame coordinates
+				Xmin = 16;
+				Xmax = 17;
+				Yframe = 7;
+				//always cut
+				SetFrameMin();
+				//set speed
+				animationDelay = 0.1f;
+				//set the current animation
+				CurType = animationType.IdleLeft;
+				break;
 			
 			}
 		

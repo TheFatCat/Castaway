@@ -23,6 +23,9 @@ bool  crouching = false;
 bool  jumping = false;
 public bool  canThrow = true;
 bool  throwing = false;
+public bool hit = false;
+public float hitTime = 0.2f;
+private float hitTimer = 0.0f;
 public bool  canShoot = true; 
 bool  shooting = false;
 public double shotLength = 0.7;
@@ -66,7 +69,7 @@ public static Transform getPlayer(){
 		return player;
 }
 	
-int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 if facing left or right
+public int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 if facing left or right
 	double y = Input.GetAxisRaw("Vertical");	
 	if(y > 0.25){
 		return 1;
@@ -79,7 +82,7 @@ int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 i
 	}
 }
 
-int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
+public int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing left
 	if(transform.localScale.x > 0){
 		return 1;
 	}
@@ -94,18 +97,18 @@ void  Update ()
 		
 		
 		//hold our z value to center player
-		transform.position  = new Vector3(transform.position.x, transform.position.y, zPosition);
+		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
 		//get inputs
 		double h = Input.GetAxisRaw ("Horizontal");
 		double v = Input.GetAxisRaw ("Vertical");
-		if(frozen){
+		if (frozen) {
 			h = 0;
 			v = 0;
 		}
 		//PlayerSpriteAnimate overAnimator = overlay.GetComponent<PlayerSpriteAnimate> ();
 		PlayerSpriteAnimate animator = GetComponent<PlayerSpriteAnimate> ();
 	
-		grounded = IsGrounded();
+		grounded = IsGrounded ();
 		if (grounded) {	//on ground controlls---------------
 
 			//smooth out the horizontal vector
@@ -114,7 +117,7 @@ void  Update ()
 				//slower move speed
 				moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * crouchSpeed), (float)acceleration);
 				//shorter controller
-				if(controller.height != 4.36f){
+				if (controller.height != 4.36f) {
 					controller.center = new Vector3 (0, 0, 1.78f);
 					controller.height = 4.36f;
 				}
@@ -125,8 +128,8 @@ void  Update ()
 			} else {
 				moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)acceleration);
 				//regular controller
-				if(controller.height != 6.92f){
-					controller.center = new Vector3(0,0,0);
+				if (controller.height != 6.92f) {
+					controller.center = new Vector3 (0, 0, 0);
 					controller.height = 6.92f;
 				}
 				if (v > 0.5f) {//looking up
@@ -186,14 +189,14 @@ void  Update ()
 						crouching = true;
 					} else {	//looking forward
 						crouching = false;
-						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleLeft);
+						animator.SetAnimation (PlayerSpriteAnimate.animationType.Die); 	//CHANGE IT BACK
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
 					}
 				}
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (Input.GetButtonDown ("Jump")  && ! frozen) {
+			if (Input.GetButtonDown ("Jump") && ! frozen) {
 				jumping = true;
 				shooting = false;
 				shootTimer = 0.0f;
@@ -230,7 +233,7 @@ void  Update ()
 			//smooth out the horizontal vector
 			moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)inAirAccel);
 			moveDirection.y -= (float)(gravity * Time.deltaTime);
-			if(Input.GetButton("Jump") && moveDirection.y >0 ){
+			if (Input.GetButton ("Jump") && moveDirection.y > 0) {
 				moveDirection.y += (float)(jumpModifier * Time.deltaTime);	
 			}
 		
@@ -372,6 +375,31 @@ void  Update ()
 			}
 		}
 
+
+
+		if (hit) {
+			//increment the hit timer
+			hitTimer += Time.deltaTime;
+			//we got hit, baby
+			if (!IsGrounded ()) {
+				//jumping
+				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitJump);
+			} else if (getDirectionY () == 0) {
+				//facing left
+				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitLeft);
+			} else if (getDirectionY () == 1) {
+				//facing up
+				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitUp);
+			} else {
+				//crouching
+				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitCrouch);
+			}
+			if(hitTimer > hitTime){
+				hitTimer = 0.0f;
+				hit = false;
+			}
+		}
+	
 	
 		controller.Move(moveDirection * Time.deltaTime);
 	
@@ -387,6 +415,12 @@ public void  fire (){
 			shootTimer = 0.0f;
 			weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
 		}
+}
+
+public void Hit (){
+		Debug.Log("HIT");
+		hitTimer = 0.0f;
+		hit = true;
 }
 
 //allow us to shoot

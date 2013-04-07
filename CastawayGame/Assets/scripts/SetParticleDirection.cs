@@ -8,7 +8,6 @@ public class SetParticleDirection : MonoBehaviour {
 	void Start () {
 		ps = this.GetComponent<ParticleSystem>();
 		ps.startRotation = Mathf.Deg2Rad * transform.parent.eulerAngles.z + Random.Range(-0.3f,0.3f);
-		Debug.Log(Mathf.Deg2Rad * transform.parent.eulerAngles.z);
 	}
 	
 
