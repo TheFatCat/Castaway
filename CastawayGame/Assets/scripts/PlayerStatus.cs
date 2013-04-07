@@ -34,7 +34,7 @@ public class PlayerStatus : Status {
 				
 				renderer.enabled = true;
 				invincible = false;
-				invincibleFlashTimer = -invincibleTime;
+				invincibleFlashTimer = 0;
 				
 			}
 			
