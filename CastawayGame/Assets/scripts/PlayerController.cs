@@ -189,7 +189,7 @@ void  Update ()
 						crouching = true;
 					} else {	//looking forward
 						crouching = false;
-						animator.SetAnimation (PlayerSpriteAnimate.animationType.Die); 	//CHANGE IT BACK
+						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
 					}
 				}
@@ -433,7 +433,14 @@ public void  SetCanThrow ( bool yesno  ){
 	 canThrow = yesno;
 }
 
+//freeze us
+public void SetFrozen(bool freeze){
+	frozen = freeze;
+}
+
 public bool  IsGrounded (){
 	return controller.isGrounded;
 }
+
+
 }

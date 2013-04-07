@@ -32,6 +32,10 @@ public animationType FallbackType= animationType.IdleLeft;
 public wrap CurWrap= wrap.Loop;
 //bool  done =  false;
 
+void Start (){
+		SetAnimation(FallbackType);	//set to the current animation
+	}
+
 void  Update (){
 	timer += Time.deltaTime;	//add to timer
 	if(timer >= animationDelay){	//wait for timer to expire to do anything
@@ -196,7 +200,7 @@ public void  SetAnimation ( animationType type  ){
 				CurType = type;
 				break;
 			case animationType.CrouchLeft:
-				if(CurType == animationType.CrouchMove || (CurType == animationType.CrouchStart && offsetX >= Xmax * tilingX)){//if came from crouch left or crouch start 
+				if(CurType == animationType.CrouchMove || CurType == animationType.HitCrouch ||(CurType == animationType.CrouchStart && offsetX >= Xmax * tilingX)){//if came from crouch left or crouch start 
 					//set frame coordinates
 					Xmin = 12;
 					Xmax = 16;
@@ -463,7 +467,7 @@ public void  SetAnimation ( animationType type  ){
 				//set speed
 				animationDelay = 0.1f;
 				//set the current animation
-				CurType = animationType.IdleLeft;
+				CurType = type;
 				break;
 
 			case animationType.HitUp:
@@ -476,7 +480,7 @@ public void  SetAnimation ( animationType type  ){
 				//set speed
 				animationDelay = 0.1f;
 				//set the current animation
-				CurType = animationType.IdleLeft;
+				CurType = type;
 				break;
 
 			case animationType.HitJump:
@@ -489,7 +493,7 @@ public void  SetAnimation ( animationType type  ){
 				//set speed
 				animationDelay = 0.1f;
 				//set the current animation
-				CurType = animationType.IdleLeft;
+				CurType = type;
 				break;
 
 			case animationType.HitCrouch:
@@ -502,7 +506,7 @@ public void  SetAnimation ( animationType type  ){
 				//set speed
 				animationDelay = 0.1f;
 				//set the current animation
-				CurType = animationType.IdleLeft;
+				CurType = animationType.CrouchLeft;
 				break;
 			
 			}

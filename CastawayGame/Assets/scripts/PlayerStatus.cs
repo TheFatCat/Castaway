@@ -10,6 +10,7 @@ public class PlayerStatus : Status {
 	private float invincibleFlashTimer = 0.0f;
 	public float deadTime = 5.0f;	//for keeping track of how long the player is dead
 	private float deadTimer = 0.0f;
+	public bool isDead = false;	//if player is dead but not respawned
 
 	void Start(){
 
@@ -18,17 +19,18 @@ public class PlayerStatus : Status {
 	
 	
 	
-	void Update(){
+	void Update ()
+	{
 		//animator takes care of flashing by itself 
 
-		if(invincible){	//very good,hmm, yes
+		if (invincible && !isDead) {	//very good,hmm, yes
 			invincibleFlashTimer += Time.deltaTime;
-			if(invincibleFlashTimer > invincibleIncrement){
+			if (invincibleFlashTimer > invincibleIncrement) {
 				invincibleFlashTimer = 0;
 				renderer.enabled = !renderer.enabled;
 			}
 			invincibleTimer += Time.deltaTime;
-			if(invincibleTimer > invincibleTime){
+			if (invincibleTimer > invincibleTime) {
 				
 				renderer.enabled = true;
 				invincible = false;
@@ -36,6 +38,18 @@ public class PlayerStatus : Status {
 				
 			}
 			
+		}
+
+		if (isDead) {	//we are dead but not respawned
+			deadTimer += Time.deltaTime;
+
+			if(deadTimer >= deadTime){	//time's up!
+				health = (int)(.8 * maxHeath);
+				transform.position = PlayerSpawn.getPlayerSpawn().position;	//respawn
+				renderer.enabled = true;	// you can see me again!
+				isDead = false;
+				controller.SetFrozen(false);
+			}
 		}
 	}
 
@@ -62,16 +76,11 @@ public class PlayerStatus : Status {
 	}
 
 	public override void die(){
-		Debug.Log(transform.name + " just died");	
-		if(shouldDestroyOnDeath){
-			Destroy(gameObject);
-		}
-		Instantiate(deathPrefab,transform.position, Quaternion.identity);
-		//respawn the player after 2 seconds
-		
-		if(transform == PlayerController.getPlayer()){
-			health = (int)(.8 * maxHeath);
-			transform.position = PlayerSpawn.getPlayerSpawn().position;
-		}
+		Debug.Log(transform.name + " just died");
+		isDead = true;
+		Instantiate(deathPrefab,transform.position, transform.rotation);
+		renderer.enabled = false;	//you can't see me
+		//disable player input
+		controller.SetFrozen(true);
 	}
 }
