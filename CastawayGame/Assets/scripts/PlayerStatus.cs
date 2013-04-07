@@ -49,6 +49,7 @@ public class PlayerStatus : Status {
 				renderer.enabled = true;	// you can see me again!
 				isDead = false;
 				controller.SetFrozen(false);
+				deadTimer = 0.0f;
 			}
 		}
 	}

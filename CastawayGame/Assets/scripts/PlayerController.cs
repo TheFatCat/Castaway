@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 //script to take user input and transform into movement
 private static  Transform player ;	
 public bool frozen = false;
+public LayerMask mask = -1;
 private float zPosition = 0.0f;
 public double speed = 1.0;
 public double minMoveDistance = 0.005;
@@ -157,7 +158,7 @@ void  Update ()
 				if (h != 0) {//is moving
 		
 					//are we looking up?
-					if (v > 0.5f) {//looking up
+					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -168,7 +169,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchMove);
 						crouching = true;
-					} else {	//looking forward
+					} else if (!Physics.Raycast(transform.position, Vector3.up,5,mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -176,7 +177,7 @@ void  Update ()
 			
 				} else {//is idle
 					//are we looking up?
-					if (v > 0.5f) {//looking up
+					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -187,7 +188,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = true;
-					} else {	//looking forward
+					} else if (!Physics.Raycast(transform.position, Vector3.up,5, mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -196,7 +197,7 @@ void  Update ()
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (Input.GetButtonDown ("Jump") && ! frozen) {
+			if (Input.GetButtonDown ("Jump") && !frozen ) {
 				jumping = true;
 				shooting = false;
 				shootTimer = 0.0f;
@@ -228,7 +229,7 @@ void  Update ()
 				jumping = true;
 			}
 		
-		
+		//in air
 		} else {//in air controls-----------------------------
 			//smooth out the horizontal vector
 			moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)inAirAccel);
@@ -275,7 +276,13 @@ void  Update ()
 
 		}
 	
-	
+		//if we bumped our head
+		if(Physics.Raycast(transform.position, Vector3.up,5, mask.value) && moveDirection.y > 0){
+			//we hit something
+			SetVelocity(new Vector3(moveDirection.x,0,0));
+
+
+		}
 		//test for secondary fire
 		if (Input.GetButtonDown ("Fire2") && canThrow) {
 			throwing = true;
@@ -320,7 +327,7 @@ void  Update ()
 			//we want to fire
 			if (grounded) {//we are on the ground
 				if (h != 0) {//we are moving =  SPECIAL CASE
-					if (v > 0.5f) {//we are looking up
+					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//we are looking up and nothing above us
 						overlay.renderer.enabled = true;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootMoveUp);
 						crouching = false;
@@ -332,22 +339,22 @@ void  Update ()
 						animator.SetFallback (PlayerSpriteAnimate.animationType.CrouchLeft);
 						overlay.renderer.enabled = false;
 						crouching = true;
-					} else {//left
+					} else if(!Physics.Raycast(transform.position, Vector3.up,5, mask.value)){//left and nothing above us
 						overlay.renderer.enabled = true;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootMoveLeft);
 						crouching = false;
 					}
 				} else {//we are idle
 					overlay.renderer.enabled = false;	
-					if (v > 0.5f) {//we are looking up
+					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//we are looking up and nothing above us
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = false;
-					} else if (v < -0.5f) {
+					} else if (v < -0.5f) {//crouching
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootCrouch);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = true;
-					} else {//left
+					} else if(!Physics.Raycast(transform.position, Vector3.up,5, mask.value)){//left and nothing above us
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = false;
@@ -405,6 +412,16 @@ void  Update ()
 	
 		
 	
+}
+
+public void AddVelocity (Vector3 velocity) //for knockback, etc
+{
+	moveDirection += velocity;
+}
+
+public void SetVelocity (Vector3 velocity)	//completely overrides current movement
+{
+	moveDirection = velocity;
 }
 
 public void  fire (){
