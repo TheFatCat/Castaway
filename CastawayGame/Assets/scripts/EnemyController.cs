@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour {
 	
 	// check to see if we hit the player and if so do damage
 	void OnControllerColliderHit(ControllerColliderHit hit){
-		if(hit.transform.tag.Equals("Player")){
+		if(hit.transform == PlayerController.getPlayer()){
 			hit.transform.GetComponent<PlayerController>().takeDamage(touchDamage);
 			
 		}
