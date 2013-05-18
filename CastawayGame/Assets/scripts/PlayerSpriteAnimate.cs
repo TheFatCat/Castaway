@@ -405,7 +405,7 @@ public void  SetAnimation ( animationType type  ){
 				CurWrap = wrap.OneShot;
 				
 				//set the current animation
-				CurType = animationType.CrouchLeft;
+				CurType = type;
 				break;
 			case animationType.ThrowMove:					//special
 				//set frame coordinates
