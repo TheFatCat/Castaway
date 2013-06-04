@@ -29,7 +29,9 @@ public class CutScene : MonoBehaviour {
 				if(segmentNumber > cutSceneSegments.Length -1){
 					Destroy(gameObject);
 				}
+				else{
 				cutSceneSegments[segmentNumber].Start();
+				}
 			}
 		}
 		
