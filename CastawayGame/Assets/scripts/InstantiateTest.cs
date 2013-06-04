@@ -1,3 +1,10 @@
+/// <summary>
+/// Instantiate test.
+/// This code is used in the game for instantiating objects for testing
+/// something will be instantiated whenever you type space
+/// </summary>
+
+
 using UnityEngine;
 using System.Collections;
 

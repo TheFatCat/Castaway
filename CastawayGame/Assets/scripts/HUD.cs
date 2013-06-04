@@ -33,7 +33,7 @@ public class HUD : MonoBehaviour {
 	
 	public void hideHUD(){
 		pullUp = true;
-	}
+	} 
 	public void unhideHUD(){
 		pullUp = false;
 	}
@@ -67,7 +67,7 @@ public class HUD : MonoBehaviour {
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){
 		}*/
 		GUI.DrawTexture(getRect(375, 0 , 50, 50) , weaponImplementer.getCurrentWeapon().weaponIcon);
-		
+		     
 	}
 	
 	
