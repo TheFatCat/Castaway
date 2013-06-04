@@ -13,7 +13,7 @@ public class CutScene : MonoBehaviour {
 		if(cutSceneSegments.Length > 0){
 			//PlayerController.getPlayer().GetComponent<PlayerController>().SetFrozen(true);
 			//EnemyController.freezeAllEnemies();
-			cutSceneSegments[0].Start();
+			
 		}
 		else{
 			Destroy(gameObject);
@@ -24,14 +24,13 @@ public class CutScene : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(cutSceneSegments[0] != null){
+			cutSceneSegments[segmentNumber].RunElements();
 			if(cutSceneSegments[segmentNumber].CheckTime()){
 				segmentNumber ++;
 				if(segmentNumber > cutSceneSegments.Length -1){
 					Destroy(gameObject);
 				}
-				else{
-				cutSceneSegments[segmentNumber].Start();
-				}
+				
 			}
 		}
 		
@@ -41,10 +40,10 @@ public class CutScene : MonoBehaviour {
 	[System.Serializable]
 	public class CutSceneSegment{
 		public float duration;
-		public CutSceneElement[] elements;
-		public void Start(){
-			foreach(CutSceneElement element in elements){
-				element.StartElement();
+		public Move[] moveElements;
+		public void RunElements(){
+			foreach(Move move in moveElements){
+				move.ActionLogic();
 			}
 		}
 		public bool CheckTime(){
