@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 //Class for doing in game cutscenes
 public class CutScene : MonoBehaviour {
@@ -27,6 +27,7 @@ public class CutScene : MonoBehaviour {
 			cutSceneSegments[segmentNumber].RunElements();
 			if(cutSceneSegments[segmentNumber].CheckTime()){
 				segmentNumber ++;
+				Debug.Log("next segment " + segmentNumber);
 				if(segmentNumber > cutSceneSegments.Length -1){
 					Destroy(gameObject);
 				}
@@ -41,18 +42,41 @@ public class CutScene : MonoBehaviour {
 	public class CutSceneSegment{
 		public float duration;
 		public Move[] moveElements;
+		
+		public GameObject dialogObject;
+		DialogBox dialogue;
+		bool instantiated;
+		public CutsceneInstantiateDestroy[] instantiateDestroys;
 		public void RunElements(){
-			foreach(Move move in moveElements){
-				move.ActionLogic();
+			
+			List<CutSceneElement> elements = new List<CutSceneElement>();
+			elements.AddRange(moveElements);
+			elements.AddRange(instantiateDestroys);
+			
+			
+			if(dialogObject != null && !instantiated){
+				instantiated = true;
+				GameObject dialogInstance = MonoBehaviour.Instantiate(dialogObject) as GameObject ;
+				Debug.Log(dialogInstance);
+				dialogue = dialogInstance.GetComponent<DialogBox>();
+			}
+			
+			foreach(CutSceneElement element in elements){
+				element.ActionLogic();
 			}
 		}
 		public bool CheckTime(){
-			duration -= Time.deltaTime;
-			if(duration < 0){
-				return true;
+			if(dialogue != null){
+				return false;	
 			}
 			else{
-				return false;
+				duration -= Time.deltaTime;
+				if(duration < 0){
+					return true;
+				}
+				else{
+					return false;
+				}
 			}
 		}
 	}

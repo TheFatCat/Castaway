@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DialogBox : MonoBehaviour {
+public class DialogBox : MonoBehaviour  {
  	string text = "place your text here buddy";
 	int textLengthShown = 0;
 	public Vector2 windowSizePercent;
@@ -11,7 +11,7 @@ public class DialogBox : MonoBehaviour {
 	int dialogNum =0;
 	public DialogSegment[] dialogs;
 	public float faceHeight = 0.1f;
-		 
+	
 	// Use this for initialization
 	void Start () {
 		text = dialogs[0].dialog;
@@ -19,10 +19,14 @@ public class DialogBox : MonoBehaviour {
 	}
 	
 	void freezeWorld(){
+		if(PlayerController.getPlayer() == null)
+			return;
 		PlayerController.getPlayer().GetComponent<PlayerController>().frozen  = true;
 		EnemyController.freezeAllEnemies();
 	}
 	void unfreezeWorld(){
+		if(PlayerController.getPlayer() == null)
+			return;
 		PlayerController.getPlayer().GetComponent<PlayerController>().frozen  = false;
 		EnemyController.unfreezeAllEnemies();
 	}
@@ -45,8 +49,9 @@ public class DialogBox : MonoBehaviour {
 			textLengthShown = 0;
 			dialogNum ++;
 			if(dialogNum >= dialogs.Length){
+				
 				unfreezeWorld();
-				Destroy(this);
+				Destroy(gameObject);
 			}
 			else{
 				text = dialogs[dialogNum].dialog;
