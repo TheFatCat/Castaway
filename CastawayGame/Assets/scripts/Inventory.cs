@@ -7,11 +7,34 @@ public class Inventory : MonoBehaviour {
 	[SerializeField] float scaleY = 1f;
 	[SerializeField] int coins;
 	List<Item> items = new List<Item>();
+	bool onWeaponBox = true;
+	bool onItemBox = false;
+	bool onEqupiiedItemsBox = false;
+	WeaponImplementer wp;
+	List<Weapon> weapons;
+	//three textures for the weapon box and the weapon box's starting size
+	public Texture activeWeaponTexture;
+	public Texture inacvticeWeaponTexture;
+	public Texture weaponTextureBackground;
+	private Rect weaponRect = new Rect(0, getYPixels(50), getXPixels(500), getYPixels(50));
+	// texture for the description box
+	public Texture descriptionTexture;
+	private Rect descriptionRect = new Rect(getXPixels(50), getYPixels(500), getXPixels(300), getYPixels(550));
+	// three textures for the item box
+	public Texture activeItemTexture;
+	public Texture inactiveItemTexture;
+	public Texture itemTexturebackground;
+	private Rect itemRect = new Rect(0, getYPixels(100), getXPixels(500), getYPixels(400));
+	// three textures for the equipped items box 
+	public Texture activeEquippedItemTexture;
+	public Texture inactiveEquippedItemTexture;
+	public Texture equippedItemBackground;
+	private Rect equippedItemRect = new Rect(0, getYPixels(550), getXPixels(500),getYPixels(50));
 	
 	public GUISkin skin;
 	// Use this for initialization
 	void Start () {
-		
+		weapons = wp.getWeapons;
 	}
 	
 	public void addCoins(int val ){
@@ -41,6 +64,7 @@ public class Inventory : MonoBehaviour {
 	
 	[SerializeField] Texture window;
 	private bool inventoryIsOpen;
+	
 	
 	// Update is called once per frame
 	void Update () {
@@ -75,17 +99,19 @@ public class Inventory : MonoBehaviour {
 			GUI.skin = skin;
 			currentScaleX = Mathf.Lerp(currentScaleX , scaleX , 0.1f);
 			currentScaleY = Mathf.Lerp(currentScaleY, scaleY , 0.1f);
-			GUI.Window(1,new Rect(0,0, getXPixels(800), getYPixels(600)), mainWindow, "");
-			//GUI.DrawTexture( new Rect(0,0, getXPixels(800) ,  getYPixels(600) ) , window);
+			if(onWeaponBox == true && onItemBox == false && onEqupiiedItemsBox == false){
+				
+			}else if(onWeaponBox == false && onItemBox == true && onEqupiiedItemsBox == false){
+				
+			}else if(onWeaponBox == false && onItemBox == false && onEqupiiedItemsBox == true){
+				
+			}
+			GUI.DrawTexture(new Rect(0,getXPixels(50), getXPixels(500), getYPixels(50)), weaponTextureBackground);
 		}
 	}
 	
 	
 	void mainWindow(int id){
-		GUI.Window(1,new Rect(0,0, getXPixels(800), getYPixels(600)), weaponMenu, "");
-		GUI.Window(1,new Rect(0,0, getXPixels(800), getYPixels(600)), itemMenu, "");
-		GUI.Window(1,new Rect(0,0, getXPixels(800), getYPixels(600)), equippedMenu, "");
-		GUI.Window(1,new Rect(0,0, getXPixels(800), getYPixels(600)), descriptionMenu, "");
 	}
 	
 	void equippedMenu(int id){
