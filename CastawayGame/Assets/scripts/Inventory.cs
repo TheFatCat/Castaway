@@ -7,34 +7,38 @@ public class Inventory : MonoBehaviour {
 	[SerializeField] float scaleY = 1f;
 	[SerializeField] int coins;
 	List<Item> items = new List<Item>();
+	WeaponImplementer wp;
+	List<Weapon> weapons;
+	// these three booleans will be used to decide which section of the inventory the player is using
 	bool onWeaponBox = true;
 	bool onItemBox = false;
 	bool onEqupiiedItemsBox = false;
-	WeaponImplementer wp;
-	List<Weapon> weapons;
-	//three textures for the weapon box and the weapon box's starting size
+	//three textures for the weapon box
 	public Texture activeWeaponTexture;
-	public Texture inacvticeWeaponTexture;
+	public Texture inactiveWeaponTexture;
 	public Texture weaponTextureBackground;
-	private Rect weaponRect = new Rect(0, getYPixels(50), getXPixels(500), getYPixels(50));
+	Rect weaponRect;
 	// texture for the description box
 	public Texture descriptionTexture;
-	private Rect descriptionRect = new Rect(getXPixels(50), getYPixels(500), getXPixels(300), getYPixels(550));
+	Rect descriptionRect;
 	// three textures for the item box
 	public Texture activeItemTexture;
 	public Texture inactiveItemTexture;
 	public Texture itemTexturebackground;
-	private Rect itemRect = new Rect(0, getYPixels(100), getXPixels(500), getYPixels(400));
+	Rect itemRect;
 	// three textures for the equipped items box 
 	public Texture activeEquippedItemTexture;
 	public Texture inactiveEquippedItemTexture;
 	public Texture equippedItemBackground;
-	private Rect equippedItemRect = new Rect(0, getYPixels(550), getXPixels(500),getYPixels(50));
+	Rect equippedItemRect;
+	
+	public Rect objectSlot;
 	
 	public GUISkin skin;
 	// Use this for initialization
 	void Start () {
-		weapons = wp.getWeapons;
+		//weapons = wp.getWeapons();
+
 	}
 	
 	public void addCoins(int val ){
@@ -68,9 +72,15 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		
-		
+		//starting box's for the GUI
+		weaponRect = new Rect(getXPixels(20), getYPixels(50), getXPixels(510), getYPixels(175));
+		//starting box for the description box
+		descriptionRect = new Rect(getXPixels(540), getYPixels(50), getXPixels(240), getYPixels(550));
+		//starting box for the item box
+		itemRect = new Rect(getXPixels (20), getYPixels(230), getXPixels(510), getYPixels(235));
+		//starting box for the equiped items box
+		equippedItemRect = new Rect(getXPixels(20), getYPixels(470), getXPixels(510),getYPixels(120));
+
 		if(Input.GetKeyDown(KeyCode.I)){
 			inventoryIsOpen = !inventoryIsOpen;
 			
@@ -99,14 +109,23 @@ public class Inventory : MonoBehaviour {
 			GUI.skin = skin;
 			currentScaleX = Mathf.Lerp(currentScaleX , scaleX , 0.1f);
 			currentScaleY = Mathf.Lerp(currentScaleY, scaleY , 0.1f);
+			// item description background
+				GUI.DrawTexture(descriptionRect, descriptionTexture);
+			// the following if statements will put the active tuxtures forward and the inactive textures back.
 			if(onWeaponBox == true && onItemBox == false && onEqupiiedItemsBox == false){
-				
+				GUI.DrawTexture(weaponRect, activeWeaponTexture);
+				GUI.DrawTexture(itemRect, inactiveItemTexture);
+				GUI.DrawTexture(equippedItemRect, inactiveEquippedItemTexture);
 			}else if(onWeaponBox == false && onItemBox == true && onEqupiiedItemsBox == false){
-				
+				GUI.DrawTexture(weaponRect, inactiveWeaponTexture);
+				GUI.DrawTexture(itemRect, activeItemTexture);
+				GUI.DrawTexture(equippedItemRect, inactiveEquippedItemTexture);	
 			}else if(onWeaponBox == false && onItemBox == false && onEqupiiedItemsBox == true){
-				
+				GUI.DrawTexture(weaponRect, inactiveWeaponTexture);
+				GUI.DrawTexture(itemRect, inactiveItemTexture);
+				GUI.DrawTexture(equippedItemRect, activeEquippedItemTexture);
 			}
-			GUI.DrawTexture(new Rect(0,getXPixels(50), getXPixels(500), getYPixels(50)), weaponTextureBackground);
+			
 		}
 	}
 	
@@ -125,12 +144,12 @@ public class Inventory : MonoBehaviour {
 	}
 	
 	
-	int getXPixels(int size){
-		return (int)(size * currentScaleX);
+ 	int getXPixels(float size){
+		return(int)(size * currentScaleX);
 	}
 	
 	int getYPixels(float size){
-		return (int)(size * currentScaleX);
+		return(int)(size * currentScaleX);
 	}
 	
 	
