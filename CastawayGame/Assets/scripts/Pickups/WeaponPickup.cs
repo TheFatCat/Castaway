@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WeaponPickup : MonoBehaviour {
 	public Transform pickupFlash;
+	public GameObject pickupNamePrefab;
+	public string title = "weapon";
 	void Start(){
 		collider.isTrigger = true;
 	}
@@ -33,6 +35,13 @@ public class WeaponPickup : MonoBehaviour {
 			implementer.addWeapon(weapon);
 			//instantiate the pickup prefab
 			Instantiate(pickupFlash,transform.position,transform.rotation);
+
+
+			GameObject name = Instantiate (pickupNamePrefab, transform.position, Quaternion.identity) as GameObject;
+			name.GetComponent<TextMesh> ().text = "" + title;
+
+			//name.text = "hello";
+
 			//Destroy the leftover object
 			Destroy(gameObject);
 			
