@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour {
 	public Transform damageHit;
 	public Transform sandyHit;
 	public Transform woodenHit;
+	public GameObject HPText;	//for the generic text
 	//add more when we have more
 
 	
@@ -23,6 +24,9 @@ public class Bullet : MonoBehaviour {
 			status.substractHealth(damage);
 			//we hit an enemy
 			Instantiate(damageHit,transform.position,transform.rotation);
+			//instantiate the damage text
+			GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+			name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
 		}
 		//check for the material of what we hit	
 		string tag = collision.transform.tag;
