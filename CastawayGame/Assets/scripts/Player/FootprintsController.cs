@@ -9,6 +9,8 @@ public class FootprintsController : MonoBehaviour {
 	private ParticleSystem ps;
 	public float trigger = 0.0f;			//distance trigger
 	public float triggerdistance = 1.0f;	//how far between prints
+	public float raylength = 3.0f;
+	public LayerMask mask = -1;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +28,7 @@ public class FootprintsController : MonoBehaviour {
 		//ps.Emit(1);	//emit a particle
 		if (controller.isGrounded) {
 			RaycastHit hit;
-			if (Physics.Raycast (transform.position, Vector3.up * -3.0f, out hit)) {
+			if (Physics.Raycast (transform.position, Vector3.up * -raylength, out hit, mask.value)) {
 				//ps.Emit(1);	//emit a particle
 				if (hit.transform.tag.Equals ("Sand")) {
 					if (transform.position.x >= trigger) {//if we went farther to the right than the trigger
