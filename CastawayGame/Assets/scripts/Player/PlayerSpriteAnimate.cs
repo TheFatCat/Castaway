@@ -356,7 +356,7 @@ public void  SetAnimation ( animationType type  ){
 				//set wrapping
 				CurWrap = wrap.OneShot;
 				//set the current animation
-				CurType = animationType.CrouchLeft;
+				CurType = animationType.CrouchStart;
 				break;
 			case animationType.ShootFallLeft:
 				//set frame coordinates
