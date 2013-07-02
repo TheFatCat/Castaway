@@ -45,7 +45,8 @@ public class FootprintsController : MonoBehaviour {
 						ps.Emit (1);	//emit a particle
 						trigger -= triggerdistance;	//advance the trigger
 					}
-					//sound
+					//sound 
+					/*
 					if (transform.position.x >= soundTrigger) {	//far enough right to make a sound
 						int index = (int) (Random.value * sandFootsteps.Length);
 						if (sandFootsteps[index]) {
@@ -64,6 +65,8 @@ public class FootprintsController : MonoBehaviour {
 
 						soundTrigger -= soundDistance;	//advance the sound Trigger
 					}
+					*/
+
 				}
 			
 			}

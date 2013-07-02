@@ -38,8 +38,22 @@ CharacterController controller;
 //collision flags from controller
 private CollisionFlags collisionFlags; 
 private Status status;
+private Vector3 moveDirection = Vector3.zero;
+//audio
+public AudioClip[] crouchFootsteps;
+public AudioClip[] sandFootsteps;
+public AudioClip[] woodFootsteps;
+public AudioClip[] metalFootsteps;
+//et cetera
+public AudioClip crouchSound;
+public AudioClip getUpSound;
+public AudioClip jumpSound;
+public AudioClip landSound;
 
-public Vector3 moveDirection = Vector3.zero;
+
+private float audioTimer = 0.0f;
+public float audioDelay = 1.0f;
+
 
 void OnControllerColliderHit(ControllerColliderHit hit){
 	if(hit.transform.tag.Equals("Enemy")){
@@ -51,9 +65,6 @@ void OnControllerColliderHit(ControllerColliderHit hit){
 
 	
 public void takeDamage(int damage){
-	
-			
-	
 	if(! status.isInvincible()){
 		status.substractHealth(damage);	
 		status.setInvincibleFor(0.75f);	
@@ -154,6 +165,7 @@ void  Update ()
 		
 			//animation section....
 			if (!shooting && !throwing) {
+				bool wasCrouching = crouching;
 				//check orientation
 				if (h != 0) {//is moving
 		
@@ -194,10 +206,30 @@ void  Update ()
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
 					}
 				}
+				if(crouching != wasCrouching){
+					//something changed, mate
+					if (crouching == true) {
+						//we started crouching
+						if (crouchSound) {
+							audio.PlayOneShot (crouchSound);
+						}
+					} else {
+						//we are standing up
+						if (getUpSound) {
+							audio.PlayOneShot (getUpSound);
+						}
+					}
+
+				}
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (Input.GetButtonDown ("Jump") && !frozen ) {
+			if (Input.GetButtonDown ("Jump") && !frozen && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {
+				//play sound
+				if (jumpSound) {
+					audio.PlayOneShot (jumpSound);
+				}
+
 				jumping = true;
 				shooting = false;
 				shootTimer = 0.0f;
@@ -218,6 +250,11 @@ void  Update ()
 			}
 			//if we just landed
 			if (jumping && grounded) {
+				//audio
+				if (landSound) {
+					audio.PlayOneShot (landSound);
+				}
+
 				jumping = false;
 				shooting = false;
 				throwing = false;
@@ -228,7 +265,41 @@ void  Update ()
 			if (!jumping && !grounded) {
 				jumping = true;
 			}
-		
+
+
+			//AUDIO>>>>>>>>>
+
+			if(h !=0){
+				audioTimer += Time.deltaTime;
+
+				if(crouching){
+
+				}else{//not crouching
+					if (audioTimer >= audioDelay){	//time to play a sound!
+						audioTimer = 0.0f;
+						RaycastHit Rhit;
+						if (Physics.Raycast (transform.position, -Vector3.up, out Rhit, 3.7f, mask.value)) {	//shoot a ray down
+							if (Rhit.transform.tag.Equals ("Sand")) {	//we hit sand
+								//PLAY A SOUND
+								int index = (int) (Random.value * sandFootsteps.Length);
+								if (sandFootsteps[index]) {
+									audio.PlayOneShot (sandFootsteps[index]);
+								}
+							} else if (Rhit.transform.tag.Equals ("Wood")) {	//we hit wood
+
+
+							}// get the idea?
+
+
+						}
+
+					}
+				}
+			}
+
+
+
+
 		//in air
 		} else {//in air controls-----------------------------
 			//smooth out the horizontal vector
