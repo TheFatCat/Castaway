@@ -7,6 +7,8 @@ public class Weapon {
 	[SerializeField]public  Texture uniqueSpriteSheet;// the sprite sheet for this particular gun
 	[SerializeField]public  Texture weaponIcon;//for gui
 	[SerializeField]public  string description;//for gui
+	[SerializeField]public AudioClip shootSound;
+	[SerializeField]public float shootVolume;
 	[SerializeField]public  Rigidbody bullet ;//bullet gun will fire
 	[SerializeField]public  Rigidbody muzzleFlashUp;//4 muzzle flashes for different directions
 	[SerializeField]public  Rigidbody muzzleFlashRight;

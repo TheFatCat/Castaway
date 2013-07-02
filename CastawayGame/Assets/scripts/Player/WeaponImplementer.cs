@@ -22,7 +22,12 @@ public class WeaponImplementer : MonoBehaviour{
 	}
 	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		
-			if(currentWeapon.ammo > 0 && canShoot){
+			if(currentWeapon.ammo > 0 && canShoot){	//shoot
+				//audio
+				if (currentWeapon.shootSound) {
+
+					audio.PlayOneShot (currentWeapon.shootSound, currentWeapon.shootVolume);
+				}
 				currentWeapon.ammo --;
 				bulletLocation.x *= -(transform.localScale.x/Mathf.Abs(transform.localScale.x));//change for direction
 				bulletLocation.z -= 0.3f;	//make sure bullets are in front of player
