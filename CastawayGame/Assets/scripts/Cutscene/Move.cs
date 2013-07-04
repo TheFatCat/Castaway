@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using System.Collections;
+using UnityEditor;
 [System.Serializable]
 public class Move  : CutSceneElement{
 	public Transform actor;
@@ -8,10 +9,19 @@ public class Move  : CutSceneElement{
 	public float speed;
 	
 	
-	public  void ActionLogic(){
+	public  override void ActionLogic(float deltaTime){
 		if(actor != null){
-			actor.position = Vector3.MoveTowards(actor.position, actor.position + direction,speed * Time.deltaTime);
+			actor.Translate(direction * speed * deltaTime);
 		}
+	}
+	
+	public override void DrawGUI(){
+		setStartTime(EditorGUILayout.FloatField("StartTime",getStartTime())); 
+		setDuration(EditorGUILayout.FloatField("Duration",getDuration()));
+		actor = EditorGUILayout.ObjectField("Target", actor,(typeof(Transform))) as Transform;
+		direction = EditorGUILayout.Vector3Field("Direction",direction);
+		speed = EditorGUILayout.FloatField("Speed",speed);
+		
 	}
 	
 	

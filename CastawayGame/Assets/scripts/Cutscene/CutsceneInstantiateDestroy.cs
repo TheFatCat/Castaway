@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEditor;
 [System.Serializable]
-public class CutsceneInstantiateDestroy : CutSceneElement
+public class CutsceneInstantiateDestroy : Move
 {
 	public float waitTime;
 	public InstantiateDestroyType instantiateDestroyType;
@@ -9,7 +10,7 @@ public class CutsceneInstantiateDestroy : CutSceneElement
 	public Vector3 position;
 	public Quaternion rotation;
 	float timer = 0;
-	public  void ActionLogic(){
+	public override void ActionLogic(float deltaTime){
 		timer += Time.deltaTime;
 		if(timer > waitTime){
 			switch(instantiateDestroyType){
@@ -25,6 +26,9 @@ public class CutsceneInstantiateDestroy : CutSceneElement
 		}
 	}
 	
+	public override void DrawGUI(){
+		EditorGUILayout.TextArea("this is just a simple test to \n see if instantiate gui works");
+	}
 	[System.Serializable]
 	public enum InstantiateDestroyType{
 		INSTANTIATE,
