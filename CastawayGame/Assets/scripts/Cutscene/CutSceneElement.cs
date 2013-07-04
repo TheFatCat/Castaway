@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor ;
+#endif
 [System.Serializable]
 public class  CutSceneElement {
 	[SerializeField]
@@ -31,6 +34,9 @@ public class  CutSceneElement {
 	public virtual void ActionLogic(float deltaTime){
 	}
   	public virtual void DrawGUI(){
+#if UNITY_EDITOR
+				setStartTime(EditorGUILayout.FloatField("StartTime",getStartTime())); 
+#endif
 	}
 			
 		

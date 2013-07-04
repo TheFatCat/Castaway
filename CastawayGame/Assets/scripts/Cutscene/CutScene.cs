@@ -101,7 +101,8 @@ public class CutScene : MonoBehaviour {
 		//Debug.Log("Update");
 		if(start){
 		//	Debug.Log("Has Started");
-			timer += Time.deltaTime;
+			float deltaTime = Time.deltaTime;
+			timer += deltaTime;
 			for(int i = 0; i < inactiveCutsceneElements.Count; i ++){
 				CutSceneElement element = inactiveCutsceneElements.ToArray()[i];
 				//Debug.Log("inactive " + element.ToString());
@@ -119,7 +120,7 @@ public class CutScene : MonoBehaviour {
 					//Destroy(element);
 				}
 				else{
-					element.ActionLogic(Time.deltaTime);
+					element.ActionLogic(deltaTime);
 				}
 			}
 		}

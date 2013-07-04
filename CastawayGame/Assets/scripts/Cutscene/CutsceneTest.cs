@@ -11,6 +11,8 @@ public class CutsceneTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("Test");
+		float deltaTime = Time.deltaTime;
+		Debug.Log(deltaTime);
+		transform.Translate(new Vector3(1,0,0) * deltaTime);
 	}
 }
