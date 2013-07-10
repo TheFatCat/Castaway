@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour {
 		if(tag.Equals("Sand")){
 			// we hit sand
 			Instantiate(sandyHit,transform.position,transform.rotation);
-		} else  if(tag.Equals("wood")){
+		} else  if(tag.Equals("Wood")){
 			//we hit wood
 			Instantiate(woodenHit,transform.position,transform.rotation);
 		} else if(status == null){
