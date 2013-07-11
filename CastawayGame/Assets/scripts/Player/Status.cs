@@ -8,8 +8,15 @@ public class Status :MonoBehaviour {
 	[SerializeField] protected Animation hitFrame; // animation frame when object is hit
 	[SerializeField] protected  GameObject deathPrefab ;
 	[SerializeField] protected  GameObject hitPrefab ;
+	[SerializeField] protected AudioClip hitSound;
+	public int minDrops = 0;
+	public int maxDrops = 0;
+	public Vector3 offset = Vector3.zero;
+	public GameObject[] drops;
+	//public float[] dropRate;				//For when we want to change the frequency of drops
 	[SerializeField] protected bool shouldDestroyOnDeath = true;
 	protected bool invincible = false; // make the object invincible from damage
+
 	[SerializeField] protected int health = 0;
 	[SerializeField] protected int maxHeath = 100;
 	//[SerializeField] int mana = 0;
@@ -19,6 +26,8 @@ public class Status :MonoBehaviour {
 	public float invincibleTime = 0;
 	protected float flashTimer = 0.5f; // for keeping track of how long the object should flash
 	public float flashTime = 0.25f;
+
+
 
 
 	
@@ -62,6 +71,11 @@ public class Status :MonoBehaviour {
 			if(animator != null){
 				animator.flashFrame(hitFrame);
 			}
+			//play the hit sound
+			if (hitSound && audio) {
+				audio.PlayOneShot (hitSound);
+			}
+
 			//instantiate the hit prefab
 			if(hitPrefab != null){
 				Instantiate(hitPrefab,transform.position, Quaternion.identity);
@@ -107,6 +121,15 @@ public class Status :MonoBehaviour {
 			Destroy(gameObject);
 		}
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
+		//instantiate all pickups spawned
+		int toDrop = Random.Range (minDrops, maxDrops);
+		for (int i = 0; i< maxDrops; i++) {
+			//choose a random drop, and instantiate it
+			Instantiate (drops[(int) Random.Range (0, drops.Length - 1)], transform.position + offset, transform.rotation);
+		}
+
+
+
 	}
 	public bool isInvincible(){
 		return invincible;
