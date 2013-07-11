@@ -123,9 +123,9 @@ public class Status :MonoBehaviour {
 		Instantiate(deathPrefab,transform.position, Quaternion.identity);
 		//instantiate all pickups spawned
 		int toDrop = Random.Range (minDrops, maxDrops);
-		for (int i = 0; i< maxDrops; i++) {
+		for (int i = 0; i< toDrop; i++) {
 			//choose a random drop, and instantiate it
-			Instantiate (drops[(int) Random.Range (0, drops.Length - 1)], transform.position + offset, transform.rotation);
+			Instantiate (drops[(int) Random.Range (0, drops.Length - 1)], transform.position + offset, Quaternion.identity);
 		}
 
 

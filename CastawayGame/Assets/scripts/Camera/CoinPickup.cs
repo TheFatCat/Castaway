@@ -28,7 +28,8 @@ public class CoinPickup : MonoBehaviour {
 			name.GetComponent<TextMesh> ().text = "$" + coinValue.ToString ();
 			PlayerController.getPlayer ().GetComponent<Inventory> ().addCoins (coinValue);
 			Destroy (gameObject);
-		} else if(!collider.isTrigger  ){	//we touched something else
+
+		} else if(!collider.isTrigger  && collider.tag != "Bullet"){	//we touched something else
 			Debug.Log ("touched" + collider.name);
 			if (this.GetComponent<Rigidbody> ()) {	//if we have as rigidbody
 				Rigidbody rb = this.GetComponent<Rigidbody> ();
