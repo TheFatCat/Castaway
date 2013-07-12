@@ -25,7 +25,16 @@ public class CutsceneEditor : Editor{
 		//EditorGUILayout.IntPopup(
 		curentlySelected = EditorGUILayout.Popup(curentlySelected,elementTypes);
 		
-		if(GUI.Button(new Rect(0,800,100,50), "Add Element")){
+		foreach(CutSceneElement element in cutScene.getInactiveElements()){
+			//if(element != null)
+			element.DrawGUI();
+			EditorGUILayout.LabelField("##############################");
+
+			
+		}
+		Rect buttonRect = EditorGUILayout.BeginVertical();
+		EditorGUILayout.LabelField("Add new element");
+		if(GUI.Button(buttonRect, "Add Element")){
 			//cutScene.addElement(new Move());
 			switch(curentlySelected){
 			case 0:
@@ -38,16 +47,18 @@ public class CutsceneEditor : Editor{
 				break;
 			}
 		}
-		if(GUI.Button(new Rect(200,800,100,50), "Remove Element")){
+		EditorGUILayout.EndVertical();
+		
+		buttonRect = EditorGUILayout.BeginVertical();
+		EditorGUILayout.LabelField("clearelements");
+
+		if(GUI.Button(buttonRect, "Remove Element")){
 			CutSceneElement element = cutScene.getInactiveElements().ToArray()[cutScene.getInactiveElements().Count -1];
 			//cutScene.getInactiveElements().Remove(element);
 			//DestroyImmediate(element);
 			cutScene.inactiveMoves.Clear();
 		}
-		foreach(CutSceneElement element in cutScene.getInactiveElements()){
-			//if(element != null)
-			element.DrawGUI();
-		}
+		EditorGUILayout.EndVertical();
 		if(GUI.changed){
 			EditorUtility.SetDirty (target);
 		}
