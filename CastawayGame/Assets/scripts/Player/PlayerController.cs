@@ -38,6 +38,11 @@ CharacterController controller;
 //collision flags from controller
 private CollisionFlags collisionFlags; 
 private Status status;
+	//for input
+	private double h = 0.0f;
+	private double v = 0.0f;
+	//for external control
+	private bool jump = false;
 private Vector3 moveDirection = Vector3.zero;
 //audio
 public AudioClip[] crouchFootsteps;
@@ -61,7 +66,11 @@ void OnControllerColliderHit(ControllerColliderHit hit){
 	}
 }
 
-
+void SetInput(double fH, double fV, bool fjump){	//set the inputs to fake things.  For shooting and throwing, simply call the appropriate functions
+		h = fH;
+		v = fV;
+		jump = fjump;
+}
 
 	
 public void takeDamage(int damage){
@@ -111,12 +120,11 @@ void  Update ()
 		//hold our z value to center player
 		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
 		//get inputs
-		double h = Input.GetAxisRaw ("Horizontal");
-		double v = Input.GetAxisRaw ("Vertical");
-		if (frozen) {
-			h = 0;
-			v = 0;
+		if(!frozen){	//if we're not frozen, or not being controlled
+			h = Input.GetAxisRaw ("Horizontal");
+			v = Input.GetAxisRaw ("Vertical");
 		}
+
 		//PlayerSpriteAnimate overAnimator = overlay.GetComponent<PlayerSpriteAnimate> ();
 		PlayerSpriteAnimate animator = GetComponent<PlayerSpriteAnimate> ();
 	
@@ -224,7 +232,10 @@ void  Update ()
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (Input.GetButtonDown ("Jump") && !frozen && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {
+			if (((Input.GetButtonDown ("Jump") && !frozen) || jump) && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {
+				//reset jump input
+				jump = false;
+
 				//play sound
 				if (jumpSound) {
 					audio.PlayOneShot (jumpSound);
@@ -503,6 +514,14 @@ public void  fire (){
 			shootTimer = 0.0f;
 			weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
 		}
+}
+
+public void Toss (){	//throw
+	if (canThrow) {
+		throwing = true;
+		shooting = false;
+		shootTimer = 0.0f;//quicker than shoot
+	}
 }
 
 public void Hit (){
