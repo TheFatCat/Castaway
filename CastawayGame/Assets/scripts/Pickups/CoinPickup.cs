@@ -8,15 +8,13 @@ public class CoinPickup : MonoBehaviour {
 	[SerializeField] private GameObject coinFlash; //the flash after coin is picked up
 	[SerializeField] private GameObject coinName;	//the text prefab that appears when picket up
 	[SerializeField] private int coinValue; // the number of coins reveived from this pickup
-	public float startSpeed = 1.0f;
+
 
 
 
 	void Start () {
 		this.collider.isTrigger = true;	//this is really unnessessary....
-		if (this.GetComponent<Rigidbody> ()) {
-			this.GetComponent<Rigidbody> ().velocity = new Vector3 ((Random.value - 0.5f) * 2.0f * startSpeed, startSpeed + (Random.value * startSpeed), 0.0f);
-		}
+
 	}
 	
 	
@@ -29,17 +27,6 @@ public class CoinPickup : MonoBehaviour {
 			PlayerController.getPlayer ().GetComponent<Inventory> ().addCoins (coinValue);
 			Destroy (gameObject);
 
-		} else if(!collider.isTrigger  && collider.tag != "Bullet"){	//we touched something else
-			Debug.Log ("touched" + collider.name);
-			if (this.GetComponent<Rigidbody> ()) {	//if we have as rigidbody
-				Rigidbody rb = this.GetComponent<Rigidbody> ();
-				rb.isKinematic = true;	//stop  movin
-
-
-
-			}
-
-		}
-		
+		} 
 	}
 }
