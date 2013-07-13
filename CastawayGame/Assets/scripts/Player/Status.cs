@@ -78,7 +78,7 @@ public class Status :MonoBehaviour {
 
 			//instantiate the hit prefab
 			if(hitPrefab != null){
-				Instantiate(hitPrefab,transform.position, Quaternion.identity);
+				Instantiate(hitPrefab,transform.position + offset, Quaternion.identity);
 			}
 
 			flashTimer = 0;
