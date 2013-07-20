@@ -6,9 +6,12 @@ public class Bullet : MonoBehaviour {
 	public float deathTime = 2f;//how many seconds till destroyed
 	float timer = 0f;
 	public int damage = 1; // how much damage this bullet will do to a status
+	public int critDamage = 2;
 	//hit particles
-	public Transform normalHit;
 	public Transform damageHit;
+	public Transform damageCrit;	//critical Hit
+	public float critChance = 0.0f;
+	public Transform normalHit;
 	public Transform sandyHit;
 	public Transform woodenHit;
 	public GameObject HPText;	//for the generic text
@@ -21,19 +24,32 @@ public class Bullet : MonoBehaviour {
 		// if the object has a status take health from the status and destroy the bullet
 		Status status = collision.transform.GetComponent<Status>();
 		if(status != null && !collision.transform.tag.Equals("Player")){
-			status.substractHealth(damage);
-			//we hit an enemy
-			Instantiate(damageHit,transform.position,transform.rotation);
-			//instantiate the damage text
-			GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
-			name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
+			//roll and see if we did critical damage
+			if(Random.value < critChance){
+				//CRITICAL HIT
+				status.substractHealth (critDamage);
+				Instantiate(damageCrit,transform.position,transform.rotation);
+				//instantiate the damage text
+				GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+				name.GetComponent<TextMesh> ().text = "-" + critDamage.ToString();
+
+			} else{
+				//we hit an enemy
+				status.substractHealth(damage);
+				Instantiate(damageHit,transform.position,transform.rotation);
+				//instantiate the damage text
+				GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+				name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
+
+			}
+
 		}
 		//check for the material of what we hit	
 		string tag = collision.transform.tag;
 		if(tag.Equals("Sand")){
 			// we hit sand
 			Instantiate(sandyHit,transform.position,transform.rotation);
-		} else  if(tag.Equals("ood")){
+		} else  if(tag.Equals("Wood")){
 			//we hit wood
 			Instantiate(woodenHit,transform.position,transform.rotation);
 		} else if(status == null){

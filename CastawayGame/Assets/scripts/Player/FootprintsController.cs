@@ -7,9 +7,6 @@ public class FootprintsController : MonoBehaviour {
 	public Vector3 offset;
 	private CharacterController controller;
 	private ParticleSystem ps;
-	public AudioClip[] sandFootsteps;
-	public float soundDistance = 1.0f;		//distance between sounds
-	public float soundTrigger = 0.0f;
 	private float trigger = 0.0f;			//distance trigger
 	public float triggerdistance = 1.0f;	//how far between prints
 	public float raylength = 3.0f;
@@ -22,7 +19,7 @@ public class FootprintsController : MonoBehaviour {
 		controller = player.GetComponent<CharacterController>();
 		ps = GetComponent<ParticleSystem>();
 		trigger = transform.position.x + triggerdistance;	//start off the trigger a little to the right
-		soundTrigger = transform.position.x + soundDistance;	//start off the sound trigger a little to the right
+		//soundTrigger = transform.position.x + soundDistance;	//start off the sound trigger a little to the right
 	}
 	
 	// Update is called once per frame
@@ -33,10 +30,15 @@ public class FootprintsController : MonoBehaviour {
 		transform.position += offset;
 		//ps.Emit(1);	//emit a particle
 		if (controller.isGrounded) {
+
 			RaycastHit hit;
-			if (Physics.Raycast (transform.position, Vector3.up * -raylength, out hit, mask.value)) {
+			//Debug.DrawLine (transform.position, transform.position + Vector3.up, Color.blue);
+			//Debug.DrawLine (transform.position, transform.position + (Vector3.up * -raylength), Color.red);
+			if (Physics.Raycast (transform.position, -Vector3.up,  out hit,raylength, mask.value)) {
+				//Debug.Log (hit.transform.tag);
 				//ps.Emit(1);	//emit a particle
 				if (hit.transform.tag.Equals ("Sand")) {
+
 					if (transform.position.x >= trigger + triggerdistance) {//if we went farther to the right than the trigger
 						ps.Emit (1);	//emit a particle
 						trigger += triggerdistance;	//advance the trigger
@@ -45,27 +47,7 @@ public class FootprintsController : MonoBehaviour {
 						ps.Emit (1);	//emit a particle
 						trigger -= triggerdistance;	//advance the trigger
 					}
-					//sound 
-					/*
-					if (transform.position.x >= soundTrigger) {	//far enough right to make a sound
-						int index = (int) (Random.value * sandFootsteps.Length);
-						if (sandFootsteps[index]) {
-							audio.PlayOneShot (sandFootsteps[index]);
-						}
-						Debug.Log ("went right");
 
-						soundTrigger += soundDistance;	//advance the sound Trigger
-					} else if (transform.position.x <= soundTrigger - soundDistance) { // far enough left to make a sound
-						int index = (int) (Random.value * sandFootsteps.Length);
-						if (sandFootsteps[index]) {
-							audio.PlayOneShot (sandFootsteps[index]);
-						}
-
-						Debug.Log ("went left");
-
-						soundTrigger -= soundDistance;	//advance the sound Trigger
-					}
-					*/
 
 				}
 			

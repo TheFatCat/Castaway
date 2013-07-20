@@ -361,7 +361,7 @@ void  Update ()
 		//if we bumped our head
 		if(Physics.Raycast(transform.position, Vector3.up,5, mask.value) && moveDirection.y > 0){
 			//we hit something
-			SetVelocity(new Vector3(moveDirection.x,0,0));
+			SetVelocity(new Vector3(moveDirection.x,0,(float)(-1.0f * gravity)));
 
 
 		}
