@@ -88,6 +88,7 @@ void  Start (){
 
 public static Transform getPlayer(){
 		return player;
+
 }
 	
 public int  getDirectionY (){ //returns a value, 1 if facing up, -1 if facing down, 0 if facing left or right
