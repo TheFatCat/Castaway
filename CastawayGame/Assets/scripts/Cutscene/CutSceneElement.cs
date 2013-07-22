@@ -9,7 +9,7 @@ public class  CutSceneElement {
 	[SerializeField]
 	private float startTime = 0;
 	[SerializeField]
-	private float duration = 0;
+	protected float duration = 0;
 	
 	
 	public void OnEnable(){

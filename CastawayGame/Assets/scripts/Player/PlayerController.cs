@@ -66,7 +66,7 @@ void OnControllerColliderHit(ControllerColliderHit hit){
 	}
 }
 
-void SetInput(double fH, double fV, bool fjump){	//set the inputs to fake things.  For shooting and throwing, simply call the appropriate functions
+public void SetInput(double fH, double fV, bool fjump){	//set the inputs to fake things.  For shooting and throwing, simply call the appropriate functions
 		h = fH;
 		v = fV;
 		jump = fjump;
