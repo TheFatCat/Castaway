@@ -11,12 +11,12 @@ public class PlayerControl : CutSceneElement
 	string[] Options = new string[]{"Horizontal","Vertical","Jump","Shoot"}; 
 	public override void ActionLogic (float deltaTime)
 	{
-		PlayerController player = PlayerController.getPlayer();
+		PlayerController player = PlayerController.getPlayer().GetComponent<PlayerController>();
 		if(i == 0){
-			player.SetInput(moveDirection,0,0);
+			player.SetInput(moveDirection,0,false);
 		}
 		else if(i == 1){
-			player.SetInput(0,moveDirection,0);
+			player.SetInput(0,moveDirection,false);
 		}
 		else if( i == 2){
 			player.SetInput(0,0,true);
