@@ -131,6 +131,8 @@ void  Update ()
 	
 		grounded = IsGrounded ();
 		if (grounded) {	//on ground controlls---------------
+			//don't move down
+			moveDirection.y = -10.0f;
 
 			//smooth out the horizontal vector
 			if (crouching) {

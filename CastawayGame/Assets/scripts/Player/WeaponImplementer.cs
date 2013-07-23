@@ -20,6 +20,18 @@ public class WeaponImplementer : MonoBehaviour{
 	public List<Weapon> getWeapons(){
 		return weapons;
 	}
+
+	public int getAmmo(){
+
+		return currentWeapon.ammo;
+	}
+
+	public int getMaxAmmo(){
+
+		return currentWeapon.maxAmmo;
+
+	}
+
 	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		
 			if(currentWeapon.ammo > 0 && canShoot){	//shoot

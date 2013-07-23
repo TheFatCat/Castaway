@@ -5,9 +5,14 @@ public class HUD : MonoBehaviour {
 	
 	[SerializeField] private Texture healthBarBackground;
 	[SerializeField] private Texture healthBar;
+	[SerializeField] private Texture healthFlash;	//for when we lose health
 	[SerializeField] private Texture healthIcon;
-	[SerializeField] private Vector2 scaleImage = new Vector2(1,1);
+	[SerializeField] private Texture ammoBarBackground;
+	[SerializeField] private Texture ammoBar;
+	[SerializeField] private Texture ammoIcon;
+	private Vector2 scaleImage = new Vector2(1,1);
 	private PlayerStatus playerStatus;
+	private WeaponImplementer playerWeapon;
 	private Inventory inventory;
 	private WeaponImplementer weaponImplementer;
 	DrawBars drawBars ;
@@ -21,10 +26,13 @@ public class HUD : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start(){
-		while(PlayerController.getPlayer() == null){
+		while(PlayerController.getPlayer() == null){	//<-- this is terrible, why would you ever write this?
+
 		}
+		//cache important variables
 		inventory = PlayerController.getPlayer().GetComponent<Inventory>();
 		playerStatus = PlayerController.getPlayer().GetComponent<PlayerStatus>();
+		playerWeapon = PlayerController.getPlayer ().GetComponent<WeaponImplementer> ();
 		weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
 		drawBars = GetComponent<DrawBars>();
 		
@@ -37,19 +45,18 @@ public class HUD : MonoBehaviour {
 	public void unhideHUD(){
 		pullUp = false;
 	}
+
+
 	// Update is called once per frame
 	void Update () {
-		
-		
-		
 		if(pullUp){
 			pullupScale = Mathf.Lerp(pullupScale, 1,0.1f);
 		}
 		else{
 			pullupScale = Mathf.Lerp(pullupScale, 0,0.1f);
 		}
-		scaleImage.x = (Screen.width  - (2 * drawBars.getBarWidth()))/ 800f;
-		scaleImage.y = Screen.height / 600f;
+		scaleImage.x = (float)(Screen.width  - (2 * drawBars.getBarWidth()))/ 800f;
+		scaleImage.y = (float) Screen.height / 600f;
 	}
 	
 	void OnGUI(){
@@ -57,12 +64,25 @@ public class HUD : MonoBehaviour {
 			
 			
 		}
-		GUI.DrawTexture(getRect(0,0, 65 , 65), healthIcon);
-		
-		GUI.DrawTexture( getRect(75,5, 158 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 26 ),healthBar);
-		GUI.DrawTexture(getRect (70, 0, 162  , 34 ), healthBarBackground);
+		//Draw Heart
+		GUI.DrawTexture(getRect(0, 0, 64 , 64), healthIcon);
+		//Draw Bullets
+		GUI.DrawTexture (getRect (736, 0, 64, 64), ammoIcon);
+		//Draw Health
+		if(playerStatus.getHealth() > 0){
+			GUI.DrawTexture( getRect(55,14, 128 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
+		}
+		//Draw Health Background
+		GUI.DrawTexture(getRect (55,12, 128  , 32 ), healthBarBackground);
+		//Draw Ammo
+		if(playerWeapon.getAmmo() > 0){	
+			GUI.DrawTexture( getRect(745,14, -128 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
+		}
+		//Draw Ammo Background
+		GUI.DrawTexture(getRect (617,12, 128  , 32 ), ammoBarBackground);
+
 		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
-		GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
+		//GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
 		/*
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){
 		}*/
