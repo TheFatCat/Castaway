@@ -70,16 +70,16 @@ public class HUD : MonoBehaviour {
 		GUI.DrawTexture (getRect (736, 0, 64, 64), ammoIcon);
 		//Draw Health
 		if(playerStatus.getHealth() > 0){
-			GUI.DrawTexture( getRect(55,14, 128 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
+			GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
 		}
 		//Draw Health Background
-		GUI.DrawTexture(getRect (55,12, 128  , 32 ), healthBarBackground);
+		GUI.DrawTexture(getRect (55,12, 175  , 32 ), healthBarBackground);
 		//Draw Ammo
 		if(playerWeapon.getAmmo() > 0){	
-			GUI.DrawTexture( getRect(745,14, -128 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
+			GUI.DrawTexture( getRect(745,14, -175 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
 		}
 		//Draw Ammo Background
-		GUI.DrawTexture(getRect (617,12, 128  , 32 ), ammoBarBackground);
+		GUI.DrawTexture(getRect (570,12, 175  , 32 ), ammoBarBackground);
 
 		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
 		//GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
