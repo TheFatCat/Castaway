@@ -373,6 +373,7 @@ void  Update ()
 
 
 		}
+		/*
 		//test for secondary fire
 		if (Input.GetButtonDown ("Fire2") && canThrow) {
 			Toss ();
@@ -380,6 +381,7 @@ void  Update ()
 			shooting = false;
 			shootTimer = 0.0f;//quicker than shoot
 		}
+		*/
 	
 		if (throwing) {	//we are throwing
 			if (grounded) {//on the ground
