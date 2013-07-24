@@ -14,6 +14,7 @@ public class WeaponImplementer : MonoBehaviour{
 	*/
 	[SerializeField] private List<Weapon> weapons = new List<Weapon>(); // essentially the players armory
 	public Weapon currentWeapon = null;
+	public Weapon currentWeapon2 = null;
 	private double timer = 0.0; // to keep track of rate of fire
 	
 	
@@ -31,6 +32,22 @@ public class WeaponImplementer : MonoBehaviour{
 		return currentWeapon.maxAmmo;
 
 	}
+
+	public void fire2 (Vector3 bulletLocation,Vector3 bulletDirection, Vector3 playerVelocity){
+		if (currentWeapon2.shootSound) {
+			audio.PlayOneShot (currentWeapon2.shootSound, currentWeapon2.shootVolume);
+		}
+		bulletLocation.x *= -(transform.localScale.x/Mathf.Abs(transform.localScale.x));//change for direction
+		Debug.Log ("threw something");
+		Rigidbody bullet2Clone = Instantiate(currentWeapon2.bullet,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;//instantiate bullet
+		if(transform.localScale.x < 0 ){	
+			bullet2Clone.transform.localScale = new Vector3 (-bullet2Clone.transform.localScale.x,bullet2Clone.transform.localScale.y,bullet2Clone.transform.localScale.z); 
+		}
+		bullet2Clone.transform.parent = transform;
+		//bullet2Clone.velocity = playerVelocity;
+
+	}
+
 
 	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		

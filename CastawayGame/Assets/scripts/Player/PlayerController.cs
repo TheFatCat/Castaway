@@ -31,6 +31,8 @@ public bool  canShoot = true;
 bool  shooting = false;
 public double shotLength = 0.7;
 private double shootTimer= 0.0;
+private Vector3 secondaryMuzzleLocation = Vector3.zero;	//where thrown objects will be spawned
+private Vector3 secondaryMuzzleDirection = Vector3.zero;	//where thrown objects will fly
 private Vector3 muzzleLocation = Vector3.zero;	//where the bullets will be spawned
 private Vector3 muzzleDirection = Vector3.left;	//what direction bullets will fly
 public Transform overlay;
@@ -116,7 +118,7 @@ public int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing 
 // Update is called once per frame
 void  Update ()
 	{
-		
+		Debug.DrawLine (transform.position, transform.position + muzzleLocation, Color.red);
 		
 		//hold our z value to center player
 		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
@@ -146,6 +148,7 @@ void  Update ()
 				}
 				//crouching
 				muzzleLocation = new Vector3 (-3.2f, -0.55f, 0);
+				secondaryMuzzleLocation = new Vector3 (-0.8f, -0.5f, -0.5f);
 				muzzleDirection = new Vector3 ((transform.localScale.x / Mathf.Abs (transform.localScale.x)), 0, 0);
 			
 			} else {
@@ -157,10 +160,12 @@ void  Update ()
 				}
 				if (v > 0.5f) {//looking up
 					muzzleLocation = new Vector3 (-0.101f, 3.63f);
+					secondaryMuzzleLocation = new Vector3 (-0.5f, 1.7f, -0.5f);
 					muzzleDirection = Vector3.up;
 				
 				} else {//looking left
 					muzzleLocation = new Vector3 (-3, 1.7082f, 0);
+					secondaryMuzzleLocation = new Vector3 (-0.5f, 1.7f, -0.5f);
 					muzzleDirection = new Vector3 ((transform.localScale.x / Mathf.Abs (transform.localScale.x)), 0, 0);
 				}
 			}
@@ -370,6 +375,7 @@ void  Update ()
 		}
 		//test for secondary fire
 		if (Input.GetButtonDown ("Fire2") && canThrow) {
+			Toss ();
 			throwing = true;
 			shooting = false;
 			shootTimer = 0.0f;//quicker than shoot
@@ -515,15 +521,26 @@ public void  fire (){
 			shooting = true;
 			throwing = false;
 			shootTimer = 0.0f;
-			weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
+			if (grounded) {
+				weapon.fire (muzzleLocation, muzzleDirection, new Vector3 (moveDirection.x, 0.0f, 0.0f));
+			} else {
+				weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
+			}
 		}
 }
 
 public void Toss (){	//throw
 	if (canThrow) {
+		WeaponImplementer weapon = GetComponent<WeaponImplementer> ();
 		throwing = true;
 		shooting = false;
 		shootTimer = 0.0f;//quicker than shoot
+			Debug.Log ("Threw");
+		if (grounded) {
+			weapon.fire2 (secondaryMuzzleLocation, muzzleDirection, new Vector3 (moveDirection.x, 0.0f, 0.0f));
+		} else {
+			weapon.fire2 (secondaryMuzzleLocation, muzzleDirection, moveDirection);
+		}
 	}
 }
 
