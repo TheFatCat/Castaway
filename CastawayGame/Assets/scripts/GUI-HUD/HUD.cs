@@ -101,7 +101,7 @@ public class HUD : MonoBehaviour {
 			//Draw Weapon Icon
 			GUI.DrawTexture(getRect(375, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
 		}
-		//GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
+		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
 		//GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
 		/*
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){

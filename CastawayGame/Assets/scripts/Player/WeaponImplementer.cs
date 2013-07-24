@@ -142,7 +142,13 @@ public class WeaponImplementer : MonoBehaviour{
 		
 	}
 	
-	
+	public void addAmmo(int value){
+		currentWeapon.ammo += value;
+		if(currentWeapon.ammo > currentWeapon.maxAmmo){
+			currentWeapon.ammo = currentWeapon.maxAmmo;
+		}
+	}
+
 	public Weapon getCurrentWeapon(){
 		return currentWeapon;
 	}
