@@ -13,7 +13,7 @@ public class WeaponImplementer : MonoBehaviour{
 	public double fireRate = 0.2;//seconds per shot
 	*/
 	[SerializeField] private List<Weapon> weapons = new List<Weapon>(); // essentially the players armory
-	[SerializeField] private Weapon currentWeapon;
+	public Weapon currentWeapon = null;
 	private double timer = 0.0; // to keep track of rate of fire
 	
 	

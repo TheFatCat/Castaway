@@ -14,8 +14,11 @@ public class HUD : MonoBehaviour {
 	private PlayerStatus playerStatus;
 	private WeaponImplementer playerWeapon;
 	private Inventory inventory;
-	private WeaponImplementer weaponImplementer;
+	//private WeaponImplementer weaponImplementer;
 	DrawBars drawBars ;
+	public float flashTime = 0.1f;
+	private float timer = 5000f;
+
 	
 	//For pulling the hud up or down when we want to hide it
 	float pullupScale = 0;
@@ -33,7 +36,7 @@ public class HUD : MonoBehaviour {
 		inventory = PlayerController.getPlayer().GetComponent<Inventory>();
 		playerStatus = PlayerController.getPlayer().GetComponent<PlayerStatus>();
 		playerWeapon = PlayerController.getPlayer ().GetComponent<WeaponImplementer> ();
-		weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
+		//weaponImplementer = PlayerController.getPlayer().GetComponent<WeaponImplementer>();	
 		drawBars = GetComponent<DrawBars>();
 		
 	}
@@ -46,9 +49,14 @@ public class HUD : MonoBehaviour {
 		pullUp = false;
 	}
 
+	public void hit(){
+		timer = 0.0f;
+	}
+
 
 	// Update is called once per frame
 	void Update () {
+		timer += Time.deltaTime;
 		if(pullUp){
 			pullupScale = Mathf.Lerp(pullupScale, 1,0.1f);
 		}
@@ -58,7 +66,8 @@ public class HUD : MonoBehaviour {
 		scaleImage.x = (float)(Screen.width  - (2 * drawBars.getBarWidth()))/ 800f;
 		scaleImage.y = (float) Screen.height / 600f;
 	}
-	
+
+
 	void OnGUI(){
 		if(playerStatus == null){
 			
@@ -66,27 +75,38 @@ public class HUD : MonoBehaviour {
 		}
 		//Draw Heart
 		GUI.DrawTexture(getRect(0, 0, 64 , 64), healthIcon);
-		//Draw Bullets
-		GUI.DrawTexture (getRect (736, 0, 64, 64), ammoIcon);
+
 		//Draw Health
 		if(playerStatus.getHealth() > 0){
-			GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
+			if(timer < flashTime){	//we're in the zone!
+				GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthFlash);
+			}else{
+				GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
+			}
+
 		}
 		//Draw Health Background
 		GUI.DrawTexture(getRect (55,12, 175  , 32 ), healthBarBackground);
-		//Draw Ammo
-		if(playerWeapon.getAmmo() > 0){	
-			GUI.DrawTexture( getRect(745,14, -175 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
-		}
-		//Draw Ammo Background
-		GUI.DrawTexture(getRect (570,12, 175  , 32 ), ammoBarBackground);
 
-		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
+		//only draw ammo if we have a gun
+		if(playerWeapon.getMaxAmmo() != 0){	//neeed to find a better way to check whether we have a weapon
+			//Draw Bullets
+			GUI.DrawTexture (getRect (736, 0, 64, 64), ammoIcon);
+			//Draw Ammo
+			if(playerWeapon.getAmmo() > 0){	
+				GUI.DrawTexture( getRect(745,14, -175 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
+			}
+			//Draw Ammo Background
+			GUI.DrawTexture(getRect (570,12, 175  , 32 ), ammoBarBackground);
+			//Draw Weapon Icon
+			GUI.DrawTexture(getRect(375, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
+		}
+		//GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
 		//GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
 		/*
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){
 		}*/
-		GUI.DrawTexture(getRect(375, 0 , 50, 50) , weaponImplementer.getCurrentWeapon().weaponIcon);
+
 		     
 	}
 	

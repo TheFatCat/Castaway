@@ -6,6 +6,8 @@ public class PlayerStatus : Status {
 	//private PlayerSpriteAnimate PlayerAnimator;
 	private PlayerController controller;
 	//public float invincibleTime = 1.0f;
+	public HUD hud;
+	public GameObject HPText;
 	public float invincibleIncrement = 0.05f;
 	private float invincibleFlashTimer = 0.0f;
 	public float deadTime = 5.0f;	//for keeping track of how long the player is dead
@@ -62,12 +64,20 @@ public class PlayerStatus : Status {
 		if(! invincible){
 			//lets get hit
 			controller.Hit();
+			//invincible = true;
+
+			//Transform player = controller.getPlayer();
+			//HUD hud = GetComponent<HUD> ();
+			hud.hit ();
 
 			//instantiate the hit prefab
 			if(hitPrefab != null){
 				Instantiate(hitPrefab,transform.position, Quaternion.identity);
+
 			}
-			
+			//instantiate text
+			GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+			name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
 
 			health -= damage;
 			if(health <= 0){
