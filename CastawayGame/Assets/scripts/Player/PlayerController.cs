@@ -186,7 +186,7 @@ void  Update ()
 				if (h != 0) {//is moving
 		
 					//are we looking up?
-					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.5f,1f,0f),5, mask.value) && !Physics.Raycast(transform.position,new Vector3(-0.5f,1f,0f),5, mask.value)) {//looking up and nothing above us
+					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.2f,1f,0f),5, mask.value) && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -197,7 +197,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchMove);
 						crouching = true;
-					} else if (!Physics.Raycast(transform.position,new Vector3(0.5f,1f,0f),5,mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.5f,1f,0f),5, mask.value)){	//looking forward and nothing above us
+					} else if (!Physics.Raycast(transform.position,new Vector3(0.2f,1f,0f),5,mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -205,7 +205,7 @@ void  Update ()
 			
 				} else {//is idle
 					//are we looking up?
-					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.5f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.5f,1f,0f),5, mask.value)) {//looking up and nothing above us
+					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -216,7 +216,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = true;
-					} else if (!Physics.Raycast(transform.position, new Vector3(0.5f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.5f,1f,0f),5, mask.value)){	//looking forward and nothing above us
+					} else if (!Physics.Raycast(transform.position, new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -240,7 +240,7 @@ void  Update ()
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (((Input.GetButtonDown ("Jump") && !frozen) || jump) && !Physics.Raycast(transform.position,new Vector3(0.5f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.5f,1f,0f),5, mask.value)) {
+			if (((Input.GetButtonDown ("Jump") && !frozen) || jump) && !Physics.Raycast(transform.position,new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {
 				//reset jump input
 				jump = false;
 
