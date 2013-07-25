@@ -9,12 +9,13 @@ public class shadow : MonoBehaviour {
 	public int maxAlpha = 150;
 	public int minAlpha = 50;
 	public float alpha= 0f;
+	public LayerMask mask;
 
 	// Update is called once per frame
 	void Update ()
 		{
 			//if there is something below the parent, put us there
-			int mask = ~(1 << 10);
+			
 			RaycastHit hit;
 			if (Physics.Raycast (parent.position, -Vector3.up, out hit, 100f, mask)) {
 						transform.position = hit.point;

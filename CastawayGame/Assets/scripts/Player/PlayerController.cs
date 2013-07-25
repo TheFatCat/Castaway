@@ -31,6 +31,8 @@ public bool  canShoot = true;
 bool  shooting = false;
 public double shotLength = 0.7;
 private double shootTimer= 0.0;
+private Vector3 secondaryMuzzleLocation = Vector3.zero;	//where thrown objects will be spawned
+private Vector3 secondaryMuzzleDirection = Vector3.zero;	//where thrown objects will fly
 private Vector3 muzzleLocation = Vector3.zero;	//where the bullets will be spawned
 private Vector3 muzzleDirection = Vector3.left;	//what direction bullets will fly
 public Transform overlay;
@@ -116,7 +118,7 @@ public int  getDirectionX (){//returns a value, 1 if facing right, -1 if facing 
 // Update is called once per frame
 void  Update ()
 	{
-		
+		Debug.DrawLine (transform.position, transform.position + muzzleLocation, Color.red);
 		
 		//hold our z value to center player
 		transform.position = new Vector3 (transform.position.x, transform.position.y, zPosition);
@@ -131,6 +133,8 @@ void  Update ()
 	
 		grounded = IsGrounded ();
 		if (grounded) {	//on ground controlls---------------
+			//don't move down
+			moveDirection.y = -10.0f;
 
 			//smooth out the horizontal vector
 			if (crouching) {
@@ -144,6 +148,7 @@ void  Update ()
 				}
 				//crouching
 				muzzleLocation = new Vector3 (-3.2f, -0.55f, 0);
+				secondaryMuzzleLocation = new Vector3 (-0.8f, -0.5f, -0.5f);
 				muzzleDirection = new Vector3 ((transform.localScale.x / Mathf.Abs (transform.localScale.x)), 0, 0);
 			
 			} else {
@@ -155,10 +160,12 @@ void  Update ()
 				}
 				if (v > 0.5f) {//looking up
 					muzzleLocation = new Vector3 (-0.101f, 3.63f);
+					secondaryMuzzleLocation = new Vector3 (-0.5f, 1.7f, -0.5f);
 					muzzleDirection = Vector3.up;
 				
 				} else {//looking left
 					muzzleLocation = new Vector3 (-3, 1.7082f, 0);
+					secondaryMuzzleLocation = new Vector3 (-0.5f, 1.7f, -0.5f);
 					muzzleDirection = new Vector3 ((transform.localScale.x / Mathf.Abs (transform.localScale.x)), 0, 0);
 				}
 			}
@@ -179,7 +186,7 @@ void  Update ()
 				if (h != 0) {//is moving
 		
 					//are we looking up?
-					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//looking up and nothing above us
+					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.2f,1f,0f),5, mask.value) && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -190,7 +197,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchMove);
 						crouching = true;
-					} else if (!Physics.Raycast(transform.position, Vector3.up,5,mask.value)){	//looking forward and nothing above us
+					} else if (!Physics.Raycast(transform.position,new Vector3(0.2f,1f,0f),5,mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.MoveLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -198,7 +205,7 @@ void  Update ()
 			
 				} else {//is idle
 					//are we looking up?
-					if (v > 0.5f && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {//looking up and nothing above us
+					if (v > 0.5f && !Physics.Raycast(transform.position,new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {//looking up and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleUp);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleUp);
@@ -209,7 +216,7 @@ void  Update ()
 						}
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.CrouchLeft);
 						crouching = true;
-					} else if (!Physics.Raycast(transform.position, Vector3.up,5, mask.value)){	//looking forward and nothing above us
+					} else if (!Physics.Raycast(transform.position, new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)){	//looking forward and nothing above us
 						crouching = false;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.IdleLeft);
 						animator.SetFallback (PlayerSpriteAnimate.animationType.IdleLeft);
@@ -233,7 +240,7 @@ void  Update ()
 			}
 		
 			//we are on the ground, so check if we can jump
-			if (((Input.GetButtonDown ("Jump") && !frozen) || jump) && !Physics.Raycast(transform.position, Vector3.up,5, mask.value)) {
+			if (((Input.GetButtonDown ("Jump") && !frozen) || jump) && !Physics.Raycast(transform.position,new Vector3(0.2f,1,0),5, mask.value)  && !Physics.Raycast(transform.position,new Vector3(-0.2f,1f,0f),5, mask.value)) {
 				//reset jump input
 				jump = false;
 
@@ -366,16 +373,19 @@ void  Update ()
 
 
 		}
+		/*
 		//test for secondary fire
 		if (Input.GetButtonDown ("Fire2") && canThrow) {
+			Toss ();
 			throwing = true;
 			shooting = false;
 			shootTimer = 0.0f;//quicker than shoot
 		}
+		*/
 	
 		if (throwing) {	//we are throwing
 			if (grounded) {//on the ground
-				if (v < -0.5f) {//crouching
+				if (crouching) {//crouching
 					animator.SetAnimation (PlayerSpriteAnimate.animationType.ThrowCrouch);
 					moveDirection.x = 0;	//cant move while crouching and throwing
 				} else {//left
@@ -513,15 +523,26 @@ public void  fire (){
 			shooting = true;
 			throwing = false;
 			shootTimer = 0.0f;
-			weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
+			if (grounded) {
+				weapon.fire (muzzleLocation, muzzleDirection, new Vector3 (moveDirection.x, 0.0f, 0.0f));
+			} else {
+				weapon.fire (muzzleLocation, muzzleDirection, moveDirection);
+			}
 		}
 }
 
 public void Toss (){	//throw
 	if (canThrow) {
+		WeaponImplementer weapon = GetComponent<WeaponImplementer> ();
 		throwing = true;
 		shooting = false;
 		shootTimer = 0.0f;//quicker than shoot
+			Debug.Log ("Threw");
+		if (grounded) {
+			weapon.fire2 (secondaryMuzzleLocation, muzzleDirection, new Vector3 (moveDirection.x, 0.0f, 0.0f));
+		} else {
+			weapon.fire2 (secondaryMuzzleLocation, muzzleDirection, moveDirection);
+		}
 	}
 }
 

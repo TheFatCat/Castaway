@@ -13,7 +13,7 @@ public class DroppablePickup : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider collider){
-		if(!collider.isTrigger  && collider.tag != "Bullet"){	//we touched something else
+		if(!collider.isTrigger  && collider.tag != "Bullet" && collider.tag != "Enemy" && !collider.isTrigger){	//we touched something else
 			Debug.Log ("touched" + collider.name);
 			if (this.GetComponent<Rigidbody> ()) {	//if we have as rigidbody
 				Rigidbody rb = this.GetComponent<Rigidbody> ();

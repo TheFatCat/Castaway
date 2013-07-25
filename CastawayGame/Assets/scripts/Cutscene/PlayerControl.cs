@@ -19,6 +19,7 @@ public class PlayerControl : CutSceneElement
 		}
 		else if(i == 1){
 			player.SetInput(0,(double)moveDirection,false);
+
 		}
 		else if( i == 2){
 			player.SetInput(0,0,true);

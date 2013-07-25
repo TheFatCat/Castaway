@@ -13,13 +13,45 @@ public class WeaponImplementer : MonoBehaviour{
 	public double fireRate = 0.2;//seconds per shot
 	*/
 	[SerializeField] private List<Weapon> weapons = new List<Weapon>(); // essentially the players armory
-	[SerializeField] private Weapon currentWeapon;
+	public Weapon currentWeapon = null;
+	public Weapon currentWeapon2 = null;
 	private double timer = 0.0; // to keep track of rate of fire
 	
 	
 	public List<Weapon> getWeapons(){
 		return weapons;
 	}
+
+	public int getAmmo(){
+
+		return currentWeapon.ammo;
+	}
+
+	public int getMaxAmmo(){
+
+		return currentWeapon.maxAmmo;
+
+	}
+
+	public void fire2 (Vector3 bulletLocation,Vector3 bulletDirection, Vector3 playerVelocity){
+
+			
+			if (currentWeapon2.shootSound) {
+				audio.PlayOneShot (currentWeapon2.shootSound, currentWeapon2.shootVolume);
+			}
+			bulletLocation.x *= -(transform.localScale.x/Mathf.Abs(transform.localScale.x));//change for direction
+			Debug.Log ("threw something");
+			Rigidbody bullet2Clone = Instantiate(currentWeapon2.bullet,transform.position + bulletLocation, Quaternion.identity) as Rigidbody;//instantiate bullet
+			if(transform.localScale.x < 0 ){	
+				bullet2Clone.transform.localScale = new Vector3 (-bullet2Clone.transform.localScale.x,bullet2Clone.transform.localScale.y,bullet2Clone.transform.localScale.z); 
+			}
+			bullet2Clone.transform.parent = transform;
+			//bullet2Clone.velocity = playerVelocity;
+
+
+	}
+
+
 	public void  fire (Vector3 bulletLocation, Vector3 bulletDirection, Vector3 playerVelocity){
 		
 			if(currentWeapon.ammo > 0 && canShoot){	//shoot
@@ -87,11 +119,16 @@ public class WeaponImplementer : MonoBehaviour{
 	
 	void  Update (){
 		timer+= Time.deltaTime;	
-		if((Input.GetButtonDown("Fire1") || (Input.GetButton("Fire1") && currentWeapon.automatic) )&& timer >= currentWeapon.timeBetweenShots ){
+		if ((Input.GetButtonDown ("Fire1") || (Input.GetButton ("Fire1") && currentWeapon.automatic)) && timer >= currentWeapon.timeBetweenShots) {
 			timer = 0.0f;
 			
-			PlayerController controller = GetComponent<PlayerController>();
-			controller.fire();
+			PlayerController controller = GetComponent<PlayerController> ();
+			controller.fire ();
+		} else if (Input.GetButtonDown ("Fire2") && timer >= currentWeapon2.timeBetweenShots) {
+			timer = 0.0f;
+			PlayerController controller = GetComponent<PlayerController> ();
+			controller.Toss ();
+
 		}
 	}
 	
@@ -105,7 +142,13 @@ public class WeaponImplementer : MonoBehaviour{
 		
 	}
 	
-	
+	public void addAmmo(int value){
+		currentWeapon.ammo += value;
+		if(currentWeapon.ammo > currentWeapon.maxAmmo){
+			currentWeapon.ammo = currentWeapon.maxAmmo;
+		}
+	}
+
 	public Weapon getCurrentWeapon(){
 		return currentWeapon;
 	}
