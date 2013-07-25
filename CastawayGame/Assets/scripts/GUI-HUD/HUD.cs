@@ -11,11 +11,12 @@ public class HUD : MonoBehaviour {
 	[SerializeField] private Texture ammoBar;
 	[SerializeField] private Texture ammoIcon;
 	[SerializeField] private GUIText healthText;
+	[SerializeField] private Font healthFont;
+	[SerializeField] private Font healthFlashFont;
 	[SerializeField] private GUIText ammoText;
 
 
-	[SerializeField] private GUIStyle healthStyle;
-	[SerializeField] private GUIStyle ammoStyle;
+
 	private Vector2 scaleImage = new Vector2(1,1);
 	private PlayerStatus playerStatus;
 	private WeaponImplementer playerWeapon;
@@ -83,11 +84,14 @@ public class HUD : MonoBehaviour {
 		GUI.DrawTexture(getRect(0, 0, 64 , 64), healthIcon);
 		//Draw Health numbers
 		//GUI.Label (getRect (235,-10,120,40), playerStatus.getHealth () + "", healthStyle);
-		healthText.pixelOffset = new Vector2 (drawBars.getBarWidth() + scaleImage.x * 235, (550 * scaleImage.y)+ 60);
-		healthText.text = playerStatus.getHealth () + "";
+
 
 		//Draw Health
-		if(playerStatus.getHealth() > 0){
+		if(playerStatus.getHealth() >= 0){
+			//draw health numbers
+			healthText.pixelOffset = new Vector2 (drawBars.getBarWidth() + scaleImage.x * 235, (550 * scaleImage.y)+ 60);
+			healthText.text = playerStatus.getHealth () + "";
+
 			if(timer < flashTime){	//we're in the zone!
 				GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthFlash);
 			}else{
