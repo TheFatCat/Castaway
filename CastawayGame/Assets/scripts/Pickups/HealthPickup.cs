@@ -23,8 +23,12 @@ public class HealthPickup : MonoBehaviour {
 		if (collider.transform == PlayerController.getPlayer ()) {
 			Instantiate (healthPoof, transform.position, Quaternion.identity);
 			GameObject name = Instantiate (healthName, transform.position, Quaternion.identity) as GameObject;
-			name.GetComponent<TextMesh> ().text = "+" + healthValue.ToString ();
+			if (healthValue != 0) {
+				name.GetComponent<TextMesh> ().text = "+" + healthValue.ToString ();
+			}
+			Debug.Log ("gained " + healthValue + " health");
 			PlayerController.getPlayer ().GetComponent<PlayerStatus> ().addHealth (healthValue);
+			healthValue = 0;
 			Destroy (gameObject);
 
 		} 
