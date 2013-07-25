@@ -17,12 +17,15 @@ public class CutScene : MonoBehaviour {
 	[SerializeField]
 	public List<CutsceneVisibility> inactiveCutsceneVisibilities;
 	[SerializeField]
+	public List<CutsceneWaitForInput> inactiveCutsceneWaitForInputs;
+	[SerializeField]
 	private List<CutSceneElement> inactiveCutsceneElements ; 
 	[SerializeField]
 	private List<CutSceneElement> activeCutSceneElements;
 	[SerializeField]
 	bool startedEditor = false;
 	
+	private int timeMultiplier = 1;
 	// Use this for initialization
 	void Start(){
 		Debug.Log("cutscene size " + inactiveCutsceneElements.Count);
@@ -67,6 +70,7 @@ public class CutScene : MonoBehaviour {
 			inactiveMoves = new List<Move>();
 			inactiveInstantiateDestroys = new List<CutsceneInstantiateDestroy>();
 			inactiveCutsceneVisibilities = new List<CutsceneVisibility>();
+			inactiveCutsceneWaitForInputs = new List<CutsceneWaitForInput>();
 		}
 	}
 	
@@ -82,7 +86,7 @@ public class CutScene : MonoBehaviour {
 		inactiveCutsceneElements.AddRange(inactiveInstantiateDestroys.ToArray());
 		inactiveCutsceneElements.AddRange(inactivePlayerControls.ToArray());
 		inactiveCutsceneElements.AddRange(inactiveCutsceneVisibilities.ToArray());
-
+		inactiveCutsceneElements.AddRange(inactiveCutsceneWaitForInputs.ToArray());
 		start = true;
 	}
 	public void addElement(CutSceneElement element){
@@ -99,6 +103,9 @@ public class CutScene : MonoBehaviour {
 		else if(element.GetType() == (typeof(CutsceneVisibility))){
 			inactiveCutsceneVisibilities.Add(new CutsceneVisibility());
 		}
+		else if(element.GetType() == (typeof(CutsceneWaitForInput))){
+			inactiveCutsceneWaitForInputs.Add(new CutsceneWaitForInput());
+		}
 		inactiveCutsceneElements.Add(element);	
 		
 	}
@@ -106,6 +113,18 @@ public class CutScene : MonoBehaviour {
 	public void removeElement(CutSceneElement element){
 		if(element.GetType() ==  (typeof( Move))){
 			inactiveMoves.Remove((Move) element);
+		}
+		else if(element.GetType() ==  (typeof( CutsceneInstantiateDestroy))){
+			inactiveInstantiateDestroys.Remove((CutsceneInstantiateDestroy) element);
+		}
+		else if(element.GetType() ==  (typeof(PlayerControl))){
+			inactivePlayerControls.Remove((PlayerControl) element);
+		}
+		else if(element.GetType() ==  (typeof(CutsceneVisibility))){
+			inactiveCutsceneVisibilities.Remove((CutsceneVisibility) element);
+		}
+		else if(element.GetType() ==  (typeof(CutsceneWaitForInput))){
+			inactiveCutsceneWaitForInputs.Remove((CutsceneWaitForInput) element);
 		}
 		inactiveCutsceneElements.Remove(element);	
 	}
@@ -115,8 +134,9 @@ public class CutScene : MonoBehaviour {
 		//Debug.Log("Update");
 		if(start){
 			PlayerController.getPlayer().GetComponent<PlayerController>().SetFrozen(true);
-			float deltaTime = Time.deltaTime;
+			float deltaTime = Time.deltaTime * timeMultiplier;
 			timer += deltaTime;
+			timeMultiplier = 1;
 			for(int i = 0; i < inactiveCutsceneElements.Count; i ++){
 				CutSceneElement element = inactiveCutsceneElements.ToArray()[i];
 				//Debug.Log("inactive " + element.ToString());
@@ -128,6 +148,9 @@ public class CutScene : MonoBehaviour {
 			}
 			for(int i = 0; i < activeCutSceneElements.Count; i ++){
 				CutSceneElement element = activeCutSceneElements.ToArray()[i];
+				if(element.stopTimer){
+					timeMultiplier = 0;
+				}
 				if(element.getStartTime() + element.getDuration() <= timer && element.noDuration != true){
 					i --;
 					activeCutSceneElements.Remove(element);
