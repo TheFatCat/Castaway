@@ -10,6 +10,12 @@ public class HUD : MonoBehaviour {
 	[SerializeField] private Texture ammoBarBackground;
 	[SerializeField] private Texture ammoBar;
 	[SerializeField] private Texture ammoIcon;
+	[SerializeField] private GUIText healthText;
+	[SerializeField] private GUIText ammoText;
+
+
+	[SerializeField] private GUIStyle healthStyle;
+	[SerializeField] private GUIStyle ammoStyle;
 	private Vector2 scaleImage = new Vector2(1,1);
 	private PlayerStatus playerStatus;
 	private WeaponImplementer playerWeapon;
@@ -75,6 +81,10 @@ public class HUD : MonoBehaviour {
 		}
 		//Draw Heart
 		GUI.DrawTexture(getRect(0, 0, 64 , 64), healthIcon);
+		//Draw Health numbers
+		//GUI.Label (getRect (235,-10,120,40), playerStatus.getHealth () + "", healthStyle);
+		healthText.pixelOffset = new Vector2 (drawBars.getBarWidth() + scaleImage.x * 235, (550 * scaleImage.y)+ 60);
+		healthText.text = playerStatus.getHealth () + "";
 
 		//Draw Health
 		if(playerStatus.getHealth() > 0){
@@ -95,13 +105,20 @@ public class HUD : MonoBehaviour {
 			//Draw Ammo
 			if(playerWeapon.getAmmo() > 0){	
 				GUI.DrawTexture( getRect(745,14, -175 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
+				//draw numbers
+				//GUI.Label (getRect (445,-10,120,60), playerWeapon.getAmmo () + "", ammoStyle);
+
+				ammoText.pixelOffset = new Vector2 (drawBars.getBarWidth() + scaleImage.x * 565, (550 * scaleImage.y)+ 60);
+				ammoText.text = playerWeapon.getAmmo () + "";
 			}
 			//Draw Ammo Background
 			GUI.DrawTexture(getRect (570,12, 175  , 32 ), ammoBarBackground);
 			//Draw Weapon Icon
-			GUI.DrawTexture(getRect(375, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
+			GUI.DrawTexture(getRect(340, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
+			GUI.DrawTexture(getRect(410, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
 		}
-		GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth()); 
+		//GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth(), guistyle); 
+
 		//GUI.TextArea(getRect(745, 0, 50, 50), "" +inventory.getCoins());
 		/*
 		for(int i = 0; i < weaponImplementer.getWeapons().Size(); i ++){
