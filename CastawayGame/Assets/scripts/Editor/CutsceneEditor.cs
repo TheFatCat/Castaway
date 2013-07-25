@@ -7,7 +7,7 @@ public class CutsceneEditor : Editor{
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -17,7 +17,7 @@ public class CutsceneEditor : Editor{
 	
 	int curentlySelected =0; 
 	public override void OnInspectorGUI(){
-		string[] elementTypes = new string[]{"Move" , "InstantiateDestroy"}; 
+		string[] elementTypes = new string[]{"Move" , "InstantiateDestroy","PlayerControl"}; 
 		
 		CutScene cutScene = (CutScene) target;
 		cutScene.StartCutscene();
@@ -25,6 +25,7 @@ public class CutsceneEditor : Editor{
 		//EditorGUILayout.IntPopup(
 		curentlySelected = EditorGUILayout.Popup(curentlySelected,elementTypes);
 		
+
 		foreach(CutSceneElement element in cutScene.getInactiveElements()){
 			//if(element != null)
 			element.DrawGUI();
@@ -43,6 +44,10 @@ public class CutsceneEditor : Editor{
 			case 1:
 				cutScene.addElement(new CutsceneInstantiateDestroy());
 				break;
+			case 2:
+				Debug.Log("Added pplayer control");
+				cutScene.addElement(new PlayerControl());
+				break;
 			default:
 				break;
 			}
@@ -53,10 +58,12 @@ public class CutsceneEditor : Editor{
 		EditorGUILayout.LabelField("clearelements");
 
 		if(GUI.Button(buttonRect, "Remove Element")){
-			CutSceneElement element = cutScene.getInactiveElements().ToArray()[cutScene.getInactiveElements().Count -1];
+			//CutSceneElement element = cutScene.getInactiveElements().ToArray()[cutScene.getInactiveElements().Count -1];
 			//cutScene.getInactiveElements().Remove(element);
 			//DestroyImmediate(element);
 			cutScene.inactiveMoves.Clear();
+			cutScene.inactiveInstantiateDestroys.Clear();
+			cutScene.inactivePlayerControls.Clear();
 		}
 		EditorGUILayout.EndVertical();
 		if(GUI.changed){

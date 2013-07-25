@@ -9,6 +9,8 @@ public class CutScene : MonoBehaviour {
 	private bool start = false;
 	private float timer = 0;
 	[SerializeField]
+	public List<PlayerControl> inactivePlayerControls;
+	[SerializeField]
 	public List<Move> inactiveMoves ;
 	[SerializeField]
 	public List<CutsceneInstantiateDestroy> inactiveInstantiateDestroys;
@@ -60,6 +62,7 @@ public class CutScene : MonoBehaviour {
 			activeCutSceneElements = new List<CutSceneElement>();
 		}
 		if(inactiveMoves == null){
+			inactivePlayerControls = new List<PlayerControl>();
 			inactiveMoves = new List<Move>();
 			inactiveInstantiateDestroys = new List<CutsceneInstantiateDestroy>();
 		}
@@ -74,7 +77,7 @@ public class CutScene : MonoBehaviour {
 		
 		inactiveCutsceneElements.AddRange(inactiveMoves.ToArray());				
 		inactiveCutsceneElements.AddRange(inactiveInstantiateDestroys.ToArray());
-		
+		inactiveCutsceneElements.AddRange(inactivePlayerControls.ToArray());
 
 		start = true;
 	}
@@ -84,6 +87,10 @@ public class CutScene : MonoBehaviour {
 		}
 		else if(element.GetType() ==  (typeof( CutsceneInstantiateDestroy))){
 			inactiveInstantiateDestroys.Add (new CutsceneInstantiateDestroy());
+		}
+		else if(element.GetType() == (typeof(PlayerControl))){
+			Debug.Log("found player type");
+			inactivePlayerControls.Add(new PlayerControl());
 		}
 		inactiveCutsceneElements.Add(element);	
 		
@@ -100,7 +107,7 @@ public class CutScene : MonoBehaviour {
 	void Update () {
 		//Debug.Log("Update");
 		if(start){
-		//	Debug.Log("Has Started");
+			PlayerController.getPlayer().GetComponent<PlayerController>().SetFrozen(true);
 			float deltaTime = Time.deltaTime;
 			timer += deltaTime;
 			for(int i = 0; i < inactiveCutsceneElements.Count; i ++){
@@ -122,6 +129,11 @@ public class CutScene : MonoBehaviour {
 				else{
 					element.ActionLogic(deltaTime);
 				}
+			}
+			//finish
+			if(inactiveCutsceneElements.Count == 0 && activeCutSceneElements.Count == 0){
+				PlayerController.getPlayer().GetComponent<PlayerController>().SetFrozen(false);
+				Destroy(gameObject);
 			}
 		}
 	}
