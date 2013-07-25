@@ -15,6 +15,8 @@ public class CutScene : MonoBehaviour {
 	[SerializeField]
 	public List<CutsceneInstantiateDestroy> inactiveInstantiateDestroys;
 	[SerializeField]
+	public List<CutsceneVisibility> inactiveCutsceneVisibilities;
+	[SerializeField]
 	private List<CutSceneElement> inactiveCutsceneElements ; 
 	[SerializeField]
 	private List<CutSceneElement> activeCutSceneElements;
@@ -55,7 +57,6 @@ public class CutScene : MonoBehaviour {
 	} */
 	
 	public void OnEnable(){
-		Debug.Log("Enabled Cutscene");
 		if(inactiveCutsceneElements == null){
 			Debug.Log("new Arraylist");
 			inactiveCutsceneElements = new List<CutSceneElement>();
@@ -65,6 +66,7 @@ public class CutScene : MonoBehaviour {
 			inactivePlayerControls = new List<PlayerControl>();
 			inactiveMoves = new List<Move>();
 			inactiveInstantiateDestroys = new List<CutsceneInstantiateDestroy>();
+			inactiveCutsceneVisibilities = new List<CutsceneVisibility>();
 		}
 	}
 	
@@ -73,11 +75,13 @@ public class CutScene : MonoBehaviour {
 	}
 	
 	public void StartCutscene(){
+		OnEnable();
 		inactiveCutsceneElements.Clear();
 		
 		inactiveCutsceneElements.AddRange(inactiveMoves.ToArray());				
 		inactiveCutsceneElements.AddRange(inactiveInstantiateDestroys.ToArray());
 		inactiveCutsceneElements.AddRange(inactivePlayerControls.ToArray());
+		inactiveCutsceneElements.AddRange(inactiveCutsceneVisibilities.ToArray());
 
 		start = true;
 	}
@@ -91,6 +95,9 @@ public class CutScene : MonoBehaviour {
 		else if(element.GetType() == (typeof(PlayerControl))){
 			Debug.Log("found player type");
 			inactivePlayerControls.Add(new PlayerControl());
+		}
+		else if(element.GetType() == (typeof(CutsceneVisibility))){
+			inactiveCutsceneVisibilities.Add(new CutsceneVisibility());
 		}
 		inactiveCutsceneElements.Add(element);	
 		
@@ -121,12 +128,13 @@ public class CutScene : MonoBehaviour {
 			}
 			for(int i = 0; i < activeCutSceneElements.Count; i ++){
 				CutSceneElement element = activeCutSceneElements.ToArray()[i];
-				if(element.getStartTime() + element.getDuration() <= timer){
+				if(element.getStartTime() + element.getDuration() <= timer && element.noDuration != true){
 					i --;
 					activeCutSceneElements.Remove(element);
 					//Destroy(element);
 				}
 				else{
+					element.noDuration = false;
 					element.ActionLogic(deltaTime);
 				}
 			}

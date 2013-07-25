@@ -10,7 +10,8 @@ public class  CutSceneElement {
 	private float startTime = 0;
 	[SerializeField]
 	protected float duration = 0;
-	
+	[SerializeField]
+	public bool noDuration = false;
 	
 	public void OnEnable(){
 		Debug.Log("Enabled"+ToString());

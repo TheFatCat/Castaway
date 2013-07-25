@@ -17,7 +17,7 @@ public class CutsceneEditor : Editor{
 	
 	int curentlySelected =0; 
 	public override void OnInspectorGUI(){
-		string[] elementTypes = new string[]{"Move" , "InstantiateDestroy","PlayerControl"}; 
+		string[] elementTypes = new string[]{"Move" , "InstantiateDestroy","PlayerControl","Visibility"}; 
 		
 		CutScene cutScene = (CutScene) target;
 		cutScene.StartCutscene();
@@ -48,6 +48,9 @@ public class CutsceneEditor : Editor{
 				Debug.Log("Added pplayer control");
 				cutScene.addElement(new PlayerControl());
 				break;
+			case 3:
+				cutScene.addElement(new CutsceneVisibility());
+				break;
 			default:
 				break;
 			}
@@ -64,6 +67,7 @@ public class CutsceneEditor : Editor{
 			cutScene.inactiveMoves.Clear();
 			cutScene.inactiveInstantiateDestroys.Clear();
 			cutScene.inactivePlayerControls.Clear();
+			cutScene.inactiveCutsceneVisibilities.Clear();
 		}
 		EditorGUILayout.EndVertical();
 		if(GUI.changed){
