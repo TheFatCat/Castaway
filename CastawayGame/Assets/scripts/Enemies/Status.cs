@@ -15,7 +15,7 @@ public class Status :MonoBehaviour {
 	public GameObject[] drops;
 	//public float[] dropRate;				//For when we want to change the frequency of drops
 	[SerializeField] protected bool shouldDestroyOnDeath = true;
-	protected bool invincible = false; // make the object invincible from damage
+	public bool invincible = false; // make the object invincible from damage
 
 	[SerializeField] protected int health = 0;
 	[SerializeField] protected int maxHeath = 100;
@@ -34,6 +34,10 @@ public class Status :MonoBehaviour {
 	
 	void Start(){
 		animator = GetComponent<Animator>();
+	}
+
+	public bool IsInvincible(){
+		return invincible;
 	}
 	
 	
@@ -68,6 +72,8 @@ public class Status :MonoBehaviour {
 			return;
 		}
 		if(! invincible){
+			invincible = true;	//set invincible
+			invincibleTimer = 0;
 			if(animator != null){
 				animator.flashFrame(hitFrame);
 			}
@@ -101,7 +107,9 @@ public class Status :MonoBehaviour {
 		if(addedHealth < 0){
 			return;
 		}
-		health += addedHealth;
+		if(health >= 0){	//can't add health if we're dead
+			health += addedHealth;
+		}
 		
 		health = Mathf.Clamp(health, 0, maxHeath);
 	}

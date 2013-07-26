@@ -425,7 +425,7 @@ void  Update ()
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootMoveUp);
 						crouching = false;
 					
-					} else if (v < -0.5f) {//crouching
+					} else if (v < -0.5f || crouching) {//crouching
 						//don't allow to crouch fire and move
 						moveDirection.x = 0;
 						animator.SetAnimation (PlayerSpriteAnimate.animationType.ShootCrouch);
@@ -484,10 +484,10 @@ void  Update ()
 			if (!IsGrounded ()) {
 				//jumping
 				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitJump);
-			} else if (getDirectionY () == 0) {
+			} else if (getDirectionY () == 0 && !crouching) {
 				//facing left
 				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitLeft);
-			} else if (getDirectionY () == 1) {
+			} else if (getDirectionY () == 1 && !crouching) {
 				//facing up
 				animator.SetAnimation (PlayerSpriteAnimate.animationType.HitUp);
 			} else {

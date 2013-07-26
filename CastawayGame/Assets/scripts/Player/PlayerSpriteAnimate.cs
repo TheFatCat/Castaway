@@ -430,7 +430,7 @@ public void  SetAnimation ( animationType type  ){
 				CurWrap = wrap.OneShot;
 				
 				//set the current animation
-				CurType = animationType.CrouchLeft ;
+				CurType = animationType.CrouchStart;
 				break;
 			case animationType.ThrowFall:
 				//set frame coordinates
@@ -440,7 +440,7 @@ public void  SetAnimation ( animationType type  ){
 				//set speed
 				animationDelay = 0.1f;
 				//set the current animation
-				CurType = animationType.CrouchLeft;
+				CurType = animationType.JumpLeft;
 				break;
 			case animationType.Die:
 				//set frame coordinates

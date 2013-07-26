@@ -61,7 +61,7 @@ public class PlayerStatus : Status {
 		if(damage < 0){
 			return;
 		}
-		if(! invincible){
+		if(! invincible && health >= 0){
 			//lets get hit
 			controller.Hit();
 			//invincible = true;

@@ -26,21 +26,28 @@ public class Bullet : MonoBehaviour {
 		if(status != null && !collision.transform.tag.Equals("Player")){
 			//roll and see if we did critical damage
 			if(Random.value < critChance){
-				//CRITICAL HIT
+
+				//instantiate the damage text if not invincible
+				if(!status.isInvincible()){
+					GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+					name.GetComponent<TextMesh> ().text = "-" + critDamage.ToString();
+				}
+				//CRITICAL HIT!!!
 				status.substractHealth (critDamage);
 				Instantiate(damageCrit,transform.position,transform.rotation);
-				//instantiate the damage text
-				GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
-				name.GetComponent<TextMesh> ().text = "-" + critDamage.ToString();
 
 			} else{
+
+				//instantiate the damage text if not invincible
+				if(!status.isInvincible()){
+
+					GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
+					name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
+				}
 				//we hit an enemy
 				status.substractHealth(damage);
 				Instantiate(damageHit,transform.position,transform.rotation);
-				//instantiate the damage text
-				GameObject name = Instantiate (HPText, transform.position, Quaternion.identity) as GameObject;
-				name.GetComponent<TextMesh> ().text = "-" + damage.ToString();
-
+						
 			}
 
 		}
