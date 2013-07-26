@@ -17,11 +17,11 @@ public class SynchronizedAnimateB : MonoBehaviour {
 	public int xDimension; // the maximum frames for both x and y
 	public int yDimension;
 	public float timePerFrame;
-	float timer  = 0f;
+	float timer  = 100f;
+
 	
-	
-	int currentX;
-	int currentY;
+	public int currentX;
+	public int currentY;
 	public bool playing = false;
 	public bool loop = false;
 	
@@ -31,7 +31,7 @@ public class SynchronizedAnimateB : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		if(playing){
+		if(playing ){
 			timer += Time.deltaTime;
 			if(timer > timePerFrame){
 				timer = 0;
@@ -49,6 +49,9 @@ public class SynchronizedAnimateB : MonoBehaviour {
 				else if( (currentX + 1) > xDimension){
 					currentX = 0;
 					currentY ++;
+					if(currentY >= yDimension){
+						playing = false;
+					}
 				}
 				float x = (float)offsetX + currentX * (float)tileX;
 			
@@ -77,5 +80,6 @@ public class SynchronizedAnimateB : MonoBehaviour {
 		currentX = endX;
 		currentY = endY;
 		timer = 0;
+		playing = false;
 	}
 }
