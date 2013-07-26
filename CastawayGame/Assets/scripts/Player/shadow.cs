@@ -14,7 +14,7 @@ public class shadow : MonoBehaviour {
 			//if there is something below the parent, put us there
 			
 			RaycastHit hit;
-			if (Physics.Raycast (parent.position + Vector3.up, -Vector3.up, out hit, maxDistance, mask)) {
+			if (Physics.Raycast (parent.position + (Vector3.up * 2.0f), -Vector3.up, out hit, maxDistance, mask)) {
 						transform.position = hit.point;
 			} else {//nothing below us
 				transform.position = parent.position - (Vector3.up * 20f);
