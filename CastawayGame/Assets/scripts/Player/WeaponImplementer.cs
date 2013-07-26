@@ -152,6 +152,11 @@ public class WeaponImplementer : MonoBehaviour{
 	public Weapon getCurrentWeapon(){
 		return currentWeapon;
 	}
+
+	public Weapon getSideArm(){
+		return currentWeapon2;
+	}
+
 	public void setAttributes(Weapon attributes){
 		/*
 		renderer.material.mainTexture = attributes.uniqueSpriteSheet;

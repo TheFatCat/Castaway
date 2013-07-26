@@ -82,6 +82,9 @@ public class HUD : MonoBehaviour {
 		}
 		//Draw Heart
 		GUI.DrawTexture(getRect(0, 0, 64 , 64), healthIcon);
+		//Draw Secondary Icon
+		GUI.DrawTexture(getRect(410, 0 , 50, 50) , playerWeapon.getSideArm().weaponIcon);
+
 		//Draw Health numbers
 		//GUI.Label (getRect (235,-10,120,40), playerStatus.getHealth () + "", healthStyle);
 
@@ -119,7 +122,7 @@ public class HUD : MonoBehaviour {
 			GUI.DrawTexture(getRect (570,12, 175  , 32 ), ammoBarBackground);
 			//Draw Weapon Icon
 			GUI.DrawTexture(getRect(340, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
-			GUI.DrawTexture(getRect(410, 0 , 50, 50) , playerWeapon.getCurrentWeapon().weaponIcon);
+
 		}
 		//GUI.TextArea(getRect(5 , 70, 50,50) , playerStatus.getHealth() + " / " + playerStatus.getMaxHealth(), guistyle); 
 
