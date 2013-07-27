@@ -110,7 +110,7 @@ public class HUD : MonoBehaviour {
 			//Draw Bullets
 			GUI.DrawTexture (getRect (736, 0, 64, 64), ammoIcon);
 			//Draw Ammo
-			if(playerWeapon.getAmmo() > 0){	
+			if(playerWeapon.getAmmo() >= 0){	
 				GUI.DrawTexture( getRect(745,14, -175 * ((float) playerWeapon.getAmmo() / playerWeapon.getMaxAmmo()) , 28 ),ammoBar);
 				//draw numbers
 				//GUI.Label (getRect (445,-10,120,60), playerWeapon.getAmmo () + "", ammoStyle);

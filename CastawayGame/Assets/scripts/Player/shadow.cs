@@ -32,7 +32,7 @@ public class shadow : MonoBehaviour {
 								Instantiate (exitParticle, transform.position, Quaternion.identity);
 						}
 						engaged = false;
-					transform.position = parent.position - (Vector3.up * 20f);
+					transform.position = parent.position - (Vector3.up * 100f);
 			}
 	
 

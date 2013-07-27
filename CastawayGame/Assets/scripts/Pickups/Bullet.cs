@@ -14,6 +14,9 @@ public class Bullet : MonoBehaviour {
 	public Transform normalHit;
 	public Transform sandyHit;
 	public Transform woodenHit;
+	public Transform metalHit;
+	public float Ricochet = 0.0f;
+
 	public GameObject HPText;	//for the generic text
 	//add more when we have more
 
@@ -23,7 +26,7 @@ public class Bullet : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		// if the object has a status take health from the status and destroy the bullet
 		Status status = collision.transform.GetComponent<Status>();
-		if(status != null && !collision.transform.tag.Equals("Player")){
+		if(status != null ){
 			//roll and see if we did critical damage
 			if(Random.value < critChance){
 
@@ -53,18 +56,33 @@ public class Bullet : MonoBehaviour {
 		}
 		//check for the material of what we hit	
 		string tag = collision.transform.tag;
-		if(tag.Equals("Sand")){
-			// we hit sand
-			Instantiate(sandyHit,transform.position,transform.rotation);
-		} else  if(tag.Equals("Wood")){
-			//we hit wood
-			Instantiate(woodenHit,transform.position,transform.rotation);
-		} else if(status == null){
-			//we hit something else
-			Instantiate(normalHit,transform.position,transform.rotation);
-		}
 
-		Destroy(gameObject);
+
+
+		if (tag.Equals ("Metal")) {
+			//hit metal, so make a thing
+			Instantiate (metalHit, transform.position, transform.rotation);
+			//reverse Direction
+						Debug.Log (rigidbody.velocity);
+						rigidbody.velocity = -Ricochet * rigidbody.velocity.normalized * speed;
+						Debug.Log (rigidbody.velocity);
+						transform.Rotate (new Vector3 (0, 0, 180));
+						//transform.rotation  =  Quaternion.Euler(0,0,transform.rotation.z);
+						//changeVelocity (rigidbody.velocity * -Ricochet);
+		}else{
+			if(tag.Equals("Sand")){
+				// we hit sand
+				Instantiate(sandyHit,transform.position,transform.rotation);
+			} else  if(tag.Equals("Wood")){
+				//we hit wood
+				Instantiate(woodenHit,transform.position,transform.rotation);
+			} else if(status == null){
+				//we hit something else
+				Instantiate(normalHit,transform.position,transform.rotation);
+			}
+
+			Destroy(gameObject);
+		}
 		
 		
 		
@@ -77,8 +95,12 @@ public class Bullet : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	
+
+	public void addVelocity(Vector3 velocity){
+		rigidbody.velocity += velocity;
+	}
+
 	public void changeVelocity(Vector3 velocity){
-		rigidbody.velocity = velocity * speed;
+		rigidbody.velocity = velocity;
 	}
 }
