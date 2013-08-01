@@ -327,6 +327,7 @@ void  Update ()
 			if (Input.GetButton ("Jump") && moveDirection.y > 0) {
 				moveDirection.y += (float)(jumpModifier * Time.deltaTime);	
 			}
+			secondaryMuzzleLocation = new Vector3 (-0.5f, 1.7f, -0.5f);
 		
 			if (v > 0.5f) {//up
 				muzzleDirection = Vector3.up;
