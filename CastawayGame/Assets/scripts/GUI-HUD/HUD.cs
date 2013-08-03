@@ -101,6 +101,11 @@ public class HUD : MonoBehaviour {
 				GUI.DrawTexture( getRect(55,14, 175 * ((float) playerStatus.getHealth() / playerStatus.getMaxHealth()) , 28 ),healthBar);
 			}
 
+		}else{
+			//draw health numbers
+			healthText.pixelOffset = new Vector2 (drawBars.getBarWidth() + scaleImage.x * 235, (550 * scaleImage.y)+ 60);
+			healthText.text = 0 + "";
+
 		}
 		//Draw Health Background
 		GUI.DrawTexture(getRect (55,12, 175  , 32 ), healthBarBackground);
