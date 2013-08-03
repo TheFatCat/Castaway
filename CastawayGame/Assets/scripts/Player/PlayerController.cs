@@ -143,6 +143,9 @@ void  Update ()
 				moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * crouchSpeed), (float)acceleration);
 				//shorter controller
 				if (controller.height != 4.36f) {
+					CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+					capsuleCollider.center = new Vector3(0,0,1.78f);
+					capsuleCollider.height= 4.36f;
 					controller.center = new Vector3 (0, 0, 1.78f);
 					controller.height = 4.36f;
 				}
@@ -155,6 +158,9 @@ void  Update ()
 				moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)acceleration);
 				//regular controller
 				if (controller.height != 6.92f) {
+					CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+					capsuleCollider.center = new Vector3(0,0,0);
+					capsuleCollider.height= 6.92f;
 					controller.center = new Vector3 (0, 0, 0);
 					controller.height = 6.92f;
 				}
