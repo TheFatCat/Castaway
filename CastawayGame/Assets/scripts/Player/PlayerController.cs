@@ -327,6 +327,15 @@ void  Update ()
 
 		//in air
 		} else {//in air controls-----------------------------
+			//regular controller
+				if (controller.height != 6.92f) {
+					CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+					capsuleCollider.center = new Vector3(0,0,0);
+					capsuleCollider.height= 6.92f;
+					controller.center = new Vector3 (0, 0, 0);
+					controller.height = 6.92f;
+				}
+			
 			//smooth out the horizontal vector
 			moveDirection.x = Mathf.Lerp ((float)moveDirection.x, (float)(h * speed), (float)inAirAccel);
 			moveDirection.y -= (float)(gravity * Time.deltaTime);
