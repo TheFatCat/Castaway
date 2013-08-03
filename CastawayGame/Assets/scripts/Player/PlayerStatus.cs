@@ -61,6 +61,9 @@ public class PlayerStatus : Status {
 		if(damage < 0){
 			return;
 		}
+		//bounce back? for now just stop moving
+		controller.SetVelocity (Vector3.zero);
+
 		if(! invincible && health >= 0){
 			//lets get hit
 			controller.Hit();

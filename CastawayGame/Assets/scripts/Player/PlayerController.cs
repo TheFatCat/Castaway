@@ -534,7 +534,7 @@ public void SetVelocity (Vector3 velocity)	//completely overrides current moveme
 }
 
 public void  fire (){
-		if (canShoot) {
+		if (canShoot && !frozen) {
 			WeaponImplementer weapon = GetComponent<WeaponImplementer> ();
 			shooting = true;
 			throwing = false;
@@ -548,7 +548,7 @@ public void  fire (){
 }
 
 public void Toss (){	//throw
-	if (canThrow) {
+	if (canThrow && !frozen) {
 		WeaponImplementer weapon = GetComponent<WeaponImplementer> ();
 		throwing = true;
 		shooting = false;
@@ -580,6 +580,7 @@ public void  SetCanThrow ( bool yesno  ){
 
 //freeze us
 public void SetFrozen(bool freeze){
+	this.SetInput (0, 0, false);
 	frozen = freeze;
 	this.SetVelocity(Vector3.zero);	
 }

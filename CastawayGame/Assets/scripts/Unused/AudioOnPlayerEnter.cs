@@ -9,7 +9,7 @@ public class AudioOnPlayerEnter : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider collider){
-		if (collider.transform.audio) {
+		if (collider.transform.audio && collider.tag == "Player") {
 				audioplayer.GetComponent<AudioSource>().audio.Play();
 				
 		}
