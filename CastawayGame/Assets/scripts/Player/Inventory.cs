@@ -106,21 +106,21 @@ public class Inventory : MonoBehaviour {
 	private float currentScaleY = 0;
 	void OnGUI(){
 		if(inventoryIsOpen){
-			GUI.skin = skin;
+			//GUI.skin = skin;
 			currentScaleX = Mathf.Lerp(currentScaleX , scaleX , 0.1f);
 			currentScaleY = Mathf.Lerp(currentScaleY, scaleY , 0.1f);
 			// item description background
 				GUI.DrawTexture(descriptionRect, descriptionTexture);
 			// the following if statements will put the active tuxtures forward and the inactive textures back.
-			if(onWeaponBox == true && onItemBox == false && onEqupiiedItemsBox == false){
+			if(onWeaponBox == true ){
 				GUI.DrawTexture(weaponRect, activeWeaponTexture);
 				GUI.DrawTexture(itemRect, inactiveItemTexture);
 				GUI.DrawTexture(equippedItemRect, inactiveEquippedItemTexture);
-			}else if(onWeaponBox == false && onItemBox == true && onEqupiiedItemsBox == false){
+			}else if( onItemBox == true){
 				GUI.DrawTexture(weaponRect, inactiveWeaponTexture);
 				GUI.DrawTexture(itemRect, activeItemTexture);
 				GUI.DrawTexture(equippedItemRect, inactiveEquippedItemTexture);	
-			}else if(onWeaponBox == false && onItemBox == false && onEqupiiedItemsBox == true){
+			}else if(onEqupiiedItemsBox == true){
 				GUI.DrawTexture(weaponRect, inactiveWeaponTexture);
 				GUI.DrawTexture(itemRect, inactiveItemTexture);
 				GUI.DrawTexture(equippedItemRect, activeEquippedItemTexture);
@@ -145,11 +145,11 @@ public class Inventory : MonoBehaviour {
 	
 	
  	int getXPixels(float size){
-		return(int)(size * currentScaleX);
+		return(int)(size * currentScaleX * (Screen.width / 800f));
 	}
 	
 	int getYPixels(float size){
-		return(int)(size * currentScaleX);
+		return(int)(size * currentScaleX * (Screen.height/ 600f));
 	}
 	
 	

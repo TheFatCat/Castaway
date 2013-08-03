@@ -566,6 +566,7 @@ public void  SetCanThrow ( bool yesno  ){
 //freeze us
 public void SetFrozen(bool freeze){
 	frozen = freeze;
+	this.SetVelocity(Vector3.zero);	
 }
 
 public bool  IsGrounded (){

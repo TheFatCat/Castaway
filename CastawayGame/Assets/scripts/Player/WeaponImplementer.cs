@@ -119,16 +119,15 @@ public class WeaponImplementer : MonoBehaviour{
 	
 	void  Update (){
 		timer+= Time.deltaTime;	
-		if ((Input.GetButtonDown ("Fire1") || (Input.GetButton ("Fire1") && currentWeapon.automatic)) && timer >= currentWeapon.timeBetweenShots) {
-			timer = 0.0f;
-			
-			PlayerController controller = GetComponent<PlayerController> ();
-			controller.fire ();
-		} else if (Input.GetButtonDown ("Fire2") && timer >= currentWeapon2.timeBetweenShots) {
-			timer = 0.0f;
-			PlayerController controller = GetComponent<PlayerController> ();
-			controller.Toss ();
-
+		PlayerController controller = GetComponent<PlayerController> ();
+		if(! controller.frozen){
+			if ((Input.GetButtonDown ("Fire1") || (Input.GetButton ("Fire1") && currentWeapon.automatic)) && timer >= currentWeapon.timeBetweenShots) {
+				timer = 0.0f;
+				controller.fire ();
+			} else if (Input.GetButtonDown ("Fire2") && timer >= currentWeapon2.timeBetweenShots) {
+				timer = 0.0f;
+				controller.Toss ();
+			}
 		}
 	}
 	

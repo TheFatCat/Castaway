@@ -25,6 +25,7 @@ public class SeagullAI : MonoBehaviour {
 	private float turnWait = 5;
 	// Update is called once per frame
 	void Update () {
+		Transform player = PlayerController.getPlayer();
 		//Debug.Log(controller.getXSpeed());
 		if(!swooping){
 			timeSinceTurned += Time.deltaTime;
@@ -42,9 +43,9 @@ public class SeagullAI : MonoBehaviour {
 				}
 				
 			}
-			if(Vector3.Distance(transform.position,PlayerController.getPlayer().position) < 100 ){
+			if(Vector3.Distance(transform.position,player.position) < 100 ){
 				swooping = true;
-				Vector3 position = PlayerController.getPlayer().position + new Vector3(0,3f,0f);
+				Vector3 position = player.position + new Vector3(0f,player.lossyScale.y * 10f,0f);
 				float dX = position.x - transform.position.x;
 				float dY = position.y - transform.position.y;
 				t = 0f;
