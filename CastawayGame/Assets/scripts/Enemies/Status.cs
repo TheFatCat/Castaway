@@ -8,7 +8,7 @@ public class Status :MonoBehaviour {
 	[SerializeField] protected Animation hitFrame; // animation frame when object is hit
 	[SerializeField] protected  GameObject deathPrefab ;
 	[SerializeField] protected  GameObject hitPrefab ;
-	[SerializeField] protected AudioClip hitSound;
+	[SerializeField] protected AudioClip[] hitSound;
 	public int minDrops = 0;
 	public int maxDrops = 0;
 	public Vector3 offset = Vector3.zero;
@@ -78,8 +78,14 @@ public class Status :MonoBehaviour {
 				animator.flashFrame(hitFrame);
 			}
 			//play the hit sound
-			if (hitSound && audio) {
-				audio.PlayOneShot (hitSound);
+			if (hitSound.Length > 0 && audio) {
+								Debug.Log ("hitSound");
+				//PLAY A SOUND
+				int index = (int) (Random.value * hitSound.Length);
+				if (hitSound[index]) {
+					audio.PlayOneShot (hitSound[index]);
+				}
+
 			}
 
 			//instantiate the hit prefab

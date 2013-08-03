@@ -66,7 +66,18 @@ public class PlayerStatus : Status {
 			controller.Hit();
 			//invincible = true;
 
-			//Transform player = controller.getPlayer();
+			//play the hit sound
+			if (hitSound.Length > 0 && audio) {
+				Debug.Log ("hitSound");
+				//PLAY A SOUND
+				int index = (int) (Random.value * hitSound.Length);
+				if (hitSound[index]) {
+					audio.PlayOneShot (hitSound[index]);
+				}
+
+			}
+
+
 			//HUD hud = GetComponent<HUD> ();
 			hud.hit ();
 
