@@ -5,6 +5,7 @@ using System.Collections;
 public class SeagullAI : MonoBehaviour {
 	[SerializeField] float xSpeedScale = 10;
 	[SerializeField] float ySpeedScale = 5;
+	[SerializeField] float swoopDistance = 100;
 	[SerializeField] Animation flap;
 	[SerializeField] Animation soar;
 	[SerializeField] Animation dive;
@@ -43,7 +44,7 @@ public class SeagullAI : MonoBehaviour {
 				}
 				
 			}
-			if(Vector3.Distance(transform.position,player.position) < 100 ){
+			if(Vector3.Distance(transform.position,player.position) < swoopDistance ){
 				swooping = true;
 				Vector3 position = player.position + new Vector3(0f,player.lossyScale.y * 5f,0f);
 				float dX = position.x - transform.position.x;
