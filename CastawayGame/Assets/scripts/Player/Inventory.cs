@@ -7,8 +7,17 @@ public class Inventory : MonoBehaviour {
 	[SerializeField] float scaleY = 1f;
 	[SerializeField] int coins;
 	List<Item> items = new List<Item>();
+	//
+	
+	int boxLocation = 0;
+	int markerLocation = 0;
+	public Texture marker;
+	[SerializeField] Texture[] testArray = new Texture[7];
 	WeaponImplementer wp;
 	List<Weapon> weapons;
+	
+	
+	//
 	// these three booleans will be used to decide which section of the inventory the player is using
 	bool onWeaponBox = true;
 	bool onItemBox = false;
@@ -125,6 +134,36 @@ public class Inventory : MonoBehaviour {
 				GUI.DrawTexture(itemRect, inactiveItemTexture);
 				GUI.DrawTexture(equippedItemRect, activeEquippedItemTexture);
 			}
+			for(int i = 0; i < 5; i++){
+				GUI.DrawTexture(new Rect(getXPixels(80 +(i*79)),getYPixels(100),getXPixels(54),getYPixels(54)),testArray[boxLocation + i]);
+			}
+			
+			// TEST ONE
+			if(onWeaponBox){
+				if(Input.GetKeyDown(KeyCode.RightArrow)){
+					if(markerLocation < 5)
+						markerLocation++;
+						Debug.Log ("marker = "+markerLocation);
+					if(markerLocation >= 5 && ((boxLocation+1)+5) <= testArray.Length-1){
+						boxLocation ++;
+						markerLocation = 5;
+						Debug.Log("box is at "+boxLocation);
+						Debug.Log ("marker = "+markerLocation);
+					}
+				}
+				if(Input.GetKeyDown(KeyCode.LeftArrow)){
+					if(markerLocation > 0)
+						markerLocation--;
+						Debug.Log (" MINUS marker = "+markerLocation);
+					if(markerLocation <= 0 && boxLocation > 0){
+						boxLocation --;
+						markerLocation = 0;
+					}
+				}
+				
+			}
+			//this will draw the selector position
+			GUI.DrawTexture(new Rect(getXPixels(70 + (markerLocation*79)),getYPixels(90), getXPixels(64), getYPixels(64)), marker);
 			
 		}
 	}
