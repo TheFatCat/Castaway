@@ -48,7 +48,9 @@ private Status status;
 private Vector3 moveDirection = Vector3.zero;
 //audio
 public AudioClip[] crouchFootsteps;
+public float crouchVolume = 1.0f;
 public AudioClip[] sandFootsteps;
+public float stepVolume = 1.0f;
 public AudioClip[] woodFootsteps;
 public AudioClip[] metalFootsteps;
 //et cetera
@@ -233,11 +235,13 @@ void  Update ()
 					if (crouching == true) {
 						//we started crouching
 						if (crouchSound) {
+							audio.volume = 1.0f;
 							audio.PlayOneShot (crouchSound);
 						}
 					} else {
 						//we are standing up
 						if (getUpSound) {
+							audio.volume = 1.0f;
 							audio.PlayOneShot (getUpSound);
 						}
 					}
@@ -252,6 +256,7 @@ void  Update ()
 
 				//play sound
 				if (jumpSound) {
+					audio.volume = 1.0f;
 					audio.PlayOneShot (jumpSound);
 				}
 
@@ -304,6 +309,7 @@ void  Update ()
 						//PLAY A SOUND
 						int index = (int) (Random.value * crouchFootsteps.Length);
 							if (crouchFootsteps[index]) {
+								audio.volume = crouchVolume;
 								audio.PlayOneShot (crouchFootsteps[index]);
 							}
 							
@@ -320,6 +326,7 @@ void  Update ()
 								//PLAY A SOUND
 								int index = (int) (Random.value * sandFootsteps.Length);
 								if (sandFootsteps[index]) {
+									audio.volume = stepVolume;
 									audio.PlayOneShot (sandFootsteps[index]);
 								}
 							} else if (Rhit.transform.tag.Equals ("Wood")) {	//we hit wood
