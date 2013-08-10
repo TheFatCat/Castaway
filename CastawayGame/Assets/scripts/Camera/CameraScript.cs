@@ -33,7 +33,6 @@ public class CameraScript : MonoBehaviour {
 			
 			transform.position = new Vector3(Mathf.Clamp(Mathf.Lerp(transform.position.x,target.position.x,Xaccel * Time.deltaTime),Xmin,Xmax) ,Mathf.Clamp(Mathf.Clamp(transform.position.y,target.position.y + cameraHeight - YminMoveDist,target.position.y + cameraHeight),Ymin,Ymax), target.position.z - cameraDistance);
 			
-			
 			//if rumbling
 			if(rumbleTimer > 0.0f){
 				transform.position += new Vector3(Random.Range(-rumbleAmount,rumbleAmount) * Time.deltaTime,Random.Range(-rumbleAmount,rumbleAmount) * Time.deltaTime,0.0f);	//move randomly
