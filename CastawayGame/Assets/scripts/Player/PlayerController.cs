@@ -298,7 +298,19 @@ void  Update ()
 				audioTimer += Time.deltaTime;
 
 				if(crouching){
+					if (audioTimer >= audioDelay){	//time to play a sound!
+						audioTimer = 0.0f;
 
+						//PLAY A SOUND
+						int index = (int) (Random.value * crouchFootsteps.Length);
+							if (crouchFootsteps[index]) {
+								audio.PlayOneShot (crouchFootsteps[index]);
+							}
+							
+
+
+
+					}
 				}else{//not crouching
 					if (audioTimer >= audioDelay){	//time to play a sound!
 						audioTimer = 0.0f;
