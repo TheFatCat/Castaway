@@ -3,9 +3,8 @@ using System.Collections;
 [RequireComponent (typeof(EnemyController))]
 [RequireComponent (typeof(Animator))]
 public class SeagullAI : MonoBehaviour {
-	[SerializeField] float swoopDuration = 3;
+	[SerializeField] float swoopSpeed = 10;
 	[SerializeField] float xSpeedScale = 10;
-	[SerializeField] float ySpeedScale = 5;
 	[SerializeField] float swoopDistance = 100;
 	[SerializeField] Animation flap;
 	[SerializeField] Animation soar;
@@ -14,10 +13,9 @@ public class SeagullAI : MonoBehaviour {
 	Animator animator;
 	
 	private bool swooping = false;
-	private float yZero = 0;
-	private int xMultiplier = 1;
-	private float xZero = 0;
-	private float t = 0;
+	private bool rising = false;
+	Vector3 endPosition;
+	Vector3 target;
 	// Use this for initialization
 	void Start () {
 		controller = GetComponent<EnemyController>();
@@ -42,34 +40,39 @@ public class SeagullAI : MonoBehaviour {
 				}
 				else{
 					controller.setXSpeed( xSpeedScale);
-	
 				}
 				
 			}
 			if(Vector3.Distance(transform.position,player.position) < swoopDistance ){
 				swooping = true;
-				Vector3 position = player.position + new Vector3(0f,player.lossyScale.y * 5f,0f);
-				float dX = position.x - transform.position.x;
-				float dY = position.y - transform.position.y;
-				yZero = 4 * dY / swoopDuration; 
-				xZero = dX / swoopDuration;
-				xMultiplier = dX > 1 ? 1:-1;
+				target = player.position + new Vector3(0f,player.lossyScale.y * 5f,0f);
+				endPosition = new Vector3(target.x + 1.25f * (target.x - transform.position.x),transform.position.y,transform.position.z); 
 			}
 		}
 		else{
-			float deltaTime = Time.deltaTime;
-			t += deltaTime;
-			controller.setXSpeed(xMultiplier*Mathf.Abs(xZero - (xZero / (0.5f * swoopDuration)) * (t - 0.5f * swoopDuration)));
-			controller.setYSpeed(-1 * (t - 0.5f * swoopDuration) *(yZero / (0.5f * swoopDuration)));
-			if(t > swoopDuration){
-				t = 0;
-				swooping = false;
+			float dx = target.x - transform.position.x;
+			float dy = target.y - transform.position.y;
+			float scale = swoopSpeed /Mathf.Sqrt(Mathf.Pow(dx,2) + Mathf.Pow(dy,2));
+			if(!rising ){
+				controller.setXSpeed(dx * scale);
+				controller.setYSpeed(dy * scale);
+				if(scale > 20){
+					rising = true;
+					target = endPosition;
+				}
+			}
+			else{
+				controller.setXSpeed(Mathf.Lerp(controller.getXSpeed(),dx * scale,0.1f));
+				controller.setYSpeed(Mathf.Lerp(controller.getYSpeed(),dy * scale,0.01f));
+				if(scale > 20){
+					swooping = false;
+					rising = false;
+				}
 			}
 		}
 		if(controller.getXSpeed() > 0 ){
 				transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.lossyScale.y, transform.lossyScale.z);
-					
-			}
+		}
 		else{
 			transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1, transform.lossyScale.y, transform.lossyScale.z);
 		}
