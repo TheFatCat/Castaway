@@ -1,0 +1,42 @@
+Biome	Default
+GradientSlope		17.5
+GradientOffset		-37
+ScaleSize		5
+0.002
+0.01
+0.05
+0.002
+0.125
+HeightSize		5
+3
+4
+0.6
+4
+0.4
+GroundMin		0.5
+Caves			true
+CaveGradientSlope	-0.23
+CaveGradientOffset	0.71
+CaveScaleSize		3
+0.17
+0.04
+0.13
+CaveHeightSize		3
+0.4
+0.7
+0.4
+CaveRange		0.4
+0.65
+Stone			true
+StoneGradientSlope	-0.2
+StoneGradientOffset	0.55
+StoneScaleSize		3
+0.10
+0.03
+0.17
+StoneHeight		3
+0.3
+0.7
+0.7
+StoneRange		0.4
+0.7
